@@ -83,8 +83,9 @@ window.Tabla = React.createClass({
 		var dom = ReactDOM.findDOMNode(this);
 		var alto_tabla = dom.offsetHeight;
 		var domMenu = dom.querySelector('.menu-tabla');
-		alto_tabla -= domMenu.offsetHeight;
-
+		if (domMenu) {
+			alto_tabla -= domMenu.offsetHeight;
+		}
 		this.setState({alto_tabla: alto_tabla}, function () {
 			this.calcAltoBody();
 		});
