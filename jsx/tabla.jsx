@@ -179,7 +179,7 @@ window.Tabla = React.createClass({
 		var cargarCombo = function (col) {
 
 			var params = {
-				_sort: col.campo,
+				_sort: col.tipo.texto,
 				_order: 'ASC'
 			};
 
