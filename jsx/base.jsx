@@ -105,9 +105,4 @@
 
 		return cols;
 	};
-
-	ReactDOM.render(
-		<App/>,
-		document.getElementById('react-container') 
-	);
 })();
