@@ -21,32 +21,10 @@ window.PanelTabla = React.createClass({
 		};
 	},
 	componentDidMount: function() {
-		var dom = ReactDOM.findDOMNode(this);
-		dom.addEventListener('resize', this.onResize);
-		this.triggerResize({
-			width: dom.offsetWidth,
-			height: dom.offsetHeight,
-			top: dom.offsetTop,
-			left: dom.offsetLeft,
-			index: dom.cellIndex
-		});
-	},
-	triggerResize: function (offset) {
-		this.dimensionar();
-		this.props.onResize(offset, this);
-	},
-	onResize: function (e) {
-		this.triggerResize({
-			width: e.currentTarget.offsetWidth,
-			height: e.currentTarget.offsetHeight,
-			top: e.currentTarget.offsetTop,
-			left: e.currentTarget.offsetLeft,
-			index: e.currentTarget.cellIndex
-		});
 	},
 	onResizeTabla: function (offset, tabla) {
-		//this.dimensionar();
 		this.props.onResizeTabla(offset, tabla, this);
+		this.props.onResize(offset, this);
 	},
 	dimensionar: function () {
 		var dom = ReactDOM.findDOMNode(this);
