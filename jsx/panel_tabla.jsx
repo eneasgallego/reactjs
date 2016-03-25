@@ -15,14 +15,23 @@ window.PanelTabla = React.createClass({
 			acciones: [],
 			claseFila: function(){},
 			parseData: function(){},
+			onResize: function(){},
 			onResizeTabla: function(){},
 			onClickAcciones: function(){}
 		};
 	},
 	componentDidMount: function() {
+		var dom = ReactDOM.findDOMNode(this);
+		dom.addEventListener('resize', this.onResize);
+		this.onResize();
+	},
+	onResize: function (e) {
+		this.dimensionar();
+		this.props.onResizeTabla(offset, tabla, this);
 	},
 	onResizeTabla: function (offset, tabla) {
-		this.dimensionar();
+		//this.dimensionar();
+		this.props.onResizeTabla(offset, tabla, this);
 	},
 	dimensionar: function () {
 		var dom = ReactDOM.findDOMNode(this);
