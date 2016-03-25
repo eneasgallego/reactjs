@@ -56,7 +56,7 @@ window.Tabla = React.createClass({
 		});
 	},
 	parseData: function (data) {
-		var ret = this.props.parseData(data);
+		var ret = this.props.parseData(data, this);
 
 		return ret ? ret : data;
 	},

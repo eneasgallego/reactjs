@@ -19,6 +19,11 @@ window.PanelTabla = React.createClass({
 	},
 	componentWillUpdate: function() {
 	},
+	parseData: function (data, tabla) {
+		var ret = this.props.parseData(data, tabla, this);
+
+		return ret ? ret : data;
+	},
 	onClickAcciones: function (tag, fila, tabla) {
 		this.props.onClickAcciones(tag, fila, tabla, this);
 	},
@@ -30,7 +35,7 @@ window.PanelTabla = React.createClass({
 			ref="tabla"
 			id_campo={this.props.id_campo}
 			url={this.props.url}
-			parseData={this.props.parseData}
+			parseData={this.parseData}
 			params={this.props.params}
 			claseFila={this.props.claseFila}
 			cols={this.props.cols}
