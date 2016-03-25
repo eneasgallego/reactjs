@@ -7,7 +7,7 @@ $color2-resaltado: #44EAB8;
 $color3-resaltado: #38FF38;
 $color-texto-resaltado: black;
 
-.#{$clase-tabla}-cont {
+.tabla-cont {
 	position: relative;
 	width: 100%;
 	height: 100%;
@@ -15,13 +15,13 @@ $color-texto-resaltado: black;
 
 	//@include flex();
 
-	.#{$clase-menu}-#{$clase-tabla} {
+	.menu-tabla {
 	//	@include flex-grow(1);
 //		text-align: right;
 		overflow: hidden;
 	}
 
-	.#{$clase-tabla}-div {
+	.tabla-div {
 		overflow: hidden;
 		display: inline-block;
 		height: 100%;
@@ -29,7 +29,7 @@ $color-texto-resaltado: black;
 
 		//@include flex-grow(4);
 
-		.#{$clase-tabla} {
+		.tabla {
 			overflow: hidden;
 			font-family: Verdana;
 			font-size: 8pt;
@@ -102,7 +102,7 @@ $color-texto-resaltado: black;
 							min-width: 8px;
 						}
 					}
-					.#{$clase-tabla}-celda-div {
+					.tabla-celda-div {
 						padding: 8px 16px;
 					}
 				}
@@ -122,16 +122,16 @@ $color-texto-resaltado: black;
 						padding: 0;
 					}
 					
-					.#{$clase-menu} {
+					.menu {
 						border-radius: 25px;
 						margin: 4px 0;
 
-						.#{$clase-menu-item} {
+						.menu-item {
 							padding: 0px 8px;
 						}
 					}
 
-					.#{$clase-tabla}-celda-div {
+					.tabla-celda-div {
 						padding: 4px 8px;
 					}
 				}

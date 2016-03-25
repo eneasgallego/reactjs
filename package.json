@@ -11,8 +11,5 @@
     "grunt-contrib-sass": "^1.0.0",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-webfont": "^1.2.0"
-  },
-  "dependencies": {
-    "json-server": "^0.8.9"
   }
 }

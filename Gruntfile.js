@@ -8,7 +8,7 @@ module.exports = function(grunt) {
                 files: ['jsx/**/*.jsx','sass/**/*.scss'],
                 tasks: ['release'],
                 options: {
-                    interrupt: true,
+                    interrupt: true
                 }
             }
         },
@@ -79,10 +79,8 @@ module.exports = function(grunt) {
                         'js/tmp/lista_tabla.js',
                         'js/tmp/panel_tabla.js',
                         
-                        'js/tmp/app.js',
-                        
                         'js/tmp/base.js'],
-                dest: 'js/app.js',
+                dest: 'js/app.js'
             }
         }
     });

@@ -2,7 +2,7 @@ $profundidad: 1;
 
 @mixin menu-hijo($prof) {
 	@if $prof <= $profundidad {
-		.#{$clase-menu} {
+		.menu {
 			z-index: $prof+1;
 			@include color-fondo();
 				
@@ -13,7 +13,7 @@ $profundidad: 1;
 			
 				@include borde();
 			
-				.#{$clase-menu-item} {
+				.menu-item {
 					display: block;
 					&:hover {
 						a {
@@ -25,20 +25,20 @@ $profundidad: 1;
 					}
 				}
 			}
-			.#{$clase-menu-item} {
+			.menu-item {
 				@include menu-hijo($prof+1);
 			}
 		}
 	}
 }
 
-.#{$clase-menu} {
+.menu {
 	margin: 0;
 	padding: 4px 0;
 	font-family: Arial;
 	@include color-cabecera();
 	
-	.#{$clase-menu-item} {
+	.menu-item {
 		display: inline-block;
 		padding: 2px 8px;
 		margin: 2px;

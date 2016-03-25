@@ -7,18 +7,18 @@ $dialogo-color2-resaltado: white;
 $dialogo-color3-resaltado: white;
 $dialogo-color-texto-resaltado: black;
 
-.#{$clase-dialogo} {
+.dialogo {
 	@include pantalla-completa();
 	position: fixed;
 	
-	.#{$clase-dialogo}-velo {
+	.dialogo-velo {
 		@include pantalla-completa();
 		background-color: black;
 		opacity: 0.5;
 		cursor: pointer;
 	}
 
-	.#{$clase-dialogo}-contenedor {
+	.dialogo-contenedor {
 		border-style: solid;
 		border-width: 4px;
 		border-radius: 15px;
@@ -59,12 +59,12 @@ $dialogo-color-texto-resaltado: black;
 			width: 80%;
 		}
 					
-		.#{$clase-menu} {
+		.menu {
 			@include color-degradado2($dialogo-color1, $dialogo-color2, $dialogo-color3, $dialogo-color-texto);
 			border-radius: 0 0 11px 11px;
 			text-align: right;
 			
-			.#{$clase-menu-item}:hover {
+			.menu-item:hover {
 				@include color-degradado2($dialogo-color1-resaltado, $dialogo-color2-resaltado, $dialogo-color3-resaltado, $dialogo-color-texto-resaltado);
 
 				a {
