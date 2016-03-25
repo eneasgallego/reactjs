@@ -11,7 +11,10 @@
 
   .tabla-cont {
     overflow: auto;
-//    height: 268px;
+
+    .tabla {
+      border-width: 0;
+    }
   }
   h2 {
     font-family: Verdana;
