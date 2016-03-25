@@ -40,8 +40,8 @@ window.PanelTabla = React.createClass({
 	},
 	render: function() {
 		return (
-			<section id={this.props.id}>
-				<h1>{this.props.titulo}</h1> 
+			<section id={this.props.id} className="panel">
+				<h2>{this.props.titulo}</h2>
 				{this.renderTabla()}
 			</section>
 		);
