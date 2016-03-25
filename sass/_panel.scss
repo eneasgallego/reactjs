@@ -18,6 +18,14 @@
       .tabla {
         border-width: 0;
         margin: 0;
+
+        .menu {
+          position: relative;
+
+          .menu-item {
+            position: absolute;
+          }
+        }
       }
     }
   }
