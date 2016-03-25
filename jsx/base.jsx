@@ -45,6 +45,18 @@
 		return -1;
 	};
 	Array.prototype.indice = indice;
+	var crearMapa = function (id) {
+		var ret = {};
+
+		for (var i = 0 ; i < this.length ; i++) {
+			var item = this[i];
+
+			ret[item[id]] = item;
+		}
+
+		return ret;
+	};
+	Array.prototype.crearMapa = crearMapa;
 	window.ajax = function (par, tabla) {
 
 		var params = '';
