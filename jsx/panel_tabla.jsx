@@ -22,7 +22,7 @@ window.PanelTabla = React.createClass({
 	},
 	componentDidMount: function() {
 		var dom = ReactDOM.findDOMNode(this);
-		dom.addEventListener('resize', this.onResize);
+		window.addEventListener('resize', this.onResize);
 		this.triggerResize({
 			width: dom.offsetWidth,
 			height: dom.offsetHeight,
