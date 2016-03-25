@@ -24,7 +24,6 @@ window.Tabla = React.createClass({
 			cols: [],
 			acciones: [],
 			guardar: undefined,
-			style: {},
 			claseFila: function(){},
 			parseData: function(){},
 			onResize: function(){},
@@ -370,7 +369,7 @@ window.Tabla = React.createClass({
 	},
 	render: function() {
 		return (
-			<div className="tabla-cont" style={this.props.style} >
+			<div className="tabla-cont">
 				{this.renderMenu()} 
 				{this.renderTabla()} 
 				{this.renderVelo()}
