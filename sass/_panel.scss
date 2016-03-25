@@ -20,10 +20,10 @@
         margin: 0;
 
         .menu {
-          position: relative;
+          display: flex;
 
           .menu-item {
-            position: absolute;
+            //position: absolute;
           }
         }
       }
