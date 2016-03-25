@@ -12,9 +12,13 @@
   .tabla-cont {
     overflow: auto;
 
-    .tabla {
-      border-width: 0;
-      margin: 0;
+    .tabla-div {
+      position: absolute;
+
+      .tabla {
+        border-width: 0;
+        margin: 0;
+      }
     }
   }
   h2 {
