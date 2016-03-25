@@ -243,7 +243,7 @@ window.Tabla = React.createClass({
 		this.cargarFilas(this.forceUpdate);
 	},
 	renderMenu: function () {
-		var ret = '';
+		var ret;
 
 		if (this.props.guardar) {
 			var menu = [{
