@@ -13,6 +13,7 @@ window.PanelTabla = React.createClass({
 			cols: [],
 			acciones: [],
 			claseFila: function(){},
+			parseData: function(){},
 			onClickAcciones: function(){}
 		};
 	},
@@ -29,6 +30,7 @@ window.PanelTabla = React.createClass({
 			ref="tabla"
 			id_campo={this.props.id_campo}
 			url={this.props.url}
+			parseData={this.props.parseData}
 			params={this.props.params}
 			claseFila={this.props.claseFila}
 			cols={this.props.cols}

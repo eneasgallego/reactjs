@@ -25,6 +25,7 @@ window.Tabla = React.createClass({
 			acciones: [],
 			guardar: undefined,
 			claseFila: function(){},
+			parseData: function(){},
 			onResize: function(){},
 			onResizeFila: function(){},
 			onResizeCelda: function(){},
@@ -53,6 +54,11 @@ window.Tabla = React.createClass({
 			left: dom.offsetLeft,
 			index: dom.cellIndex
 		});
+	},
+	parseData: function (data) {
+		var ret = this.props.parseData(data);
+
+		return ret ? ret : data;
 	},
 	triggerResize: function (offset) {
 		this.calcAltoTabla();
@@ -146,8 +152,10 @@ window.Tabla = React.createClass({
 					params: this.props.params,
 					url: this.props.url,
 					success: function (res) {
+						var data = this.parseData(res);
+
 						this.setState({
-							filas: res,
+							filas: data,
 							filas_cargadas: true,
 							cargando: false
 						}, function () {
