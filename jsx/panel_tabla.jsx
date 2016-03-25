@@ -26,7 +26,7 @@ window.PanelTabla = React.createClass({
 		var alto_panel = dom.offsetHeight;
 		var dom_titulo = ReactDOM.findDOMNode(this.refs.titulo);
 		var alto_titulo = dom_titulo.offsetHeight;
-		var alto = alto_panel - alto_titulo;
+		var alto_tabla = alto_panel - alto_titulo;
 
 		this.setState({alto_tabla: alto_tabla});
 	},
