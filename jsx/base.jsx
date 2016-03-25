@@ -81,7 +81,7 @@
 
 		xhttp.onreadystatechange = function() {
 			if (xhttp.readyState==4){
-				tabla && tabla.setState({velo: false}, function () {
+				var fn = function () {
 					if ((xhttp.status == 200) ||
 						(xhttp.status == 304) ||
 						(par.metodo.toLowerCase() == 'post' && xhttp.status == 201)) {
@@ -94,7 +94,12 @@
 							par.error(xhttp);
 						}
 					}
-				});
+				};
+				if (tabla) {
+					tabla.setState({velo: false}, fn);
+				} else {
+					fn();
+				}
 			}
 		};
 
