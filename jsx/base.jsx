@@ -83,6 +83,7 @@
 			if (xhttp.readyState==4){
 				tabla && tabla.setState({velo: false}, function () {
 					if ((xhttp.status == 200) ||
+						(xhttp.status == 304) ||
 						(par.metodo.toLowerCase() == 'post' && xhttp.status == 201)) {
 						if (typeof(par.success) === 'function') {
 							var obj = JSON.parse(xhttp.responseText);
