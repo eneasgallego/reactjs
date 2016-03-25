@@ -151,7 +151,7 @@ window.Celda = React.createClass({
 				}
 			}
 		} else if (this.state.tipo.tipo == 'bool') {
-			ret = parseInt(ret) ? 'Sí' : 'No';
+			ret = ret ? 'Sí' : 'No';
 		}
 
 		return ret;
