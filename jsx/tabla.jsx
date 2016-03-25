@@ -177,9 +177,16 @@ window.Tabla = React.createClass({
 	},
 	cargarCombos: function () {
 		var cargarCombo = function (col) {
+
+			var params = {
+				_sort: col.campo,
+				_order: 'ASC'
+			};
+
 			ajax({
 				metodo: 'get',
 				url: col.tipo.url,
+				params: params,
 				success: function (response) {
 					var combos_dataset = this.state.combos_dataset;
 					combos_dataset[col.campo] = response;
