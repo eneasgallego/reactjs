@@ -97,9 +97,13 @@
 			}
 		};
 
-		tabla && tabla.setState({velo: true}, function () {
+		if (tabla) {
+			tabla.setState({velo: true}, function () {
+				xhttp.send(params);
+			});
+		} else {
 			xhttp.send(params);
-		});
+		}
 	};
 	window.parseTipo = function (tipo) {
 		if (typeof(tipo) === 'string') {
