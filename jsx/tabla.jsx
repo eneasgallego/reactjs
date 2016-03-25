@@ -86,6 +86,9 @@ window.Tabla = React.createClass({
 	onResizeFila: function (offset, fila) {
 		this.props.onResizeFila(offset, fila, this);
 	},
+	dimensionar: function () {
+		this.calcAltoTabla();
+	},
 	calcAltoTabla: function () {
 		var dom = ReactDOM.findDOMNode(this);
 		var alto_tabla = dom.offsetHeight;

@@ -55,7 +55,15 @@ window.PanelTabla = React.createClass({
 		var alto_titulo = dom_titulo.offsetHeight;
 		var alto_tabla = alto_panel - alto_titulo;
 
-		this.setState({alto_tabla: alto_tabla});
+		this.setState({alto_tabla: alto_tabla}, function () {
+			for (var i in this.refs) {
+				var ref = this.refs[i];
+
+				if (typeof(ref.dimensionar) === 'function') {
+					ref.dimensionar();
+				}
+			}
+		}.bind(this));
 	},
 	onClickAcciones: function (tag, fila, tabla) {
 		this.props.onClickAcciones(tag, fila, tabla, this);
