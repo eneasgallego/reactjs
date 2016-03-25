@@ -1,5 +1,5 @@
 {
-  "name": "isla",
+  "name": "nreactjs",
   "version": "0.1.0",
   "devDependencies": {
     "babel-plugin-transform-react-jsx": "~6.5.2",
