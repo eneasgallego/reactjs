@@ -111,9 +111,28 @@ window.Tabla = React.createClass({
 			this.nuevaFila();
 		}
 	},
+	getValorDefecto: function (tipo) {
+		var ret;
+
+		if (tipo == 'string') {
+			ret = '';
+		} else if (tipo == 'int' || tipo == 'float' || tipo == 'object') {
+			ret = 0;
+		} else if (tipo == 'bool') {
+			ret = false;
+		}
+
+		return ret;
+	},
 	nuevaFila: function () {
 		var filas = this.state.filas.slice();
-		filas.push({});
+		var obj = {};
+		for (var i = 0 ; i < this.props.cols.length ; i++) {
+			var col = this.props.cols[i];
+
+			obj[col.campo] = this.getValorDefecto(col.tipo.tipo);
+		}
+		filas.push(obj);
 		this.setState({
 			filas: filas
 		});
