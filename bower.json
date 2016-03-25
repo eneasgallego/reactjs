@@ -1,0 +1,21 @@
+{
+  "name": "isla",
+  "version": "0.0.0",
+  "authors": [
+    "Eneas <eneasgallego@gmail.com>"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "~0.14.7"
+  }
+}
