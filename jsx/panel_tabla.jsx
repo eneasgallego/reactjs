@@ -22,6 +22,9 @@ window.PanelTabla = React.createClass({
 	componentDidMount: function() {
 	},
 	onResizeTabla: function (offset, tabla) {
+		this.dimensionar();
+	},
+	dimensionar: function () {
 		var dom = ReactDOM.findDOMNode(this);
 		var alto_panel = dom.offsetHeight;
 		var dom_titulo = ReactDOM.findDOMNode(this.refs.titulo);
