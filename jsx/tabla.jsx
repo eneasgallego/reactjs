@@ -306,7 +306,7 @@ window.Tabla = React.createClass({
 		return filas;
 	},
 	renderVelo: function () {
-		var ret = '';
+		var ret;
 
 		if (this.state.velo) { 
 			ret = 	<div className="velo">
@@ -336,7 +336,7 @@ window.Tabla = React.createClass({
 		return ret;
 	},
 	renderTabla: function () {
-		var ret = '';
+		var ret;
 		
 		var datos_header = {};
 		for (var i = 0 ; i < this.state.cols.length ; i++) {
