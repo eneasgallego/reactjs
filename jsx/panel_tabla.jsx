@@ -9,7 +9,6 @@ window.PanelTabla = React.createClass({
 			titulo: '',
 			url: '',
 			params: {},
-			necesitaParametros: false,
 			id_campo: '',
 			cols: [],
 			acciones: [],
@@ -31,7 +30,6 @@ window.PanelTabla = React.createClass({
 			id_campo={this.props.id_campo}
 			url={this.props.url}
 			params={this.props.params}
-			necesitaParametros={this.props.necesitaParametros}
 			claseFila={this.props.claseFila}
 			cols={this.props.cols}
 			acciones={this.props.acciones}
