@@ -21,7 +21,11 @@
 				});
 		};
 
-		crearPromesa(array[0], 0);
+		if (array.length) {
+			crearPromesa(array[0], 0);
+		}  else {
+			success();
+		}
 	};
 	Array.prototype.promesas = promesas;
 	var buscar = function () {
