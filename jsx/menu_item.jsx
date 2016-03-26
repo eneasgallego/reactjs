@@ -11,7 +11,8 @@ window.MenuItem = React.createClass({
 			menu: []
 		};
 	},
-	accion: function(key) {
+	accion: function(key, e) {
+		e.stopPropagation();
 		this.props.accion(key);
 	},
 	onMouseOver: function (e, boton) {
