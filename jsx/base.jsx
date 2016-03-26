@@ -3,8 +3,8 @@
 		var array = this;
 		var crearPromesa = function (item, index) {
 			return new Promise(
-				function (resolve, reject) {
-					fn.call(ref, item, index, function () {
+				function promesaArray(resolve, reject) {
+					fn.call(ref, item, index, function promesaArray2() {
 						if (index < array.length) {
 							resolve(index + 1);
 						} else {
@@ -13,10 +13,10 @@
 					}, reject);
 				})
 				.then(
-				function(index) {
+				function resolve(index) {
 					crearPromesa(array[index], index);
 				},
-				function(err) {
+				function reject(err) {
 					error(err);
 				});
 		};
