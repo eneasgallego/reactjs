@@ -1,26 +1,27 @@
 (function(){
 	var promesas = function (fn, success, error) {
+		var array = this;
 		var crearPromesa = function (item, index) {
 			return new Promise(
 				function (resolve, reject) {
 					fn(item, index, function () {
-						if (index < this.length) {
+						if (index < array.length) {
 							resolve(index + 1);
 						} else {
 							success();
 						}
-					}.bind(this), reject);
-				}.bind(this))
+					}, reject);
+				})
 				.then(
 				function(index) {
-					crearPromesa(this[index], index);
-				}.bind(this),
+					crearPromesa(array[index], index);
+				},
 				function(err) {
 					error(err);
-				}.bind(this));
-		}.bind(this);
+				});
+		};
 
-		crearPromesa(this[0], 0);
+		crearPromesa(array[0], 0);
 	};
 	Array.prototype.promesas = promesas;
 	var buscar = function () {
