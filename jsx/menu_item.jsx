@@ -42,9 +42,10 @@ window.MenuItem = React.createClass({
 			<li	className="menu-item"
 				onMouseOver={this.onMouseOver}
 				onMouseOut={this.onMouseOut}
+				onClick={this.accion.bind(this, this._reactInternalInstance._currentElement.key)}
 			>
 				<Boton	texto={this.props.texto} 
-						accion={this.accion.bind(this, this._reactInternalInstance._currentElement.key)}
+
 				/>
 				{this.renderMenu()}
 			</li>
