@@ -9,7 +9,7 @@
 						} else {
 							success();
 						}
-					}.bind(this), reject);
+					}, reject);
 				}.bind(this))
 				.then(
 				function(index) {
