@@ -1,4 +1,26 @@
 (function(){
+	var promesas = function (fn, success, error) {
+		var crearPromesa = function (item, index) {
+			return new Promise(
+				function (resolve, reject) {
+					fn(item, index, function () {
+						if (index < this.length) {
+							resolve(index + 1);
+						} else {
+							success();
+						}
+					}, reject);
+				}.bind(this))
+				.then(
+				function(index) {
+					crearPromesa(pedidos_filtrados[index], index);
+				}.bind(this),
+				function(err) {
+					error(err);
+				}.bind(this));
+		}.bind(this);
+	};
+	Array.prototype.promesas = promesas;
 	var buscar = function () {
 		var valor;
 		var campo;
