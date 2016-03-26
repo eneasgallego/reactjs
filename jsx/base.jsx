@@ -5,8 +5,9 @@
 			return new Promise(
 				function promesaArray(resolve, reject) {
 					fn.call(ref, item, index, function promesaArray2() {
+						index++;
 						if (index < array.length) {
-							resolve(index + 1);
+							resolve(index);
 						} else {
 							success();
 						}
