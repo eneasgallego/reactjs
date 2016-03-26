@@ -1,10 +1,10 @@
 (function(){
-	var promesas = function (fn, success, error) {
+	var promesas = function (fn, success, error, ref) {
 		var array = this;
 		var crearPromesa = function (item, index) {
 			return new Promise(
 				function (resolve, reject) {
-					fn(item, index, function () {
+					fn.call(ref, item, index, function () {
 						if (index < array.length) {
 							resolve(index + 1);
 						} else {
