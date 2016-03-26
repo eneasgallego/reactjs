@@ -13,7 +13,7 @@ window.MenuItem = React.createClass({
 	},
 	accion: function(key, e) {
 		e.stopPropagation();
-		this.props.accion(key);
+		this.props.accion(key, e);
 	},
 	onMouseOver: function (e, boton) {
 		this.setState({mostrar_children: true});
