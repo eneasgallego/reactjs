@@ -9,7 +9,7 @@
 						if (index < array.length) {
 							resolve(index);
 						} else {
-							success();
+							success.call(ref);
 						}
 					}, reject);
 				})
@@ -18,14 +18,14 @@
 					crearPromesa(array[index], index);
 				},
 				function reject(err) {
-					error(err);
+					error.call(ref,err);
 				});
 		};
 
 		if (array.length) {
 			crearPromesa(array[0], 0);
 		}  else {
-			success();
+			success.call(ref);
 		}
 	};
 	Array.prototype.promesas = promesas;
