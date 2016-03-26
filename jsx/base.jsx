@@ -13,12 +13,14 @@
 				}.bind(this))
 				.then(
 				function(index) {
-					crearPromesa(pedidos_filtrados[index], index);
+					crearPromesa(this[index], index);
 				}.bind(this),
 				function(err) {
 					error(err);
 				}.bind(this));
 		}.bind(this);
+
+		crearPromesa(this[0], 0);
 	};
 	Array.prototype.promesas = promesas;
 	var buscar = function () {
