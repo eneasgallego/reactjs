@@ -2,7 +2,7 @@ body {
 	overflow: hidden;
 	margin: 0;
 //	@include color-fondo();
-  	@include color-degradado(#cee0e7, #b9faff, #e4f8ff, black);
+  	@include color-degradado2(#cee0e7, #e4f8ff, #b9faff, black);
 }
 header {
 	position: relative;
