@@ -39,7 +39,8 @@
     margin: 0;
     padding: 0;
     height: 32px;
-    background-color: #686767;
-    color: #c3c3c3;
+//    background-color: #686767;
+    @include color-cabecera();
+//    color: #c3c3c3;
   }
 }
