@@ -1,7 +1,7 @@
 window.Celda = React.createClass({
 	getInitialState: function() {
     	return {
-    		orden: this.props.orden ? this.props.orden_desc ? 1 : -1 : 0,
+    		orden: this.props.orden ? this.props.orden_desc ? -1 : 1 : 0,
     		editar: false,
     		tipo: parseTipo(this.props.tipo)
     	};
