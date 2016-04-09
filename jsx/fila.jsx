@@ -112,6 +112,7 @@ window.Fila = React.createClass({
 					combos_dataset={this.props.combos_dataset}
 					ancho={this.props.anchos[i]}
 					orden={this.orden(col.campo)}
+					orden_desc={this.orden(col.campo) && this.props.orden.desc}
 					onResize={this.onResizeCelda}
 				/>
 			);
