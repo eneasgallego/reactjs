@@ -1,18 +1,18 @@
 window.Tabla = React.createClass({
 	getInitialState: function() {
-    	return {
-    		filas_cargadas: false,
-    		cargando: false,
-    		filas: [],
-    		cols: parseCols(this.props.cols),
-    		combos_dataset: {},
-    		orden: {},
-    		velo: false,
-    		anchos: [],
-    		alto_tabla: undefined,
-    		alto_body: undefined
-    	};
-  	},
+		return {
+			filas_cargadas: false,
+			cargando: false,
+			filas: [],
+			cols: parseCols(this.props.cols),
+			combos_dataset: {},
+			orden: this.props.orden,
+			velo: false,
+			anchos: [],
+			alto_tabla: undefined,
+			alto_body: undefined
+		};
+	},
 	getDefaultProps: function() {
 
 		return {
@@ -21,6 +21,7 @@ window.Tabla = React.createClass({
 			url_crear: '',
 			url: '',
 			params: {},
+			orden: {},
 			cols: [],
 			acciones: [],
 			guardar: undefined,
@@ -163,7 +164,7 @@ window.Tabla = React.createClass({
 							filas_cargadas: true,
 							cargando: false
 						}, function () {
-							if (typeof(fn) === 'function') { 
+							if (typeof(fn) === 'function') {
 								fn.call(this);
 							}
 						}.bind(this));
@@ -217,7 +218,7 @@ window.Tabla = React.createClass({
 				}
 			}
 		}
-		
+
 	},
 	onClickCelda: function (e, celda) {
 		e.preventDefault();
@@ -265,21 +266,21 @@ window.Tabla = React.createClass({
 
 			var fila = this.state.filas[i];
 			var objFila = <Fila
-					key={i}
-					cols={this.state.cols}
-					datos={fila}
-					guardar={this.guardar}
-					id_campo={this.props.id_campo}
-					acciones={this.props.acciones}
-					claseFila={this.props.claseFila}
-					onResize={this.onResizeFila}
-					onResizeCelda={this.onResizeCelda}
-					onClickCelda={this.onClickCelda}
-					onClickAcciones={this.onClickAcciones}
-					onChangeValor={this.onChangeValor}
-					combos_dataset={this.state.combos_dataset}
-					anchos={this.state.anchos}
-				/>
+				key={i}
+				cols={this.state.cols}
+				datos={fila}
+				guardar={this.guardar}
+				id_campo={this.props.id_campo}
+				acciones={this.props.acciones}
+				claseFila={this.props.claseFila}
+				onResize={this.onResizeFila}
+				onResizeCelda={this.onResizeCelda}
+				onClickCelda={this.onClickCelda}
+				onClickAcciones={this.onClickAcciones}
+				onChangeValor={this.onChangeValor}
+				combos_dataset={this.state.combos_dataset}
+				anchos={this.state.anchos}
+			/>
 
 			var campo = this.state.orden.campo;
 			if (campo) {
@@ -287,11 +288,11 @@ window.Tabla = React.createClass({
 				var index = filas.indice(function (v, k) {
 					var valor1 = parseFloat(v.props.datos[campo]);
 					valor1 = isNaN(valor1) ? v.props.datos[campo] : valor1;
-					
+
 					var valor2 = parseFloat(fila[campo]);
 					valor2 = isNaN(valor2) ? fila[campo] : valor2;
 					return ((desc && valor1 < valor2) ||
-						((!desc) && valor1 > valor2));
+					((!desc) && valor1 > valor2));
 				}.bind(this));
 				if (!~index) {
 					filas.push(objFila);
@@ -308,11 +309,11 @@ window.Tabla = React.createClass({
 	renderVelo: function () {
 		var ret;
 
-		if (this.state.velo) { 
+		if (this.state.velo) {
 			ret = 	<div className="velo">
-						<div className="velo-fondo" />
-						<div className="velo-imagen" />
-					</div>
+				<div className="velo-fondo" />
+				<div className="velo-imagen" />
+			</div>
 		}
 
 		return ret;
@@ -337,7 +338,7 @@ window.Tabla = React.createClass({
 	},
 	renderTabla: function () {
 		var ret;
-		
+
 		var datos_header = {};
 		for (var i = 0 ; i < this.state.cols.length ; i++) {
 			var col = this.state.cols[i];
@@ -379,5 +380,5 @@ window.Tabla = React.createClass({
 				{this.renderVelo()}
 			</div>
 		);
-    }
+	}
 });

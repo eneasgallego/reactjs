@@ -1,15 +1,16 @@
 window.PanelTabla = React.createClass({
 	getInitialState: function() {
-    	return {
+		return {
 			alto_tabla: undefined
-    	};
-  	},
+		};
+	},
 	getDefaultProps: function() {
 		return {
 			id: '',
 			titulo: '',
 			url: '',
 			params: {},
+			orden: {},
 			id_campo: '',
 			cols: [],
 			acciones: [],
@@ -72,6 +73,7 @@ window.PanelTabla = React.createClass({
 			url={this.props.url}
 			parseData={this.parseData}
 			params={this.props.params}
+			orden={this.props.orden}
 			claseFila={this.props.claseFila}
 			cols={this.props.cols}
 			acciones={this.props.acciones}
@@ -88,5 +90,5 @@ window.PanelTabla = React.createClass({
 				{this.renderTabla()}
 			</section>
 		);
-    }
+	}
 });
