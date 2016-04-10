@@ -19,4 +19,4 @@ Boton.defaultProps = {
 	accion(){}
 };
 
-export default MenuItem
+export default Boton
