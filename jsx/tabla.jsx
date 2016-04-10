@@ -2,6 +2,7 @@ import React from 'react'
 
 import Fila from './fila.jsx'
 import Menu from './menu.jsx'
+import Base from './base.jsx'
 
 class Tabla extends React.Component {
 	constructor(props) {
