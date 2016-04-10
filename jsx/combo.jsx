@@ -1,33 +1,33 @@
 window.Combo = React.createClass({
-	getInitialState: function() {
+	getInitialState: () => {
     	return {
 			valor: this.props.valor
     	};
   	},
-	getDefaultProps: function() {
+	getDefaultProps: () => {
 		return {
 			valor: '',
 			combo: {},
 			dataset: [],
-			onClick: function(){},
-			onBlur: function(){},
-			onChange: function(){},
-			onLoad: function(){}
+			onClick: () => {},
+			onBlur: () => {},
+			onChange: () => {},
+			onLoad: () => {}
 		};
 	},
-	componentDidMount: function() {
+	componentDidMount: () => {
 		this.props.onLoad(this);
 	},
-	focus: function () {
+	focus: () => {
 		ReactDOM.findDOMNode(this).focus();
 	},
-	onBlur: function (e) {
+	onBlur: e => {
 		return this.props.onBlur(e, this);
 	},
-	onChange: function (e) {
+	onChange: e => {
 		return this.props.onChange(e, this);
 	},
-	renderOptions: function () {
+	renderOptions: () => {
 		var ret = [];
 
 		ret.push(
@@ -43,7 +43,7 @@ window.Combo = React.createClass({
 
 		return ret;
 	},
-	render: function() {
+	render: () => {
 		return (
 			<select 
 				defaultValue={parseInt(this.state.valor)}

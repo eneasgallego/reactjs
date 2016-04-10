@@ -1,19 +1,19 @@
 window.ListaTabla = React.createClass({
-	getInitialState: function() {
+	getInitialState: () => {
     	return {
     		cols: parseCols(this.props.cols)
     	};
   	},
-	getDefaultProps: function() {
+	getDefaultProps: () => {
 		return {
 			id_campo: '',
 			url: '',
 			cols: [],
 			eliminar: false,
-			setDialogo: function(){}
+			setDialogo: () => {}
 		};
 	},
-	acciones: function () {
+	acciones: () => {
 		if (this.props.eliminar) {
 			return [{
 				texto: 'Eliminar',
@@ -22,14 +22,14 @@ window.ListaTabla = React.createClass({
 		}
 		return [];
 	},
-	onClickAcciones: function (tag) {
+	onClickAcciones: tag => {
 		var fn = this[tag];
 
 		if (typeof(fn) === 'function') {
 			fn.apply(this, arguments);
 		}
 	},
-	eliminar: function(tag, fila, tabla) {
+	eliminar: (tag, fila, tabla) => {
 
 		var id = fila.getIdFila();
 		if (id) {
@@ -44,31 +44,31 @@ window.ListaTabla = React.createClass({
 					texto: 'Cancelar',
 					tag: 'cancelar'
 				}],
-				accionMenu: function (tag) {
+				accionMenu: tag => {
 					if (tag == 'aceptar') {
 						ajax({
 							metodo: 'delete',
 							url: this.props.url + '/' + id,
-							success: function (response) {
+							success: response => {
 								var filas = tabla.state.filas.slice();
-								var indice = filas.indice(function (item) {
+								var indice = filas.indice(item => {
 									return (item[this.props.id_campo] == id);
-								}.bind(this));
+								});
 								if (!!~indice) {
 									filas.splice(indice, 1);
 									tabla.setState({filas: filas});
 								}
 								this.props.setDialogo();
-							}.bind(this)
+							}
 						}, tabla);
 					} else if (tag == 'cancelar') {
 						this.props.setDialogo();
 					}
-				}.bind(this)
+				}
 			});
 		}
 	},
-	guardar: function (valor, field, celda, fila, tabla) {
+	guardar: (valor, field, celda, fila, tabla) => {
 		var id = fila.getIdFila();
 		var campo = celda.props.campo;
 		var params = fila.props.datos;
@@ -76,11 +76,11 @@ window.ListaTabla = React.createClass({
 		var url = this.props.url;
 		var metodo = 'post';
 
-		var fn = function (response) {
+		var fn = response => {
 			var filas = tabla.state.filas.slice();
-			var indice = filas.indice(function (item) {
+			var indice = filas.indice(item => {
 				return (item[this.props.id_campo] == id);
-			}.bind(this));
+			});
 			if (!!~indice) {
 				var datos = filas[indice];
 				if (metodo == 'post') {
@@ -90,7 +90,7 @@ window.ListaTabla = React.createClass({
 				filas[indice] = datos;
 				tabla.setState({filas: filas});
 			}
-		}.bind(this);
+		};
 
 		if (id) {
 			for (var i = 0 ; i < this.state.cols.length ; i++) {
@@ -111,7 +111,7 @@ window.ListaTabla = React.createClass({
 			success: fn
 		}, tabla);
 	},
-	render: function() {
+	render: () => {
 		return (
 			<Tabla
 				id_campo={this.props.id_campo}

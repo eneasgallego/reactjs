@@ -1,12 +1,12 @@
 window.Celda = React.createClass({
-	getInitialState: function() {
+	getInitialState: () => {
     	return {
     		orden: this.props.orden ? this.props.orden_desc ? -1 : 1 : 0,
     		editar: false,
     		tipo: parseTipo(this.props.tipo)
     	};
   	},
-	getDefaultProps: function() {
+	getDefaultProps: () => {
 		return {
 			datos: '',
 			campo: '',
@@ -18,13 +18,13 @@ window.Celda = React.createClass({
     		ancho: undefined,
 			orden: false,
 			orden_desc: false,
-			onClick: function(){},
-			onResize: function(){},
-			onChangeValor: function(){},
-			onChangeDesc: function(){}
+			onClick: () => {},
+			onResize: () => {},
+			onChangeValor: () => {},
+			onChangeDesc: () => {}
 		};
 	},
-	componentDidMount: function() {
+	componentDidMount: () => {
 		var dom = ReactDOM.findDOMNode(this);
 		dom.addEventListener('resize', this.onResize);
 		this.triggerResize({
@@ -35,10 +35,10 @@ window.Celda = React.createClass({
 			index: dom.cellIndex
 		});
 	},
-	triggerResize: function (offset) {
+	triggerResize: offset => {
 		this.props.onResize(offset, this);
 	},
-	onResize: function (e) {
+	onResize: e => {
 		this.triggerResize({
 			width: e.currentTarget.offsetWidth,
 			height: e.currentTarget.offsetHeight,
@@ -47,7 +47,7 @@ window.Celda = React.createClass({
 			index: e.currentTarget.cellIndex
 		});
 	},
-	guardar: function (e, field) {
+	guardar: (e, field) => {
 		var valor;
 		if (this.state.tipo.tipo == 'bool') {
 			valor = e.currentTarget.checked;
@@ -63,48 +63,48 @@ window.Celda = React.createClass({
 			valor = e.currentTarget.value;
 		}
 
-		this.setState({editar: false}, function () {
+		this.setState({editar: false}, () => {
 			if (typeof(this.props.guardar) === 'function') {
 				this.props.guardar(valor, field, this);
 			}
-		}.bind(this));
+		});
 	},
-	accionCelda: function (e) {
+	accionCelda: e => {
 		this.props.onClick(e, this);
 	},
-	onClickField: function (e) {
+	onClickField: e => {
 		e.stopPropagation();
 	},
-	onBlurTextField: function (e, textfield) {
+	onBlurTextField: (e, textfield) => {
 		return this.guardar(e, textfield);
 	},
-	onBlurField: function (e, field) {
+	onBlurField: (e, field) => {
 		this.setState({editar: false});
 	},
-	onKeyPressText: function (e, textfield) {
+	onKeyPressText: (e, textfield) => {
 		if (e.keyCode == 27 || e.charCode == 27) {
 			this.setState({editar: false});
 		} else if (e.keyCode == 13 || e.charCode == 13) {
 			return this.guardar(e, textfield);
 		}
 	},
-	onChangeCombo: function (e, combo) {
+	onChangeCombo: (e, combo) => {
 		return this.guardar(e, combo);
 	},
-	onClickCheck: function (e, check) {
+	onClickCheck: (e, check) => {
 		return this.guardar(e, check);
 	},
-	onLoadField: function (field) {
+	onLoadField: field => {
 		field.focus();
 	},
-	changeOrden: function () {
+	changeOrden: () => {
 		this.setState({
 			orden: this.state.orden > 0 ? -1 : 1
-		}, function () {
+		}, () => {
 			this.props.onChangeDesc(this.state.orden, this);
-		}.bind(this));
+		});
 	},
-	renderEditar: function () {
+	renderEditar: () => {
 		var ret = '';
 
 		if (this.state.editar) {
@@ -139,7 +139,7 @@ window.Celda = React.createClass({
 
 		return ret;
 	},
-	renderValor: function () {
+	renderValor: () => {
 		var ret = this.props.datos;
 
 		if (this.state.tipo.tipo == 'object') {
@@ -157,7 +157,7 @@ window.Celda = React.createClass({
 
 		return ret;
 	},
-	renderStyle: function () {
+	renderStyle: () => {
 		var ret = {};
 
 		if (this.props.ancho) {
@@ -172,7 +172,7 @@ window.Celda = React.createClass({
 
 		return ret;
 	},
-	renderCelda: function () {
+	renderCelda: () => {
 		return <td 	style={this.renderStyle()}
 					onClick={this.accionCelda}
 				>
@@ -182,7 +182,7 @@ window.Celda = React.createClass({
 					</div>
 				</td>
 	},
-	renderIconoOrden: function () {
+	renderIconoOrden: () => {
 		var ret = '';
 
 		if (this.props.orden) {
@@ -195,10 +195,10 @@ window.Celda = React.createClass({
  
 		return ret;
 	},
-	renderCeldaHeader: function () {
+	renderCeldaHeader: () => {
 		return <th style={this.renderStyle()} onClick={this.accionCelda} ><div className="tabla-celda-div"><i className={this.renderIconoOrden()}></i>{this.props.datos}</div></th>
 	},
-	render: function() {
+	render: () => {
 		return (
 			this.props.header ? this.renderCeldaHeader() : this.renderCelda()
 		);

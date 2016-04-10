@@ -1,27 +1,27 @@
 window.MenuItem = React.createClass({
-	getInitialState: function() {
+	getInitialState: () => {
     	return {
     		mostrar_children: false
     	};
   	},
-	getDefaultProps: function() {
+	getDefaultProps: () => {
 		return {
 			texto: '',
-			accion: function(){},
+			accion: () => {},
 			menu: []
 		};
 	},
-	accion: function(key, e) {
+	accion: (key, e) => {
 		e.stopPropagation();
 		this.props.accion(key, e);
 	},
-	onMouseOver: function (e, boton) {
+	onMouseOver: (e, boton) => {
 		this.setState({mostrar_children: true});
 	},
-	onMouseOut: function (e, boton) {
+	onMouseOut: (e, boton) => {
 		this.setState({mostrar_children: false});
 	},
-	renderClassChild: function () {
+	renderClassChild: () => {
 		var ret = 'child';
 
 		if (!this.state.mostrar_children) {
@@ -30,7 +30,7 @@ window.MenuItem = React.createClass({
 
 		return ret;
 	},
-	renderMenu: function () {
+	renderMenu: () => {
 		var ret = '';
 		if (this.props.menu.length) {
 			ret = <Menu className={this.renderClassChild()} children={this.props.menu} accion={this.accion}/>
@@ -38,7 +38,7 @@ window.MenuItem = React.createClass({
 
 		return ret;
 	},
-	render: function() {
+	render: () => {
 		return (
 			<li	className="menu-item"
 				onMouseOver={this.onMouseOver}

@@ -1,10 +1,10 @@
-(function(){
-	var promesas = function (fn, success, error, ref) {
+(() => {
+	var promesas = (fn, success, error, ref) => {
 		var array = this;
-		var crearPromesa = function (item, index) {
+		var crearPromesa = (item, index) => {
 			return new Promise(
-				function promesaArray(resolve, reject) {
-					fn.call(ref, item, index, function promesaArray2() {
+				(resolve, reject) => {
+					fn.call(ref, item, index, () => {
 						index++;
 						if (index < array.length) {
 							resolve(index);
@@ -14,10 +14,10 @@
 					}, reject);
 				})
 				.then(
-				function resolve(index) {
+				index => {
 					crearPromesa(array[index], index);
 				},
-				function reject(err) {
+				err => {
 					error.call(ref,err);
 				});
 		};
@@ -29,7 +29,7 @@
 		}
 	};
 	Array.prototype.promesas = promesas;
-	var buscar = function () {
+	var buscar = () => {
 		var valor;
 		var campo;
 		if (arguments.length == 1) {
@@ -52,7 +52,7 @@
 		return undefined;
 	};
 	Array.prototype.buscar = buscar;
-	var indice = function () {
+	var indice = () => {
 		var valor;
 		var campo;
 		if (arguments.length == 1) {
@@ -75,7 +75,7 @@
 		return -1;
 	};
 	Array.prototype.indice = indice;
-	var crearMapa = function (id) {
+	var crearMapa = id => {
 		var ret = {};
 
 		for (var i = 0 ; i < this.length ; i++) {
@@ -87,7 +87,7 @@
 		return ret;
 	};
 	Array.prototype.crearMapa = crearMapa;
-	window.ajax = function (par, tabla) {
+	window.ajax = (par, tabla) => {
 
 		var params = '';
 		var arr = [];
@@ -109,9 +109,9 @@
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		}
 
-		xhttp.onreadystatechange = function() {
+		xhttp.onreadystatechange = () => {
 			if (xhttp.readyState==4){
-				var fn = function () {
+				var fn = () => {
 					if ((xhttp.status == 200) ||
 						(xhttp.status == 304) ||
 						(par.metodo.toLowerCase() == 'post' && xhttp.status == 201)) {
@@ -134,14 +134,14 @@
 		};
 
 		if (tabla) {
-			tabla.setState({velo: true}, function () {
+			tabla.setState({velo: true}, () => {
 				xhttp.send(params);
 			});
 		} else {
 			xhttp.send(params);
 		}
 	};
-	window.parseTipo = function (tipo) {
+	window.parseTipo = tipo => {
 		if (typeof(tipo) === 'string') {
 			return {
 				tipo: tipo
@@ -150,7 +150,7 @@
 
 		return tipo;
 	};
-	window.parseCols = function (cols) {
+	window.parseCols = cols => {
 		for (var i = 0 ; i < cols.length ; i++) {
 			cols[i].tipo = parseTipo(cols[i].tipo ? cols[i].tipo : 'string');
 		}

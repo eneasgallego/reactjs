@@ -1,28 +1,28 @@
 window.Dialogo = React.createClass({
-	getInitialState: function() {
+	getInitialState: () => {
     	return {
     		top: undefined,
     		left: undefined
     	};
   	},
-	getDefaultProps: function() {
+	getDefaultProps: () => {
 		return {
 			titulo: 'Dialogo',
 			puedeCerrar: true,
 			contenido: 'Inserte el contenido.',
 			menu: [],
-			accionMenu: function(){},
-			cerrarDialogo: function(){}
+			accionMenu: () => {},
+			cerrarDialogo: () => {}
 		};
 	},
-	componentDidMount: function() {
+	componentDidMount: () => {
 		var dom = ReactDOM.findDOMNode(this);
-		dom.addEventListener('resize', function () {
+		dom.addEventListener('resize', () => {
 			this.dimensionar();
-		}.bind(this));
+		});
 		this.dimensionar();
 	},
-	dimensionar: function () {
+	dimensionar: () => {
 		var dom = ReactDOM.findDOMNode(this);
 		var contenedor = ReactDOM.findDOMNode(this.refs.contenedor);
 		var ancho = (dom.offsetWidth - contenedor.offsetWidth) / 2;
@@ -33,13 +33,13 @@ window.Dialogo = React.createClass({
 			top: alto
 		});
 	},
-	accionMenu: function (tag) {
+	accionMenu: tag => {
 		this.props.accionMenu(tag, this);
 	},
-	cerrarDialogo: function () {
+	cerrarDialogo: () => {
 		this.props.cerrarDialogo();
 	},
-	renderMenu: function () {
+	renderMenu: () => {
 		var ret = undefined;
 
 		if (this.props.menu.length) {
@@ -48,7 +48,7 @@ window.Dialogo = React.createClass({
 
 		return ret;
 	},
-	renderStyleContenedor: function () {
+	renderStyleContenedor: () => {
 		var ret = {};
 
 		if (this.state.left) {
@@ -60,7 +60,7 @@ window.Dialogo = React.createClass({
 
 		return ret;
 	},
-	renderCerrar: function () {
+	renderCerrar: () => {
 		var ret;
 
 		if (this.props.puedeCerrar) {
@@ -69,7 +69,7 @@ window.Dialogo = React.createClass({
 
 		return ret;
 	},
-	render: function() {
+	render: () => {
 		return (
 			<div className="dialogo">
 				<div ref="velo" className="dialogo-velo" onClick={this.cerrarDialogo}></div>

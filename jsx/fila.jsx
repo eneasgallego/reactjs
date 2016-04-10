@@ -1,10 +1,10 @@
 window.Fila = React.createClass({
-	getInitialState: function() {
+	getInitialState: () => {
     	return {
     		cols: parseCols(this.props.cols)
     	};
   	},
-	getDefaultProps: function() {
+	getDefaultProps: () => {
 		return {
 			id_campo: '',
 			datos: {},
@@ -15,16 +15,16 @@ window.Fila = React.createClass({
 			guardar: undefined,
     		anchos: [],
 			orden: {},
-			claseFila: function(){},
-			onResize: function(){},
-			onResizeCelda: function(){},
-			onClickCelda: function(){},
-			onClickAcciones: function(){},
-			onChangeValor: function(){},
-			onChangeDesc: function(){}
+			claseFila: () => {},
+			onResize: () => {},
+			onResizeCelda: () => {},
+			onClickCelda: () => {},
+			onClickAcciones: () => {},
+			onChangeValor: () => {},
+			onChangeDesc: () => {}
 		};
 	},
-	componentDidMount: function() {
+	componentDidMount: () => {
 		var dom = ReactDOM.findDOMNode(this);
 		dom.addEventListener('resize', this.onResize);
 		this.triggerResize({
@@ -35,10 +35,10 @@ window.Fila = React.createClass({
 			index: dom.cellIndex
 		});
 	},
-	triggerResize: function (offset) {
+	triggerResize: offset => {
 		this.props.onResize(offset, this);
 	},
-	onResize: function (e) {
+	onResize: e => {
 		this.triggerResize({
 			width: e.currentTarget.offsetWidth,
 			height: e.currentTarget.offsetHeight,
@@ -47,30 +47,30 @@ window.Fila = React.createClass({
 			index: e.currentTarget.cellIndex
 		});
 	},
-	onResizeCelda: function (offset, celda) {
+	onResizeCelda: (offset, celda) => {
 		this.props.onResizeCelda(offset, celda, this);
 	},
-	onChangeValor: function (valor, celda) {
+	onChangeValor: (valor, celda) => {
 		this.props.onChangeValor(valor, celda, this);
 	},
-	onChangeDesc: function (desc, celda) {
+	onChangeDesc: (desc, celda) => {
 		this.props.onChangeDesc(desc, celda, this);
 	},
-	getIdFila: function () {
+	getIdFila: () =>  {
 		return this.props.datos[this.props.id_campo];
 	},
-	setIdFila: function (id) {
+	setIdFila: id => {
 		this.props.datos[this.props.id_campo] = id;
 	},
-	guardar: function (valor, field, celda) {
+	guardar: (valor, field, celda) => {
 		if (typeof(this.props.guardar) === 'function') {
 			this.props.guardar(valor, field, celda, this);
 		}
 	},
-	accionMenu: function (tag) {
+	accionMenu: tag => {
 		this.props.onClickAcciones(tag, this);
 	},
-	renderAcciones: function () {
+	renderAcciones: () =>  {
 		var ret;
 
 		if (this.props.acciones.length) {
@@ -87,10 +87,10 @@ window.Fila = React.createClass({
 
 		return ret;
 	},
-	orden: function (campo) {
+	orden: campo => {
 		return (this.props.orden.campo == campo);
 	},
-	renderCeldas: function () {
+	renderCeldas: () =>  {
 		var celdas = [];
 
 		var celdas = [];
@@ -125,7 +125,7 @@ window.Fila = React.createClass({
 
 		return celdas;
 	},
-	claseFila: function () {
+	claseFila: () =>  {
 		var ret = this.props.header ? 'header' : '';
 
 		var claseFila = this.props.claseFila(this.props.datos, this);
@@ -135,7 +135,7 @@ window.Fila = React.createClass({
 
 		return ret;
 	},
-	render: function() {
+	render: () => {
 		return (
 			<tr className={this.claseFila()} >
 				{this.renderCeldas()}
