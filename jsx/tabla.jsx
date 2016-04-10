@@ -291,7 +291,7 @@ window.Tabla = React.createClass({
 				anchos={this.state.anchos}
 			/>
 
-			if (campo) {
+			if (this.state.orden.length) {
 				let ordenar = (datos, prof) => {
 					let orden = this.state.orden[prof];
 					let ret = false;
