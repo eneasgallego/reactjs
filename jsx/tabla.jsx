@@ -300,10 +300,17 @@ window.Tabla = React.createClass({
 						let campo = orden.campo;
 						let desc = orden.desc;
 
-						let valor1 = parseFloat(datos[campo]);
-						valor1 = isNaN(valor1) ? datos[campo] : valor1;
+						let valor1;
+						let valor2;
+						if (typeof(campo) === 'function') {
+							valor1 = campo(datos);
+							valor2 = campo(fila);
+						} else {
+							valor1 = parseFloat(datos[campo]);
+							valor2 = parseFloat(fila[campo]);
+						}
 
-						let valor2 = parseFloat(fila[campo]);
+						valor1 = isNaN(valor1) ? datos[campo] : valor1;
 						valor2 = isNaN(valor2) ? fila[campo] : valor2;
 
 						ret = (((valor1 == valor2) && ordenar(datos, prof+1)) ||
