@@ -92,8 +92,6 @@ window.Fila = React.createClass({
 	},
 	renderCeldas()  {
 		let celdas = [];
-
-		let celdas = [];
 		for (let i = 0 ; i < this.state.cols.length ; i++) {
 
 			let col = this.state.cols[i];
