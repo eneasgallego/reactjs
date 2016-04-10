@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Tabla from './tabla.jsx'
+
 class ListaTabla extends React.Component {
 	constructor(props) {
 		super(props);

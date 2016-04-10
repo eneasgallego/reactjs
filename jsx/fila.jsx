@@ -1,5 +1,8 @@
 import React from 'react'
 
+import Celda from './celda.jsx'
+import Menu from './menu.jsx'
+
 class Fila extends React.Component {
 	constructor(props) {
 		super(props);

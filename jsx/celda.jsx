@@ -1,5 +1,9 @@
 import React from 'react'
 
+import Combo from './combo.jsx'
+import CheckBox from './checkbox.jsx'
+import TextField from './textfield.jsx'
+
 class Celda extends React.Component {
 	constructor(props) {
 		super(props);
