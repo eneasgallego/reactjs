@@ -44,7 +44,7 @@ window.ListaTabla = React.createClass({
 					texto: 'Cancelar',
 					tag: 'cancelar'
 				}],
-				accionMenu(tag) {
+				accionMenu: tag => {
 					if (tag == 'aceptar') {
 						ajax({
 							metodo: 'delete',
