@@ -22,7 +22,7 @@ window.MenuItem = React.createClass({
 		this.setState({mostrar_children: false});
 	},
 	renderClassChild() {
-		var ret = 'child';
+		let ret = 'child';
 
 		if (!this.state.mostrar_children) {
 			ret += ' hidden';
@@ -31,7 +31,7 @@ window.MenuItem = React.createClass({
 		return ret;
 	},
 	renderMenu() {
-		var ret = '';
+		let ret = '';
 		if (this.props.menu.length) {
 			ret = <Menu className={this.renderClassChild()} children={this.props.menu} accion={this.accion}/>
 		}

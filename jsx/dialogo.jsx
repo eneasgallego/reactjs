@@ -16,17 +16,17 @@ window.Dialogo = React.createClass({
 		};
 	},
 	componentDidMount() {
-		var dom = ReactDOM.findDOMNode(this);
+		let dom = ReactDOM.findDOMNode(this);
 		dom.addEventListener('resize', () => {
 			this.dimensionar();
 		});
 		this.dimensionar();
 	},
 	dimensionar() {
-		var dom = ReactDOM.findDOMNode(this);
-		var contenedor = ReactDOM.findDOMNode(this.refs.contenedor);
-		var ancho = (dom.offsetWidth - contenedor.offsetWidth) / 2;
-		var alto = (dom.offsetHeight - contenedor.offsetHeight) / 2;
+		let dom = ReactDOM.findDOMNode(this);
+		let contenedor = ReactDOM.findDOMNode(this.refs.contenedor);
+		let ancho = (dom.offsetWidth - contenedor.offsetWidth) / 2;
+		let alto = (dom.offsetHeight - contenedor.offsetHeight) / 2;
 
 		this.setState({
 			left: ancho,
@@ -40,7 +40,7 @@ window.Dialogo = React.createClass({
 		this.props.cerrarDialogo();
 	},
 	renderMenu() {
-		var ret = undefined;
+		let ret = undefined;
 
 		if (this.props.menu.length) {
 			ret = <Menu ref="menu" children={this.props.menu} accion={this.accionMenu}/>
@@ -49,7 +49,7 @@ window.Dialogo = React.createClass({
 		return ret;
 	},
 	renderStyleContenedor() {
-		var ret = {};
+		let ret = {};
 
 		if (this.state.left) {
 			ret.left = this.state.left;
@@ -61,7 +61,7 @@ window.Dialogo = React.createClass({
 		return ret;
 	},
 	renderCerrar() {
-		var ret;
+		let ret;
 
 		if (this.props.puedeCerrar) {
 			ret = <i className="icon icon-cancel" onClick={this.cerrarDialogo}></i>

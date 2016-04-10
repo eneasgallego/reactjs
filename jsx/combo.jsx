@@ -28,13 +28,13 @@ window.Combo = React.createClass({
 		return this.props.onChange(e, this);
 	},
 	renderOptions() {
-		var ret = [];
+		let ret = [];
 
 		ret.push(
 			<option key={-1}></option>
 		);
-		for (var i = 0 ; i < this.props.dataset.length ; i++) {
-			var item = this.props.dataset[i];
+		for (let i = 0 ; i < this.props.dataset.length ; i++) {
+			let item = this.props.dataset[i];
 
 			ret.push(
 				<option key={i} value={item[this.props.combo.id]}>{item[this.props.combo.texto]}</option>

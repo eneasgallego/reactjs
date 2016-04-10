@@ -1,7 +1,7 @@
 (() => {
-	var promesas = function(fn, success, error, ref) {
-		var array = this;
-		var crearPromesa = (item, index) => {
+	let promesas = function(fn, success, error, ref) {
+		let array = this;
+		let crearPromesa = (item, index) => {
 			return new Promise(
 				(resolve, reject) => {
 					fn.call(ref, item, index, () => {
@@ -29,9 +29,9 @@
 		}
 	};
 	Array.prototype.promesas = promesas;
-	var buscar = function() {
-		var valor;
-		var campo;
+	let buscar = function() {
+		let valor;
+		let campo;
 		if (arguments.length == 1) {
 			valor = arguments[0];
 		} else if (arguments.length > 1) {
@@ -39,8 +39,8 @@
 			valor = arguments[1];
 		}
 
-		for (var i = 0 ; i < this.length ; i++) {
-			var item = this[i];
+		for (let i = 0 ; i < this.length ; i++) {
+			let item = this[i];
 
 			if 	((campo && item[campo] == valor) ||
 				(!campo && ((typeof(valor) === 'function' && valor(item, i)) ||
@@ -52,8 +52,8 @@
 		return undefined;
 	};
 	Array.prototype.buscar = buscar;
-	var indice = function() {
-		var valor, campo;
+	let indice = function() {
+		let valor, campo;
 
 		if (arguments.length == 1) {
 			valor = arguments[0];
@@ -62,8 +62,8 @@
 			valor = arguments[1];
 		}
 
-		for (var i = 0 ; i < this.length ; i++) {
-			var item = this[i];
+		for (let i = 0 ; i < this.length ; i++) {
+			let item = this[i];
 
 			if 	((campo && item[campo] == valor) ||
 				(!campo && ((typeof(valor) === 'function' && valor(item, i)) ||
@@ -75,11 +75,11 @@
 		return -1;
 	};
 	Array.prototype.indice = indice;
-	var crearMapa = function(id) {
-		var ret = {};
+	let crearMapa = function(id) {
+		let ret = {};
 
-		for (var i = 0 ; i < this.length ; i++) {
-			var item = this[i];
+		for (let i = 0 ; i < this.length ; i++) {
+			let item = this[i];
 
 			ret[item[id]] = item;
 		}
@@ -89,20 +89,20 @@
 	Array.prototype.crearMapa = crearMapa;
 	window.ajax = function(par, tabla) {
 
-		var params = '';
-		var arr = [];
-		for (var key in par.params) {
+		let params = '';
+		let arr = [];
+		for (let key in par.params) {
 			if (typeof(par.params[key]) !== 'function') {
 				arr.push(key + '=' + par.params[key]);
 			}
 		}
 		params = arr.join('&');
 
-		var url = par.url;
+		let url = par.url;
 		if (params && (par.metodo.toLowerCase() == 'get')) {
 			url += '?' + params;
 		}
-		var xhttp = new XMLHttpRequest();
+		let xhttp = new XMLHttpRequest();
 		xhttp.open(par.metodo, url, true);
 
 		if (par.metodo.toLowerCase() == 'post' || par.metodo.toLowerCase() == 'put') {
@@ -111,12 +111,12 @@
 
 		xhttp.onreadystatechange = () => {
 			if (xhttp.readyState==4){
-				var fn = () => {
+				let fn = () => {
 					if ((xhttp.status == 200) ||
 						(xhttp.status == 304) ||
 						(par.metodo.toLowerCase() == 'post' && xhttp.status == 201)) {
 						if (typeof(par.success) === 'function') {
-							var obj = JSON.parse(xhttp.responseText);
+							let obj = JSON.parse(xhttp.responseText);
 							par.success(obj);
 						}
 					} else {
@@ -151,7 +151,7 @@
 		return tipo;
 	};
 	window.parseCols = cols => {
-		for (var i = 0 ; i < cols.length ; i++) {
+		for (let i = 0 ; i < cols.length ; i++) {
 			cols[i].tipo = parseTipo(cols[i].tipo ? cols[i].tipo : 'string');
 		}
 

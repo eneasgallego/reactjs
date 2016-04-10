@@ -47,7 +47,7 @@ window.Tabla = React.createClass({
 			this.cargarCombos();
 		}
 
-		var dom = ReactDOM.findDOMNode(this);
+		let dom = ReactDOM.findDOMNode(this);
 		dom.addEventListener('resize', this.onResize);
 		this.triggerResize({
 			width: dom.offsetWidth,
@@ -58,7 +58,7 @@ window.Tabla = React.createClass({
 		});
 	},
 	parseData(data) {
-		var ret = this.props.parseData(data, this);
+		let ret = this.props.parseData(data, this);
 
 		return ret ? ret : data;
 	},
@@ -76,8 +76,8 @@ window.Tabla = React.createClass({
 		});
 	},
 	onResizeCelda(offset, celda, fila) {
-		var anchos = this.state.anchos;
-		var ancho = anchos[offset.index];
+		let anchos = this.state.anchos;
+		let ancho = anchos[offset.index];
 		if ((!ancho) || ancho < offset.width) {
 			anchos[offset.index] = offset.width;
 			this.setState({anchos: anchos});
@@ -91,9 +91,9 @@ window.Tabla = React.createClass({
 		this.calcAltoTabla();
 	},
 	calcAltoTabla() {
-		var dom = ReactDOM.findDOMNode(this);
-		var alto_tabla = dom.offsetHeight;
-		var domMenu = dom.querySelector('.menu-tabla');
+		let dom = ReactDOM.findDOMNode(this);
+		let alto_tabla = dom.offsetHeight;
+		let domMenu = dom.querySelector('.menu-tabla');
 		if (domMenu) {
 			alto_tabla -= domMenu.offsetHeight;
 		}
@@ -102,10 +102,10 @@ window.Tabla = React.createClass({
 		});
 	},
 	calcAltoBody() {
-		var dom = ReactDOM.findDOMNode(this);
-		var domDiv = dom.querySelector('.tabla-div');
-		var alto_body = domDiv.offsetHeight;
-		var domHead = domDiv.querySelector('thead');
+		let dom = ReactDOM.findDOMNode(this);
+		let domDiv = dom.querySelector('.tabla-div');
+		let alto_body = domDiv.offsetHeight;
+		let domHead = domDiv.querySelector('thead');
 		alto_body -= domHead.offsetHeight;
 
 		this.setState({alto_body: alto_body});
@@ -124,7 +124,7 @@ window.Tabla = React.createClass({
 		}
 	},
 	getValorDefecto(tipo) {
-		var ret;
+		let ret;
 
 		if (tipo == 'string') {
 			ret = '';
@@ -137,10 +137,10 @@ window.Tabla = React.createClass({
 		return ret;
 	},
 	nuevaFila() {
-		var filas = this.state.filas.slice();
-		var obj = {};
-		for (var i = 0 ; i < this.props.cols.length ; i++) {
-			var col = this.props.cols[i];
+		let filas = this.state.filas.slice();
+		let obj = {};
+		for (let i = 0 ; i < this.props.cols.length ; i++) {
+			let col = this.props.cols[i];
 
 			obj[col.campo] = this.getValorDefecto(col.tipo.tipo);
 		}
@@ -157,7 +157,7 @@ window.Tabla = React.createClass({
 					params: this.props.params,
 					url: this.props.url,
 					success: res => {
-						var data = this.parseData(res);
+						let data = this.parseData(res);
 
 						this.setState({
 							filas: data,
@@ -174,9 +174,9 @@ window.Tabla = React.createClass({
 		}
 	},
 	isCombosCompletos() {
-		var ret = true;
-		for (var i = 0 ; i < this.state.cols.length ; i++) {
-			var col = this.state.cols[i];
+		let ret = true;
+		for (let i = 0 ; i < this.state.cols.length ; i++) {
+			let col = this.state.cols[i];
 
 			if (col.tipo.tipo == 'object') {
 				if (this.state.combos_dataset && !this.state.combos_dataset[col.campo]) {
@@ -189,9 +189,9 @@ window.Tabla = React.createClass({
 		return ret;
 	},
 	cargarCombos() {
-		var cargarCombo = col => {
+		let cargarCombo = col => {
 
-			var params = {
+			let params = {
 				_sort: col.tipo.texto,
 				_order: 'ASC'
 			};
@@ -201,15 +201,15 @@ window.Tabla = React.createClass({
 				url: col.tipo.url,
 				params: params,
 				success: response => {
-					var combos_dataset = this.state.combos_dataset;
+					let combos_dataset = this.state.combos_dataset;
 					combos_dataset[col.campo] = response;
 					this.setState({combos_dataset: combos_dataset});
 				}
 			}, this);
 		};
 
-		for (var i = 0 ; i < this.state.cols.length ; i++) {
-			var col = this.state.cols[i];
+		for (let i = 0 ; i < this.state.cols.length ; i++) {
+			let col = this.state.cols[i];
 
 			if (col.tipo.tipo == 'object') {
 				if (!this.state.combos_dataset[col.campo]) {
@@ -246,10 +246,10 @@ window.Tabla = React.createClass({
 		this.cargarFilas(this.forceUpdate);
 	},
 	renderMenu() {
-		var ret;
+		let ret;
 
 		if (this.props.guardar) {
-			var menu = [{
+			let menu = [{
 				texto: 'NUEVO',
 				tag: 'nuevo'
 			}];
@@ -259,12 +259,12 @@ window.Tabla = React.createClass({
 		return ret;
 	},
 	renderFilas() {
-		var filas = [];
+		let filas = [];
 
-		for (var i = 0 ; i < this.state.filas.length ; i++) {
+		for (let i = 0 ; i < this.state.filas.length ; i++) {
 
-			var fila = this.state.filas[i];
-			var objFila = <Fila
+			let fila = this.state.filas[i];
+			let objFila = <Fila
 				key={i}
 				cols={this.state.cols}
 				datos={fila}
@@ -281,14 +281,14 @@ window.Tabla = React.createClass({
 				anchos={this.state.anchos}
 			/>
 
-			var campo = this.state.orden.campo;
+			let campo = this.state.orden.campo;
 			if (campo) {
-				var desc = this.state.orden.desc;
-				var index = filas.indice((v, k) => {
-					var valor1 = parseFloat(v.props.datos[campo]);
+				let desc = this.state.orden.desc;
+				let index = filas.indice((v, k) => {
+					let valor1 = parseFloat(v.props.datos[campo]);
 					valor1 = isNaN(valor1) ? v.props.datos[campo] : valor1;
 
-					var valor2 = parseFloat(fila[campo]);
+					let valor2 = parseFloat(fila[campo]);
 					valor2 = isNaN(valor2) ? fila[campo] : valor2;
 					return ((desc && valor1 < valor2) ||
 					((!desc) && valor1 > valor2));
@@ -306,7 +306,7 @@ window.Tabla = React.createClass({
 		return filas;
 	},
 	renderVelo() {
-		var ret;
+		let ret;
 
 		if (this.state.velo) {
 			ret = 	<div className="velo">
@@ -318,7 +318,7 @@ window.Tabla = React.createClass({
 		return ret;
 	},
 	renderStyleBody() {
-		var ret = {};
+		let ret = {};
 
 		if (this.state.alto_body) {
 			ret.height = this.state.alto_body + 'px';
@@ -327,7 +327,7 @@ window.Tabla = React.createClass({
 		return ret;
 	},
 	renderStyleTabla() {
-		var ret = {};
+		let ret = {};
 
 		if (this.state.alto_tabla) {
 			ret.height = this.state.alto_tabla + 'px';
@@ -336,11 +336,11 @@ window.Tabla = React.createClass({
 		return ret;
 	},
 	renderTabla() {
-		var ret;
+		let ret;
 
-		var datos_header = {};
-		for (var i = 0 ; i < this.state.cols.length ; i++) {
-			var col = this.state.cols[i];
+		let datos_header = {};
+		for (let i = 0 ; i < this.state.cols.length ; i++) {
+			let col = this.state.cols[i];
 
 			datos_header[col.campo] = col.texto;
 		}

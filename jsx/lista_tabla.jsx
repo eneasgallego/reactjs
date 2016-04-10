@@ -23,7 +23,7 @@ window.ListaTabla = React.createClass({
 		return [];
 	},
 	onClickAcciones(tag) {
-		var fn = this[tag];
+		let fn = this[tag];
 
 		if (typeof(fn) === 'function') {
 			fn.apply(this, arguments);
@@ -31,7 +31,7 @@ window.ListaTabla = React.createClass({
 	},
 	eliminar(tag, fila, tabla) {
 
-		var id = fila.getIdFila();
+		let id = fila.getIdFila();
 		if (id) {
 			this.props.setDialogo({
 				titulo: 'Eliminar',
@@ -50,8 +50,8 @@ window.ListaTabla = React.createClass({
 							metodo: 'delete',
 							url: this.props.url + '/' + id,
 							success: response => {
-								var filas = tabla.state.filas.slice();
-								var indice = filas.indice(item => {
+								let filas = tabla.state.filas.slice();
+								let indice = filas.indice(item => {
 									return (item[this.props.id_campo] == id);
 								});
 								if (!!~indice) {
@@ -69,20 +69,20 @@ window.ListaTabla = React.createClass({
 		}
 	},
 	guardar(valor, field, celda, fila, tabla) {
-		var id = fila.getIdFila();
-		var campo = celda.props.campo;
-		var params = fila.props.datos;
+		let id = fila.getIdFila();
+		let campo = celda.props.campo;
+		let params = fila.props.datos;
 		params[campo] = valor;
-		var url = this.props.url;
-		var metodo = 'post';
+		let url = this.props.url;
+		let metodo = 'post';
 
-		var fn = response => {
-			var filas = tabla.state.filas.slice();
-			var indice = filas.indice(item => {
+		let fn = response => {
+			let filas = tabla.state.filas.slice();
+			let indice = filas.indice(item => {
 				return (item[this.props.id_campo] == id);
 			});
 			if (!!~indice) {
-				var datos = filas[indice];
+				let datos = filas[indice];
 				if (metodo == 'post') {
 					datos[this.props.id_campo] = response[this.props.id_campo];
 				};
@@ -93,8 +93,8 @@ window.ListaTabla = React.createClass({
 		};
 
 		if (id) {
-			for (var i = 0 ; i < this.state.cols.length ; i++) {
-				var col = this.state.cols[i];
+			for (let i = 0 ; i < this.state.cols.length ; i++) {
+				let col = this.state.cols[i];
 
 				if (col.campo && col.campo != campo) {
 					params[col.campo] = fila.props.datos[col.campo];

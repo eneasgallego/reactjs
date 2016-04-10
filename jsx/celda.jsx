@@ -25,7 +25,7 @@ window.Celda = React.createClass({
 		};
 	},
 	componentDidMount(){
-		var dom = ReactDOM.findDOMNode(this);
+		let dom = ReactDOM.findDOMNode(this);
 		dom.addEventListener('resize', this.onResize);
 		this.triggerResize({
 			width: dom.offsetWidth,
@@ -48,7 +48,7 @@ window.Celda = React.createClass({
 		});
 	},
 	guardar(e, field) {
-		var valor;
+		let valor;
 		if (this.state.tipo.tipo == 'bool') {
 			valor = e.currentTarget.checked;
 		} else if (this.state.tipo.tipo == 'float' || this.state.tipo.tipo == 'int') {
@@ -105,7 +105,7 @@ window.Celda = React.createClass({
 		});
 	},
 	renderEditar(){
-		var ret = '';
+		let ret = '';
 
 		if (this.state.editar) {
 			if (this.state.tipo.tipo == 'object') {
@@ -140,13 +140,13 @@ window.Celda = React.createClass({
 		return ret;
 	},
 	renderValor(){
-		var ret = this.props.datos;
+		let ret = this.props.datos;
 
 		if (this.state.tipo.tipo == 'object') {
-			var dataset = this.props.combos_dataset[this.props.campo];
+			let dataset = this.props.combos_dataset[this.props.campo];
 
 			if (dataset) {
-				var item = dataset.buscar(this.state.tipo.id, ret);
+				let item = dataset.buscar(this.state.tipo.id, ret);
 				if (item) {
 					ret = item[this.state.tipo.texto];
 				}
@@ -158,7 +158,7 @@ window.Celda = React.createClass({
 		return ret;
 	},
 	renderStyle(){
-		var ret = {};
+		let ret = {};
 
 		if (this.props.ancho) {
 			ret.width = this.props.ancho + 'px';
@@ -183,7 +183,7 @@ window.Celda = React.createClass({
 				</td>
 	},
 	renderIconoOrden(){
-		var ret = '';
+		let ret = '';
 
 		if (this.props.orden) {
 			if (this.state.orden > 0) {

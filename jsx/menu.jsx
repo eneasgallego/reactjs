@@ -7,10 +7,10 @@ window.Menu = React.createClass({
 		};
 	},
 	renderChildren() {
-		var ret = [];
+		let ret = [];
 
-		for (var i = 0 ; i < this.props.children.length ; i++) {
-			var child = this.props.children[i];
+		for (let i = 0 ; i < this.props.children.length ; i++) {
+			let child = this.props.children[i];
 			ret.push(<MenuItem key={child.tag} texto={child.texto} accion={this.props.accion} menu={child.menu}/>)
 		}
 

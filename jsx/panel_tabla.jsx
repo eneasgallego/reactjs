@@ -28,15 +28,15 @@ window.PanelTabla = React.createClass({
 		this.props.onResize(offset, this);
 	},
 	dimensionar() {
-		var dom = ReactDOM.findDOMNode(this);
-		var alto_panel = dom.offsetHeight;
-		var dom_titulo = ReactDOM.findDOMNode(this.refs.titulo);
-		var alto_titulo = dom_titulo.offsetHeight;
-		var alto_tabla = alto_panel - alto_titulo;
+		let dom = ReactDOM.findDOMNode(this);
+		let alto_panel = dom.offsetHeight;
+		let dom_titulo = ReactDOM.findDOMNode(this.refs.titulo);
+		let alto_titulo = dom_titulo.offsetHeight;
+		let alto_tabla = alto_panel - alto_titulo;
 
 		this.setState({alto_tabla: alto_tabla}, () => {
-			for (var i in this.refs) {
-				var ref = this.refs[i];
+			for (let i in this.refs) {
+				let ref = this.refs[i];
 
 				if (typeof(ref.dimensionar) === 'function') {
 					ref.dimensionar();
@@ -48,7 +48,7 @@ window.PanelTabla = React.createClass({
 		this.props.onClickAcciones(tag, fila, tabla, this);
 	},
 	parseData(data, tabla) {
-		var ret = this.props.parseData(data, tabla, this);
+		let ret = this.props.parseData(data, tabla, this);
 
 		return ret ? ret : data;
 	},
@@ -57,7 +57,7 @@ window.PanelTabla = React.createClass({
 	},
 	renderStyleTabla() {
 
-		var ret = {};
+		let ret = {};
 
 		if (this.state.alto_tabla) {
 			ret.height = this.state.alto_tabla + 'px';

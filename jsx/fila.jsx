@@ -25,7 +25,7 @@ window.Fila = React.createClass({
 		};
 	},
 	componentDidMount() {
-		var dom = ReactDOM.findDOMNode(this);
+		let dom = ReactDOM.findDOMNode(this);
 		dom.addEventListener('resize', this.onResize);
 		this.triggerResize({
 			width: dom.offsetWidth,
@@ -71,7 +71,7 @@ window.Fila = React.createClass({
 		this.props.onClickAcciones(tag, this);
 	},
 	renderAcciones()  {
-		var ret;
+		let ret;
 
 		if (this.props.acciones.length) {
 			if (this.props.header) {
@@ -91,12 +91,12 @@ window.Fila = React.createClass({
 		return (this.props.orden.campo == campo);
 	},
 	renderCeldas()  {
-		var celdas = [];
+		let celdas = [];
 
-		var celdas = [];
-		for (var i = 0 ; i < this.state.cols.length ; i++) {
+		let celdas = [];
+		for (let i = 0 ; i < this.state.cols.length ; i++) {
 
-			var col = this.state.cols[i];
+			let col = this.state.cols[i];
 
 			celdas.push(
 				<Celda 
@@ -118,7 +118,7 @@ window.Fila = React.createClass({
 			);
 		}
 
-		var acciones = this.renderAcciones();
+		let acciones = this.renderAcciones();
 		if (acciones) {
 			celdas.push(acciones);
 		}
@@ -126,9 +126,9 @@ window.Fila = React.createClass({
 		return celdas;
 	},
 	claseFila()  {
-		var ret = this.props.header ? 'header' : '';
+		let ret = this.props.header ? 'header' : '';
 
-		var claseFila = this.props.claseFila(this.props.datos, this);
+		let claseFila = this.props.claseFila(this.props.datos, this);
 		if (claseFila) {
 			ret += ' ' + claseFila;
 		}
