@@ -196,7 +196,7 @@ window.Celda = React.createClass({
 		return ret;
 	},
 	renderStyleIconoOrden(){
-		let ret = '';
+		let ret = {};
 
 		if (this.props.orden) {
 			ret.fontSize = (1.1 - (this.props.orden / 10)) + 'em';
