@@ -156,7 +156,7 @@ window.Tabla = React.createClass({
 					metodo: 'get',
 					params: this.props.params,
 					url: this.props.url,
-					success(res) {
+					success: res => {
 						var data = this.parseData(res);
 
 						this.setState({
@@ -168,7 +168,7 @@ window.Tabla = React.createClass({
 								fn.call(this);
 							}
 						});
-					}.bind(this)
+					}
 				}, this);
 			});
 		}
