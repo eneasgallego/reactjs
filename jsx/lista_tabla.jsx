@@ -22,11 +22,12 @@ window.ListaTabla = React.createClass({
 		}
 		return [];
 	},
-	onClickAcciones: tag => {
+	onClickAcciones: (...arg) => {
+		var tag = arg[0];
 		var fn = this[tag];
 
 		if (typeof(fn) === 'function') {
-			fn.apply(this, arguments);
+			fn.apply(this, arg);
 		}
 	},
 	eliminar: (tag, fila, tabla) => {

@@ -29,14 +29,14 @@
 		}
 	};
 	Array.prototype.promesas = promesas;
-	var buscar = () => {
+	var buscar = (...arg) => {
 		var valor;
 		var campo;
-		if (arguments.length == 1) {
-			valor = arguments[0];
-		} else if (arguments.length > 1) {
-			campo = arguments[0];
-			valor = arguments[1];
+		if (arg.length == 1) {
+			valor = arg[0];
+		} else if (arg.length > 1) {
+			campo = arg[0];
+			valor = arg[1];
 		}
 
 		for (var i = 0 ; i < this.length ; i++) {
@@ -52,14 +52,14 @@
 		return undefined;
 	};
 	Array.prototype.buscar = buscar;
-	var indice = () => {
-		var valor;
-		var campo;
-		if (arguments.length == 1) {
-			valor = arguments[0];
-		} else if (arguments.length > 1) {
-			campo = arguments[0];
-			valor = arguments[1];
+	var indice = (...arg) => {
+		var valor, campo;
+
+		if (arg.length == 1) {
+			valor = arg[0];
+		} else if (arg.length > 1) {
+			campo = arg[0];
+			valor = arg[1];
 		}
 
 		for (var i = 0 ; i < this.length ; i++) {
