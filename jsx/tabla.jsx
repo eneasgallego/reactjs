@@ -167,11 +167,10 @@ window.Tabla = React.createClass({
 							if (typeof(fn) === 'function') {
 								fn.call(this);
 							}
-						}.bind(this));
-
-					}.bind(this)
+						});
+					}
 				}, this);
-			}.bind(this));
+			});
 		}
 	},
 	isCombosCompletos: () => {
@@ -205,9 +204,9 @@ window.Tabla = React.createClass({
 					var combos_dataset = this.state.combos_dataset;
 					combos_dataset[col.campo] = response;
 					this.setState({combos_dataset: combos_dataset});
-				}.bind(this)
+				}
 			}, this);
-		}.bind(this);
+		};
 
 		for (var i = 0 ; i < this.state.cols.length ; i++) {
 			var col = this.state.cols[i];
@@ -293,7 +292,7 @@ window.Tabla = React.createClass({
 					valor2 = isNaN(valor2) ? fila[campo] : valor2;
 					return ((desc && valor1 < valor2) ||
 					((!desc) && valor1 > valor2));
-				}.bind(this));
+				});
 				if (!~index) {
 					filas.push(objFila);
 				} else {

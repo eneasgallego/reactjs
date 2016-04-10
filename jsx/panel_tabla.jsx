@@ -42,7 +42,7 @@ window.PanelTabla = React.createClass({
 					ref.dimensionar();
 				}
 			}
-		}.bind(this));
+		});
 	},
 	onClickAcciones: (tag, fila, tabla) => {
 		this.props.onClickAcciones(tag, fila, tabla, this);
