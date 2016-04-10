@@ -89,13 +89,13 @@ $color-texto-resaltado: white;
 
 					i {
 						position: relative;
-						&:before {
+						&:after {
 							font-size: 6pt;
 							left: -8px;
-							top: -6px;
+							//top: -6px;
 							position: absolute;
 						}
-						&.icon-inv:before {
+						&.icon-inv:after {
 							margin-left: 0;
 						}
 						&:not(.icon) {
