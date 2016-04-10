@@ -37,7 +37,7 @@ class MenuItem extends React.Component {
 	}
 	renderMenu() {
 		let ret = '';
-		if (this.props.menu.length) {
+		if (this.props.menu instanceof Array && this.props.menu.length) {
 			ret = <Menu className={this.renderClassChild()} children={this.props.menu} accion={this.accion}/>
 		}
 
