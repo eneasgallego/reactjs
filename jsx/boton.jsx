@@ -21,4 +21,4 @@ class Boton extends React.Component {
     }
 }
 
-export default MenuItem
+export default Boton
