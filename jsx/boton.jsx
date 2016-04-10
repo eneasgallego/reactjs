@@ -1,10 +1,15 @@
-window.Boton = React.createClass({
-	getDefaultProps() {
+import React from 'react'
+
+class Boton extends React.Component {
+	constructor(props) {
+		super(props);
+	}
+	/*getDefaultProps() {
 		return {
 			texto: '',
 			accion(){}
 		};
-	},
+	},*/
 	render() {
 		return (
 			<a 	href="#!" 
@@ -14,4 +19,6 @@ window.Boton = React.createClass({
 			</a> 
 		);
     }
-});
+}
+
+export default MenuItem
