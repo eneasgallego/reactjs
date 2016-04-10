@@ -1,11 +1,11 @@
 window.Boton = React.createClass({
-	getDefaultProps: () => {
+	getDefaultProps() {
 		return {
 			texto: '',
-			accion: () => {}
+			accion(){}
 		};
 	},
-	render: () => {
+	render() {
 		return (
 			<a 	href="#!" 
 				onClick={this.props.accion}

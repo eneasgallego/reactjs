@@ -1,34 +1,34 @@
 window.TextField = React.createClass({
-	getInitialState: () => {
+	getInitialState() {
     	return {
 			valor: this.props.valor,
     	};
   	},
-	getDefaultProps: () => {
+	getDefaultProps() {
 		return {
 			valor: '',
-			onClick: () => {},
-			onBlur: () => {},
-			onKeyPress: () => {},
-			onLoad: () => {}
+			onClick(){},
+			onBlur(){},
+			onKeyPress(){},
+			onLoad(){}
 		};
 	},
-	componentDidMount: () => {
+	componentDidMount() {
 		this.props.onLoad(this);
 	},
-	focus: () => {
+	focus() {
 		ReactDOM.findDOMNode(this).focus();
 	},
-	onFocus: () => {
+	onFocus() {
 		ReactDOM.findDOMNode(this).select();
 	},
-	onBlur: e => {
+	onBlur(e) {
 		return this.props.onBlur(e, this);
 	},
-	onKeyPress: e => {
+	onKeyPress(e) {
 		return this.props.onKeyPress(e, this);
 	},
-	render: () => {
+	render() {
 		return (
 			<input 
 				defaultValue={this.state.valor}

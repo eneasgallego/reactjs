@@ -1,31 +1,31 @@
 window.CheckBox = React.createClass({
-	getInitialState: () => {
+	getInitialState() {
     	return {
 			valor: this.props.valor,
     	};
   	},
-	getDefaultProps: () => {
+	getDefaultProps() {
 		return {
 			valor: '',
-			onClick: () => {},
-			onBlur: () => {},
-			onLoad: () => {}
+			onClick(){},
+			onBlur(){},
+			onLoad(){}
 		};
 	},
-	componentDidMount: () => {
+	componentDidMount() {
 		this.props.onLoad(this);
 	},
-	focus: () => {
+	focus() {
 		ReactDOM.findDOMNode(this).focus();
 	},
-	onBlur: e => {
+	onBlur(e) {
 		return this.props.onBlur(e, this);
 	},
-	onClick: e => {
+	onClick(e) {
 		e.stopPropagation();
 		return this.props.onClick(e, this);
 	},
-	render: () => {
+	render() {
 		return (
 			<input 
 				type="checkbox"

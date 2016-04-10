@@ -1,12 +1,12 @@
 window.Celda = React.createClass({
-	getInitialState: () => {
+	getInitialState() {
     	return {
     		orden: this.props.orden ? this.props.orden_desc ? -1 : 1 : 0,
     		editar: false,
     		tipo: parseTipo(this.props.tipo)
     	};
   	},
-	getDefaultProps: () => {
+	getDefaultProps() {
 		return {
 			datos: '',
 			campo: '',
@@ -18,13 +18,13 @@ window.Celda = React.createClass({
     		ancho: undefined,
 			orden: false,
 			orden_desc: false,
-			onClick: () => {},
-			onResize: () => {},
-			onChangeValor: () => {},
-			onChangeDesc: () => {}
+			onClick(){},
+			onResize(){},
+			onChangeValor(){},
+			onChangeDesc(){}
 		};
 	},
-	componentDidMount: () => {
+	componentDidMount(){
 		var dom = ReactDOM.findDOMNode(this);
 		dom.addEventListener('resize', this.onResize);
 		this.triggerResize({
@@ -35,10 +35,10 @@ window.Celda = React.createClass({
 			index: dom.cellIndex
 		});
 	},
-	triggerResize: offset => {
+	triggerResize(offset) {
 		this.props.onResize(offset, this);
 	},
-	onResize: e => {
+	onResize(e) {
 		this.triggerResize({
 			width: e.currentTarget.offsetWidth,
 			height: e.currentTarget.offsetHeight,
@@ -47,7 +47,7 @@ window.Celda = React.createClass({
 			index: e.currentTarget.cellIndex
 		});
 	},
-	guardar: (e, field) => {
+	guardar(e, field) {
 		var valor;
 		if (this.state.tipo.tipo == 'bool') {
 			valor = e.currentTarget.checked;
@@ -69,42 +69,42 @@ window.Celda = React.createClass({
 			}
 		});
 	},
-	accionCelda: e => {
+	accionCelda(e) {
 		this.props.onClick(e, this);
 	},
-	onClickField: e => {
+	onClickField(e) {
 		e.stopPropagation();
 	},
-	onBlurTextField: (e, textfield) => {
+	onBlurTextField(e, textfield) {
 		return this.guardar(e, textfield);
 	},
-	onBlurField: (e, field) => {
+	onBlurField(e, field) {
 		this.setState({editar: false});
 	},
-	onKeyPressText: (e, textfield) => {
+	onKeyPressText(e, textfield) {
 		if (e.keyCode == 27 || e.charCode == 27) {
 			this.setState({editar: false});
 		} else if (e.keyCode == 13 || e.charCode == 13) {
 			return this.guardar(e, textfield);
 		}
 	},
-	onChangeCombo: (e, combo) => {
+	onChangeCombo(e, combo) {
 		return this.guardar(e, combo);
 	},
-	onClickCheck: (e, check) => {
+	onClickCheck(e, check) {
 		return this.guardar(e, check);
 	},
-	onLoadField: field => {
+	onLoadField(field) {
 		field.focus();
 	},
-	changeOrden: () => {
+	changeOrden(){
 		this.setState({
 			orden: this.state.orden > 0 ? -1 : 1
 		}, () => {
 			this.props.onChangeDesc(this.state.orden, this);
 		});
 	},
-	renderEditar: () => {
+	renderEditar(){
 		var ret = '';
 
 		if (this.state.editar) {
@@ -139,7 +139,7 @@ window.Celda = React.createClass({
 
 		return ret;
 	},
-	renderValor: () => {
+	renderValor(){
 		var ret = this.props.datos;
 
 		if (this.state.tipo.tipo == 'object') {
@@ -157,7 +157,7 @@ window.Celda = React.createClass({
 
 		return ret;
 	},
-	renderStyle: () => {
+	renderStyle(){
 		var ret = {};
 
 		if (this.props.ancho) {
@@ -172,7 +172,7 @@ window.Celda = React.createClass({
 
 		return ret;
 	},
-	renderCelda: () => {
+	renderCelda(){
 		return <td 	style={this.renderStyle()}
 					onClick={this.accionCelda}
 				>
@@ -182,7 +182,7 @@ window.Celda = React.createClass({
 					</div>
 				</td>
 	},
-	renderIconoOrden: () => {
+	renderIconoOrden(){
 		var ret = '';
 
 		if (this.props.orden) {
@@ -195,10 +195,10 @@ window.Celda = React.createClass({
  
 		return ret;
 	},
-	renderCeldaHeader: () => {
+	renderCeldaHeader(){
 		return <th style={this.renderStyle()} onClick={this.accionCelda} ><div className="tabla-celda-div"><i className={this.renderIconoOrden()}></i>{this.props.datos}</div></th>
 	},
-	render: () => {
+	render(){
 		return (
 			this.props.header ? this.renderCeldaHeader() : this.renderCelda()
 		);

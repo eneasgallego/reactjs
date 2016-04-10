@@ -1,10 +1,10 @@
 window.Fila = React.createClass({
-	getInitialState: () => {
+	getInitialState() {
     	return {
     		cols: parseCols(this.props.cols)
     	};
   	},
-	getDefaultProps: () => {
+	getDefaultProps() {
 		return {
 			id_campo: '',
 			datos: {},
@@ -15,16 +15,16 @@ window.Fila = React.createClass({
 			guardar: undefined,
     		anchos: [],
 			orden: {},
-			claseFila: () => {},
-			onResize: () => {},
-			onResizeCelda: () => {},
-			onClickCelda: () => {},
-			onClickAcciones: () => {},
-			onChangeValor: () => {},
-			onChangeDesc: () => {}
+			claseFila(){},
+			onResize(){},
+			onResizeCelda(){},
+			onClickCelda(){},
+			onClickAcciones(){},
+			onChangeValor(){},
+			onChangeDesc(){}
 		};
 	},
-	componentDidMount: () => {
+	componentDidMount() {
 		var dom = ReactDOM.findDOMNode(this);
 		dom.addEventListener('resize', this.onResize);
 		this.triggerResize({
@@ -35,10 +35,10 @@ window.Fila = React.createClass({
 			index: dom.cellIndex
 		});
 	},
-	triggerResize: offset => {
+	triggerResize(offset) {
 		this.props.onResize(offset, this);
 	},
-	onResize: e => {
+	onResize(e) {
 		this.triggerResize({
 			width: e.currentTarget.offsetWidth,
 			height: e.currentTarget.offsetHeight,
@@ -47,30 +47,30 @@ window.Fila = React.createClass({
 			index: e.currentTarget.cellIndex
 		});
 	},
-	onResizeCelda: (offset, celda) => {
+	onResizeCelda(offset, celda) {
 		this.props.onResizeCelda(offset, celda, this);
 	},
-	onChangeValor: (valor, celda) => {
+	onChangeValor(valor, celda) {
 		this.props.onChangeValor(valor, celda, this);
 	},
-	onChangeDesc: (desc, celda) => {
+	onChangeDesc(desc, celda) {
 		this.props.onChangeDesc(desc, celda, this);
 	},
-	getIdFila: () =>  {
+	getIdFila()  {
 		return this.props.datos[this.props.id_campo];
 	},
-	setIdFila: id => {
+	setIdFila(id) {
 		this.props.datos[this.props.id_campo] = id;
 	},
-	guardar: (valor, field, celda) => {
+	guardar(valor, field, celda) {
 		if (typeof(this.props.guardar) === 'function') {
 			this.props.guardar(valor, field, celda, this);
 		}
 	},
-	accionMenu: tag => {
+	accionMenu(tag) {
 		this.props.onClickAcciones(tag, this);
 	},
-	renderAcciones: () =>  {
+	renderAcciones()  {
 		var ret;
 
 		if (this.props.acciones.length) {
@@ -87,10 +87,10 @@ window.Fila = React.createClass({
 
 		return ret;
 	},
-	orden: campo => {
+	orden(campo) {
 		return (this.props.orden.campo == campo);
 	},
-	renderCeldas: () =>  {
+	renderCeldas()  {
 		var celdas = [];
 
 		var celdas = [];
@@ -125,7 +125,7 @@ window.Fila = React.createClass({
 
 		return celdas;
 	},
-	claseFila: () =>  {
+	claseFila()  {
 		var ret = this.props.header ? 'header' : '';
 
 		var claseFila = this.props.claseFila(this.props.datos, this);
@@ -135,7 +135,7 @@ window.Fila = React.createClass({
 
 		return ret;
 	},
-	render: () => {
+	render() {
 		return (
 			<tr className={this.claseFila()} >
 				{this.renderCeldas()}

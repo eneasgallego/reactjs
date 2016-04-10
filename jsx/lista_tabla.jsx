@@ -1,19 +1,19 @@
 window.ListaTabla = React.createClass({
-	getInitialState: () => {
+	getInitialState() {
     	return {
     		cols: parseCols(this.props.cols)
     	};
   	},
-	getDefaultProps: () => {
+	getDefaultProps() {
 		return {
 			id_campo: '',
 			url: '',
 			cols: [],
 			eliminar: false,
-			setDialogo: () => {}
+			setDialogo(){}
 		};
 	},
-	acciones: () => {
+	acciones() {
 		if (this.props.eliminar) {
 			return [{
 				texto: 'Eliminar',
@@ -22,15 +22,14 @@ window.ListaTabla = React.createClass({
 		}
 		return [];
 	},
-	onClickAcciones: (...arg) => {
-		var tag = arg[0];
+	onClickAcciones(tag) {
 		var fn = this[tag];
 
 		if (typeof(fn) === 'function') {
-			fn.apply(this, arg);
+			fn.apply(this, arguments);
 		}
 	},
-	eliminar: (tag, fila, tabla) => {
+	eliminar(tag, fila, tabla) {
 
 		var id = fila.getIdFila();
 		if (id) {
@@ -45,12 +44,12 @@ window.ListaTabla = React.createClass({
 					texto: 'Cancelar',
 					tag: 'cancelar'
 				}],
-				accionMenu: tag => {
+				accionMenu(tag) {
 					if (tag == 'aceptar') {
 						ajax({
 							metodo: 'delete',
 							url: this.props.url + '/' + id,
-							success: response => {
+							success(response) {
 								var filas = tabla.state.filas.slice();
 								var indice = filas.indice(item => {
 									return (item[this.props.id_campo] == id);
@@ -69,7 +68,7 @@ window.ListaTabla = React.createClass({
 			});
 		}
 	},
-	guardar: (valor, field, celda, fila, tabla) => {
+	guardar(valor, field, celda, fila, tabla) {
 		var id = fila.getIdFila();
 		var campo = celda.props.campo;
 		var params = fila.props.datos;
@@ -112,7 +111,7 @@ window.ListaTabla = React.createClass({
 			success: fn
 		}, tabla);
 	},
-	render: () => {
+	render() {
 		return (
 			<Tabla
 				id_campo={this.props.id_campo}

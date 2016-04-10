@@ -1,5 +1,5 @@
 window.Tabla = React.createClass({
-	getInitialState: () => {
+	getInitialState() {
 		return {
 			filas_cargadas: false,
 			cargando: false,
@@ -13,7 +13,7 @@ window.Tabla = React.createClass({
 			alto_body: undefined
 		};
 	},
-	getDefaultProps: () => {
+	getDefaultProps() {
 
 		return {
 			id_campo: '',
@@ -26,21 +26,21 @@ window.Tabla = React.createClass({
 			acciones: [],
 			guardar: undefined,
 			style: {},
-			claseFila: () => {},
-			parseData: () => {},
-			onResize: () => {},
-			onResizeFila: () => {},
-			onResizeCelda: () => {},
-			onChangeValor: () => {},
-			onClickAcciones: () => {}
+			claseFila(){},
+			parseData(){},
+			onResize(){},
+			onResizeFila(){},
+			onResizeCelda(){},
+			onChangeValor(){},
+			onClickAcciones(){}
 		};
 	},
-	componentWillUpdate: () => {
+	componentWillUpdate() {
 		if (this.isCombosCompletos()) {
 			this.cargarFilas();
 		}
 	},
-	componentDidMount: () => {
+	componentDidMount() {
 		if (this.isCombosCompletos()) {
 			this.cargarFilas();
 		} else {
@@ -57,16 +57,16 @@ window.Tabla = React.createClass({
 			index: dom.cellIndex
 		});
 	},
-	parseData: data => {
+	parseData(data) {
 		var ret = this.props.parseData(data, this);
 
 		return ret ? ret : data;
 	},
-	triggerResize: offset => {
+	triggerResize(offset) {
 		this.calcAltoTabla();
 		this.props.onResize(offset, this);
 	},
-	onResize: e => {
+	onResize(e) {
 		this.triggerResize({
 			width: e.currentTarget.offsetWidth,
 			height: e.currentTarget.offsetHeight,
@@ -75,7 +75,7 @@ window.Tabla = React.createClass({
 			index: e.currentTarget.cellIndex
 		});
 	},
-	onResizeCelda: (offset, celda, fila) => {
+	onResizeCelda(offset, celda, fila) {
 		var anchos = this.state.anchos;
 		var ancho = anchos[offset.index];
 		if ((!ancho) || ancho < offset.width) {
@@ -84,13 +84,13 @@ window.Tabla = React.createClass({
 		}
 		this.props.onResizeCelda(offset, celda, fila, this);
 	},
-	onResizeFila: (offset, fila) => {
+	onResizeFila(offset, fila) {
 		this.props.onResizeFila(offset, fila, this);
 	},
-	dimensionar: () => {
+	dimensionar() {
 		this.calcAltoTabla();
 	},
-	calcAltoTabla: () => {
+	calcAltoTabla() {
 		var dom = ReactDOM.findDOMNode(this);
 		var alto_tabla = dom.offsetHeight;
 		var domMenu = dom.querySelector('.menu-tabla');
@@ -101,7 +101,7 @@ window.Tabla = React.createClass({
 			this.calcAltoBody();
 		});
 	},
-	calcAltoBody: () => {
+	calcAltoBody() {
 		var dom = ReactDOM.findDOMNode(this);
 		var domDiv = dom.querySelector('.tabla-div');
 		var alto_body = domDiv.offsetHeight;
@@ -110,20 +110,20 @@ window.Tabla = React.createClass({
 
 		this.setState({alto_body: alto_body});
 	},
-	onChangeValor: (valor, celda, fila) => {
+	onChangeValor(valor, celda, fila) {
 		this.props.onChangeValor(valor, celda, fila, this);
 	},
-	guardar: (valor, field, celda, fila) => {
+	guardar(valor, field, celda, fila) {
 		if (typeof(this.props.guardar) === 'function') {
 			this.props.guardar(valor, field, celda, fila, this);
 		}
 	},
-	accionMenu: tag => {
+	accionMenu(tag) {
 		if (tag == 'nuevo') {
 			this.nuevaFila();
 		}
 	},
-	getValorDefecto: tipo => {
+	getValorDefecto(tipo) {
 		var ret;
 
 		if (tipo == 'string') {
@@ -136,7 +136,7 @@ window.Tabla = React.createClass({
 
 		return ret;
 	},
-	nuevaFila: () => {
+	nuevaFila() {
 		var filas = this.state.filas.slice();
 		var obj = {};
 		for (var i = 0 ; i < this.props.cols.length ; i++) {
@@ -149,14 +149,14 @@ window.Tabla = React.createClass({
 			filas: filas
 		});
 	},
-	cargarFilas: fn => {
+	cargarFilas(fn) {
 		if (!this.state.filas_cargadas && !this.state.cargando) {
 			this.setState({cargando: true}, () => {
 				ajax({
 					metodo: 'get',
 					params: this.props.params,
 					url: this.props.url,
-					success: res => {
+					success(res) {
 						var data = this.parseData(res);
 
 						this.setState({
@@ -173,7 +173,7 @@ window.Tabla = React.createClass({
 			});
 		}
 	},
-	isCombosCompletos: () => {
+	isCombosCompletos() {
 		var ret = true;
 		for (var i = 0 ; i < this.state.cols.length ; i++) {
 			var col = this.state.cols[i];
@@ -188,7 +188,7 @@ window.Tabla = React.createClass({
 
 		return ret;
 	},
-	cargarCombos: () => {
+	cargarCombos() {
 		var cargarCombo = col => {
 
 			var params = {
@@ -200,7 +200,7 @@ window.Tabla = React.createClass({
 				metodo: 'get',
 				url: col.tipo.url,
 				params: params,
-				success: response => {
+				success(response) {
 					var combos_dataset = this.state.combos_dataset;
 					combos_dataset[col.campo] = response;
 					this.setState({combos_dataset: combos_dataset});
@@ -219,20 +219,20 @@ window.Tabla = React.createClass({
 		}
 
 	},
-	onClickCelda: (e, celda) => {
+	onClickCelda(e, celda) {
 		e.preventDefault();
 		if (!celda.props.header && this.props.guardar) {
 			celda.setState({editar:true});
 		}
 	},
-	onClickAcciones: (tag, fila) => {
+	onClickAcciones(tag, fila) {
 		this.props.onClickAcciones(tag, fila, this);
 	},
-	onClickCeldaHeader: (e, celda) => {
+	onClickCeldaHeader(e, celda) {
 		e.preventDefault();
 		celda.changeOrden();
 	},
-	ordenar: (orden, celda, fila) => {
+	ordenar(orden, celda, fila) {
 
 		this.setState({
 			orden: {
@@ -241,11 +241,11 @@ window.Tabla = React.createClass({
 			}
 		});
 	},
-	refrescar: () => {
+	refrescar() {
 		this.state.filas_cargadas = false;
 		this.cargarFilas(this.forceUpdate);
 	},
-	renderMenu: () => {
+	renderMenu() {
 		var ret;
 
 		if (this.props.guardar) {
@@ -258,7 +258,7 @@ window.Tabla = React.createClass({
 
 		return ret;
 	},
-	renderFilas: () => {
+	renderFilas() {
 		var filas = [];
 
 		for (var i = 0 ; i < this.state.filas.length ; i++) {
@@ -305,7 +305,7 @@ window.Tabla = React.createClass({
 
 		return filas;
 	},
-	renderVelo: () => {
+	renderVelo() {
 		var ret;
 
 		if (this.state.velo) {
@@ -317,7 +317,7 @@ window.Tabla = React.createClass({
 
 		return ret;
 	},
-	renderStyleBody: () => {
+	renderStyleBody() {
 		var ret = {};
 
 		if (this.state.alto_body) {
@@ -326,7 +326,7 @@ window.Tabla = React.createClass({
 
 		return ret;
 	},
-	renderStyleTabla: () => {
+	renderStyleTabla() {
 		var ret = {};
 
 		if (this.state.alto_tabla) {
@@ -335,7 +335,7 @@ window.Tabla = React.createClass({
 
 		return ret;
 	},
-	renderTabla: () => {
+	renderTabla() {
 		var ret;
 
 		var datos_header = {};
@@ -371,7 +371,7 @@ window.Tabla = React.createClass({
 			</div>
 		);
 	},
-	render: () => {
+	render() {
 		return (
 			<div className="tabla-cont" style={this.props.style}>
 				{this.renderMenu()} 

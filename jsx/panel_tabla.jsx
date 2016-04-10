@@ -1,10 +1,10 @@
 window.PanelTabla = React.createClass({
-	getInitialState: () => {
+	getInitialState() {
 		return {
 			alto_tabla: undefined
 		};
 	},
-	getDefaultProps: () => {
+	getDefaultProps() {
 		return {
 			id: '',
 			titulo: '',
@@ -14,20 +14,20 @@ window.PanelTabla = React.createClass({
 			id_campo: '',
 			cols: [],
 			acciones: [],
-			claseFila: () => {},
-			parseData: () => {},
-			onResize: () => {},
-			onResizeTabla: () => {},
-			onClickAcciones: () => {}
+			claseFila(){},
+			parseData(){},
+			onResize(){},
+			onResizeTabla(){},
+			onClickAcciones(){}
 		};
 	},
-	componentDidMount: () => {
+	componentDidMount() {
 	},
-	onResizeTabla: (offset, tabla) => {
+	onResizeTabla(offset, tabla) {
 		this.props.onResizeTabla(offset, tabla, this);
 		this.props.onResize(offset, this);
 	},
-	dimensionar: () => {
+	dimensionar() {
 		var dom = ReactDOM.findDOMNode(this);
 		var alto_panel = dom.offsetHeight;
 		var dom_titulo = ReactDOM.findDOMNode(this.refs.titulo);
@@ -44,18 +44,18 @@ window.PanelTabla = React.createClass({
 			}
 		});
 	},
-	onClickAcciones: (tag, fila, tabla) => {
+	onClickAcciones(tag, fila, tabla) {
 		this.props.onClickAcciones(tag, fila, tabla, this);
 	},
-	parseData: (data, tabla) => {
+	parseData(data, tabla) {
 		var ret = this.props.parseData(data, tabla, this);
 
 		return ret ? ret : data;
 	},
-	refrescar: () => {
+	refrescar() {
 		this.refs.tabla.refrescar();
 	},
-	renderStyleTabla: () => {
+	renderStyleTabla() {
 
 		var ret = {};
 
@@ -65,7 +65,7 @@ window.PanelTabla = React.createClass({
 
 		return ret;
 	},
-	renderTabla: () => {
+	renderTabla() {
 		this.tabla = <Tabla
 			ref="tabla"
 			style={this.renderStyleTabla()}
@@ -83,7 +83,7 @@ window.PanelTabla = React.createClass({
 
 		return this.tabla;
 	},
-	render: () => {
+	render() {
 		return (
 			<section id={this.props.id} className="panel">
 				<h2 ref="titulo">{this.props.titulo}</h2>
