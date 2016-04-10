@@ -8,29 +8,21 @@ class Celda extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			datos: props.datos ? props.datos : '',
+			campo: props.campo ? props.campo : '',
+			props_tipo: props.tipo ? props.tipo : 'string',
+			header: props.header ? props.header : false,
+			combos_dataset: props.combos_dataset ? props.combos_dataset : {},
+			props_orden: props.orden ? props.orden : false,
+			onClick: props.onClick ? props.onClick : ()=>{},
+			onResize: props.onResize ? props.onResize : ()=>{},
+			onChangeDesc: props.onChangeDesc ? props.onChangeDesc : ()=>{},
+
 			orden: props.orden ? props.orden_desc ? -1 : 1 : 0,
 			editar: false,
 			tipo: parseTipo(props.tipo)
 		};
 	}
-/*	getDefaultProps() {
-		return {
-			datos: '',
-			campo: '',
-			tipo: 'string',
-			header: false,
-			acciones: [],
-			combos_dataset: {},
-			guardar: undefined,
-    		ancho: undefined,
-			orden: false,
-			orden_desc: false,
-			onClick(){},
-			onResize(){},
-			onChangeValor(){},
-			onChangeDesc(){}
-		};
-	},*/
 	componentDidMount(){
 		let dom = ReactDOM.findDOMNode(this);
 		dom.addEventListener('resize', this.onResize);
@@ -43,7 +35,7 @@ class Celda extends React.Component {
 		});
 	}
 	triggerResize(offset) {
-		this.props.onResize(offset, this);
+		this.state.onResize(offset, this);
 	}
 	onResize(e) {
 		this.triggerResize({
@@ -77,7 +69,7 @@ class Celda extends React.Component {
 		});
 	}
 	accionCelda(e) {
-		this.props.onClick(e, this);
+		this.state.onClick(e, this);
 	}
 	onClickField(e) {
 		e.stopPropagation();
@@ -108,7 +100,7 @@ class Celda extends React.Component {
 		this.setState({
 			orden: this.state.orden > 0 ? -1 : 1
 		}, () => {
-			this.props.onChangeDesc(this.state.orden, this);
+			this.state.onChangeDesc(this.state.orden, this);
 		});
 	}
 	renderEditar(){
@@ -117,17 +109,17 @@ class Celda extends React.Component {
 		if (this.state.editar) {
 			if (this.state.tipo.tipo == 'object') {
 				ret = 	<Combo 
-							valor={this.props.datos}
-							combo={this.props.tipo}
+							valor={this.state.datos}
+							combo={this.state.props_tipo}
 							onClick={this.onClickField}
 							onBlur={this.onBlurField}
 							onChange={this.onChangeCombo}
 							onLoad={this.onLoadField}
-							dataset={this.props.combos_dataset[this.props.campo]}
+							dataset={this.state.combos_dataset[this.state.campo]}
 						/>
 			} else if (this.state.tipo.tipo == 'bool') {
 				ret = 	<CheckBox 
-							valor={this.props.datos}
+							valor={this.state.datos}
 							onClick={this.onClickCheck}
 							onBlur={this.onBlurField}
 							onChange={this.onChangeCombo}
@@ -135,7 +127,7 @@ class Celda extends React.Component {
 						/>
 			} else {
 				ret = 	<TextField 
-							valor={this.props.datos}
+							valor={this.state.datos}
 							onClick={this.onClickField}
 							onBlur={this.onBlurTextField}
 							onKeyPress={this.onKeyPressText}
@@ -147,10 +139,10 @@ class Celda extends React.Component {
 		return ret;
 	}
 	renderValor(){
-		let ret = this.props.datos;
+		let ret = this.state.datos;
 
 		if (this.state.tipo.tipo == 'object') {
-			let dataset = this.props.combos_dataset[this.props.campo];
+			let dataset = this.state.combos_dataset[this.state.campo];
 
 			if (dataset) {
 				let item = dataset.buscar(this.state.tipo.id, ret);
@@ -192,7 +184,7 @@ class Celda extends React.Component {
 	renderIconoOrden(){
 		let ret = '';
 
-		if (this.props.orden) {
+		if (this.state.props_orden) {
 			if (this.state.orden > 0) {
 				ret = 'icon icon-triangle';
 			} else if (this.state.orden < 0) {
@@ -203,11 +195,11 @@ class Celda extends React.Component {
 		return ret;
 	}
 	renderCeldaHeader(){
-		return <th style={this.renderStyle()} onClick={this.accionCelda} ><div className="tabla-celda-div"><i className={this.renderIconoOrden()}></i>{this.props.datos}</div></th>
+		return <th style={this.renderStyle()} onClick={this.accionCelda} ><div className="tabla-celda-div"><i className={this.renderIconoOrden()}></i>{this.state.datos}</div></th>
 	}
 	render(){
 		return (
-			this.props.header ? this.renderCeldaHeader() : this.renderCelda()
+			this.state.header ? this.renderCeldaHeader() : this.renderCelda()
 		);
     }
 }

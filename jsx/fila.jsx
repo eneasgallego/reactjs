@@ -7,29 +7,23 @@ class Fila extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			cols: parseCols(props.cols)
+			id_campo: props.id_campo ? props.id_campo : '',
+			datos: props.datos ? props.datos : {},
+			acciones: props.acciones ? props.acciones : [],
+			combos_dataset: props.combos_dataset ? props.combos_dataset : {},
+			header: props.header ? props.header : false,
+			anchos: props.anchos ? props.anchos : [],
+			orden: props.orden ? props.orden : {},
+			cols: parseCols(props.cols),
+			claseFila: props.claseFila ? props.claseFila : ()=>{},
+			onResize: props.onResize ? props.onResize : ()=>{},
+			onResizeCelda: props.onResizeCelda ? props.onResizeCelda : ()=>{},
+			onClickCelda: props.onClickCelda ? props.onClickCelda : ()=>{},
+			onClickAcciones: props.onClickAcciones ? props.onClickAcciones : ()=>{},
+			onChangeValor: props.onChangeValor ? props.onChangeValor : ()=>{},
+			onChangeDesc: props.onChangeDesc ? props.onChangeDesc : ()=>{}
 		};
 	}
-/*	getDefaultProps() {
-		return {
-			id_campo: '',
-			datos: {},
-			cols: [],
-			acciones: [],
-			combos_dataset: {},
-			header: false,
-			guardar: undefined,
-    		anchos: [],
-			orden: {},
-			claseFila(){},
-			onResize(){},
-			onResizeCelda(){},
-			onClickCelda(){},
-			onClickAcciones(){},
-			onChangeValor(){},
-			onChangeDesc(){}
-		};
-	},*/
 	componentDidMount() {
 		let dom = ReactDOM.findDOMNode(this);
 		dom.addEventListener('resize', this.onResize);
@@ -42,7 +36,7 @@ class Fila extends React.Component {
 		});
 	}
 	triggerResize(offset) {
-		this.props.onResize(offset, this);
+		this.state.onResize(offset, this);
 	}
 	onResize(e) {
 		this.triggerResize({
@@ -54,19 +48,19 @@ class Fila extends React.Component {
 		});
 	}
 	onResizeCelda(offset, celda) {
-		this.props.onResizeCelda(offset, celda, this);
+		this.state.onResizeCelda(offset, celda, this);
 	}
 	onChangeValor(valor, celda) {
-		this.props.onChangeValor(valor, celda, this);
+		this.state.onChangeValor(valor, celda, this);
 	}
 	onChangeDesc(desc, celda) {
-		this.props.onChangeDesc(desc, celda, this);
+		this.state.onChangeDesc(desc, celda, this);
 	}
 	getIdFila()  {
-		return this.props.datos[this.props.id_campo];
+		return this.state.datos[this.state.id_campo];
 	}
 	setIdFila(id) {
-		this.props.datos[this.props.id_campo] = id;
+		this.state.datos[this.state.id_campo] = id;
 	}
 	guardar(valor, field, celda) {
 		if (typeof(this.props.guardar) === 'function') {
@@ -74,19 +68,19 @@ class Fila extends React.Component {
 		}
 	}
 	accionMenu(tag) {
-		this.props.onClickAcciones(tag, this);
+		this.state.onClickAcciones(tag, this);
 	}
 	renderAcciones()  {
 		let ret;
 
-		if (this.props.acciones.length) {
-			if (this.props.header) {
+		if (this.state.acciones.length) {
+			if (this.state.header) {
 				ret = 
 				<th key={this.state.cols.length}></th>
 			} else {
 				ret = 
 				<td key={this.state.cols.length}>
-					<Menu children={this.props.acciones} accion={this.accionMenu}/>
+					<Menu children={this.state.acciones} accion={this.accionMenu}/>
 				</td>
 			}
 		}
@@ -94,7 +88,7 @@ class Fila extends React.Component {
 		return ret;
 	}
 	orden(campo) {
-		return (this.props.orden.campo == campo);
+		return (this.state.orden.campo == campo);
 	}
 	renderCeldas()  {
 		let celdas = [];
@@ -105,18 +99,18 @@ class Fila extends React.Component {
 			celdas.push(
 				<Celda 
 					key={i}
-					datos={this.props.datos[col.campo]}
+					datos={this.state.datos[col.campo]}
 					campo={col.campo}
 					guardar={this.guardar}
-					onClick={this.props.onClickCelda}
+					onClick={this.state.onClickCelda}
 					onChangeValor={this.onChangeValor}
 					onChangeDesc={this.onChangeDesc}
-					header={this.props.header}
+					header={this.state.header}
 					tipo={col.tipo}
-					combos_dataset={this.props.combos_dataset}
-					ancho={this.props.anchos[i]}
+					combos_dataset={this.state.combos_dataset}
+					ancho={this.state.anchos[i]}
 					orden={this.orden(col.campo)}
-					orden_desc={this.orden(col.campo) && this.props.orden.desc}
+					orden_desc={this.orden(col.campo) && this.state.orden.desc}
 					onResize={this.onResizeCelda}
 				/>
 			);
@@ -130,9 +124,9 @@ class Fila extends React.Component {
 		return celdas;
 	}
 	claseFila()  {
-		let ret = this.props.header ? 'header' : '';
+		let ret = this.state.header ? 'header' : '';
 
-		let claseFila = this.props.claseFila(this.props.datos, this);
+		let claseFila = this.state.claseFila(this.state.datos, this);
 		if (claseFila) {
 			ret += ' ' + claseFila;
 		}

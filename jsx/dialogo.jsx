@@ -6,20 +6,16 @@ class Dialogo extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			titulo: props.titulo ? props.titulo : 'Diálogo',
+			puedeCerrar: typeof(props.puedeCerrar) === 'boolean' ? props.puedeCerrar : true,
+			contenido: props.contenido ? props.contenido : 'Inserte el contenido',
+			menu: props.menu ? props.menu : [],
+			accionMenu: props.accionMenu ? props.accionMenu : ()=>{},
+			cerrarDialogo: props.cerrarDialogo ? props.cerrarDialogo : ()=>{},
 			top: undefined,
 			left: undefined
 		};
 	}
-/*	getDefaultProps() {
-		return {
-			titulo: 'Dialogo',
-			puedeCerrar: true,
-			contenido: 'Inserte el contenido.',
-			menu: [],
-			accionMenu(){},
-			cerrarDialogo(){}
-		};
-	},*/
 	componentDidMount() {
 		let dom = ReactDOM.findDOMNode(this);
 		dom.addEventListener('resize', () => {
@@ -39,16 +35,16 @@ class Dialogo extends React.Component {
 		});
 	}
 	accionMenu(tag) {
-		this.props.accionMenu(tag, this);
+		this.state.accionMenu(tag, this);
 	}
 	cerrarDialogo() {
-		this.props.cerrarDialogo();
+		this.state.cerrarDialogo();
 	}
 	renderMenu() {
 		let ret = undefined;
 
-		if (this.props.menu.length) {
-			ret = <Menu ref="menu" children={this.props.menu} accion={this.accionMenu}/>
+		if (this.state.menu.length) {
+			ret = <Menu ref="menu" children={this.state.menu} accion={this.accionMenu}/>
 		}
 
 		return ret;
@@ -68,7 +64,7 @@ class Dialogo extends React.Component {
 	renderCerrar() {
 		let ret;
 
-		if (this.props.puedeCerrar) {
+		if (this.state.puedeCerrar) {
 			ret = <i className="icon icon-cancel" onClick={this.cerrarDialogo}></i>
 		}
 
@@ -82,13 +78,13 @@ class Dialogo extends React.Component {
 				<div ref="contenedor" className="dialogo-contenedor" style={this.renderStyleContenedor()}>
 					<header>
 						<h2>
-							{this.props.titulo}
+							{this.state.titulo}
 							{this.renderCerrar()}
 						</h2>
 					</header>
 
 					<main ref="contenido" className="dialogo-contenido">
-						{this.props.contenido}
+						{this.state.contenido}
 					</main>
 
 					{this.renderMenu()}

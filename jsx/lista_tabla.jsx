@@ -6,20 +6,15 @@ class ListaTabla extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			cols: parseCols(props.cols)
+			id_campo: props.id_campo ? props.id_campo : '',
+			url: props.url ? props.url : '',
+			eliminar: props.eliminar ? props.eliminar : false,
+			cols: parseCols(props.cols),
+			setDialogo: props.setDialogo ? props.setDialogo : ()=>{}
 		};
 	}
-/*	getDefaultProps() {
-		return {
-			id_campo: '',
-			url: '',
-			cols: [],
-			eliminar: false,
-			setDialogo(){}
-		};
-	},*/
 	acciones() {
-		if (this.props.eliminar) {
+		if (this.state.eliminar) {
 			return [{
 				texto: 'Eliminar',
 				tag: 'eliminar'
@@ -38,7 +33,7 @@ class ListaTabla extends React.Component {
 
 		let id = fila.getIdFila();
 		if (id) {
-			this.props.setDialogo({
+			this.state.setDialogo({
 				titulo: 'Eliminar',
 				puedeCerrar: false,
 				contenido: '¿Seguro de querer eliminar la fila?',
@@ -53,21 +48,21 @@ class ListaTabla extends React.Component {
 					if (tag == 'aceptar') {
 						ajax({
 							metodo: 'delete',
-							url: this.props.url + '/' + id,
+							url: this.state.url + '/' + id,
 							success: response => {
 								let filas = tabla.state.filas.slice();
 								let indice = filas.indice(item => {
-									return (item[this.props.id_campo] == id);
+									return (item[this.state.id_campo] == id);
 								});
 								if (!!~indice) {
 									filas.splice(indice, 1);
 									tabla.setState({filas: filas});
 								}
-								this.props.setDialogo();
+								this.state.setDialogo();
 							}
 						}, tabla);
 					} else if (tag == 'cancelar') {
-						this.props.setDialogo();
+						this.state.setDialogo();
 					}
 				}
 			});
@@ -78,18 +73,18 @@ class ListaTabla extends React.Component {
 		let campo = celda.props.campo;
 		let params = fila.props.datos;
 		params[campo] = valor;
-		let url = this.props.url;
+		let url = this.state.url;
 		let metodo = 'post';
 
 		let fn = response => {
 			let filas = tabla.state.filas.slice();
 			let indice = filas.indice(item => {
-				return (item[this.props.id_campo] == id);
+				return (item[this.state.id_campo] == id);
 			});
 			if (!!~indice) {
 				let datos = filas[indice];
 				if (metodo == 'post') {
-					datos[this.props.id_campo] = response[this.props.id_campo];
+					datos[this.state.id_campo] = response[this.state.id_campo];
 				};
 				datos[campo] = valor;
 				filas[indice] = datos;
@@ -119,9 +114,9 @@ class ListaTabla extends React.Component {
 	render() {
 		return (
 			<Tabla
-				id_campo={this.props.id_campo}
+				id_campo={this.state.id_campo}
 				guardar={this.guardar}
-				url={this.props.url}
+				url={this.state.url}
 				cols={this.state.cols}
 				acciones={this.acciones()}
 				onClickAcciones={this.onClickAcciones}

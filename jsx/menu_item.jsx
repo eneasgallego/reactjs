@@ -7,19 +7,15 @@ class MenuItem extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			mostrar_children: false
+			texto: props.texto ? props.texto : '',
+			menu: props.menu ? props.menu : [],
+			mostrar_children: false,
+			accion: props.accion ? props.accion : ()=>{}
 		};
 	}
-/*	getDefaultProps() {
-		return {
-			texto: '',
-			accion(){},
-			menu: []
-		};
-	},*/
 	accion(key, e) {
 		e.stopPropagation();
-		this.props.accion(key, e);
+		this.state.accion(key, e);
 	}
 	onMouseOver(e, boton) {
 		this.setState({mostrar_children: true});
@@ -38,8 +34,8 @@ class MenuItem extends React.Component {
 	}
 	renderMenu() {
 		let ret = '';
-		if (this.props.menu instanceof Array && this.props.menu.length) {
-			ret = <Menu className={this.renderClassChild()} children={this.props.menu} accion={this.accion}/>
+		if (this.state.menu instanceof Array && this.state.menu.length) {
+			ret = <Menu className={this.renderClassChild()} children={this.state.menu} accion={this.accion}/>
 		}
 
 		return ret;
@@ -51,7 +47,7 @@ class MenuItem extends React.Component {
 				onMouseOut={this.onMouseOut}
 				onClick={this.accion.bind(this, this._reactInternalInstance._currentElement.key)}
 			>
-				<Boton	texto={this.props.texto} 
+				<Boton	texto={this.state.texto}
 
 				/>
 				{this.renderMenu()}

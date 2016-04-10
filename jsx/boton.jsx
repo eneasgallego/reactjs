@@ -3,19 +3,17 @@ import React from 'react'
 class Boton extends React.Component {
 	constructor(props) {
 		super(props);
-	}
-	/*getDefaultProps() {
-		return {
-			texto: '',
-			accion(){}
+		this.state = {
+			texto: props.texto ? props.texto : '',
+			accion: props.accion ? props.accion : ()=>{}
 		};
-	},*/
+	}
 	render() {
 		return (
 			<a 	href="#!" 
-				onClick={this.props.accion}
+				onClick={this.state.accion}
 			>
-				{this.props.texto}
+				{this.state.texto}
 			</a> 
 		);
     }

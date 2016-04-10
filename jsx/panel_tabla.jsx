@@ -6,29 +6,25 @@ class PanelTabla extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			alto_tabla: undefined
+			id: props.id ? props.id : '',
+			titulo: props.titulo ? props.titulo : '',
+			url: props.url ? props.url : '',
+			id_campo: props.id_campo ? props.id_campo : '',
+			params: props.params ? props.params : {},
+			orden: props.orden ? props.orden : {},
+			cols: props.cols ? props.cols : [],
+			acciones: props.acciones ? props.acciones : [],
+			alto_tabla: undefined,
+			claseFila: props.claseFila ? props.claseFila : ()=>{},
+			parseData: props.parseData ? props.parseData : ()=>{},
+			onResize: props.onResize ? props.onResize : ()=>{},
+			onResizeTabla: props.onResizeTabla ? props.onResizeTabla : ()=>{},
+			onClickAcciones: props.onClickAcciones ? props.onClickAcciones : ()=>{}
 		};
 	}
-/*	getDefaultProps() {
-		return {
-			id: '',
-			titulo: '',
-			url: '',
-			params: {},
-			orden: {},
-			id_campo: '',
-			cols: [],
-			acciones: [],
-			claseFila(){},
-			parseData(){},
-			onResize(){},
-			onResizeTabla(){},
-			onClickAcciones(){}
-		};
-	},*/
 	onResizeTabla(offset, tabla) {
-		this.props.onResizeTabla(offset, tabla, this);
-		this.props.onResize(offset, this);
+		this.state.onResizeTabla(offset, tabla, this);
+		this.state.onResize(offset, this);
 	}
 	dimensionar() {
 		let dom = ReactDOM.findDOMNode(this);
@@ -48,10 +44,10 @@ class PanelTabla extends React.Component {
 		});
 	}
 	onClickAcciones(tag, fila, tabla) {
-		this.props.onClickAcciones(tag, fila, tabla, this);
+		this.state.onClickAcciones(tag, fila, tabla, this);
 	}
 	parseData(data, tabla) {
-		let ret = this.props.parseData(data, tabla, this);
+		let ret = this.state.parseData(data, tabla, this);
 
 		return ret ? ret : data;
 	}
@@ -72,14 +68,14 @@ class PanelTabla extends React.Component {
 		this.tabla = <Tabla
 			ref="tabla"
 			style={this.renderStyleTabla()}
-			id_campo={this.props.id_campo}
-			url={this.props.url}
+			id_campo={this.state.id_campo}
+			url={this.state.url}
 			parseData={this.parseData}
-			params={this.props.params}
-			orden={this.props.orden}
-			claseFila={this.props.claseFila}
-			cols={this.props.cols}
-			acciones={this.props.acciones}
+			params={this.state.params}
+			orden={this.state.orden}
+			claseFila={this.state.claseFila}
+			cols={this.state.cols}
+			acciones={this.state.acciones}
 			onResize={this.onResizeTabla}
 			onClickAcciones={this.onClickAcciones}
 		/>
@@ -88,8 +84,8 @@ class PanelTabla extends React.Component {
 	}
 	render() {
 		return (
-			<section id={this.props.id} className="panel">
-				<h2 ref="titulo">{this.props.titulo}</h2>
+			<section id={this.state.id} className="panel">
+				<h2 ref="titulo">{this.state.titulo}</h2>
 				{this.renderTabla()}
 			</section>
 		);
