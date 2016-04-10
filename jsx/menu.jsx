@@ -3,11 +3,6 @@ import React from 'react'
 class Menu extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			contenido: 'inicio',
-			alto: undefined,
-			dialogo: undefined
-		};
 	}
 /*	getDefaultProps() {
 		return {
