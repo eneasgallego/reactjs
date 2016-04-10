@@ -35,7 +35,7 @@ class Fila extends React.Component {
 		});
 	}
 	onResizeCelda(offset, celda) {
-		this.props.onResizeCelda(offset, celda, this);
+		this.props.onResizeCelda && this.props.onResizeCelda(offset, celda, this);
 	}
 	onChangeValor(valor, celda) {
 		this.props.onChangeValor(valor, celda, this);
