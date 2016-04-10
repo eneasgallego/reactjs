@@ -1,11 +1,21 @@
-window.Menu = React.createClass({
-	getDefaultProps() {
+import React from 'react'
+
+class Menu extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			contenido: 'inicio',
+			alto: undefined,
+			dialogo: undefined
+		};
+	}
+/*	getDefaultProps() {
 		return {
 			className: '',
 			children: [],
 			accion(){}
 		};
-	},
+	}*/
 	renderChildren() {
 		let ret = [];
 
@@ -15,7 +25,7 @@ window.Menu = React.createClass({
 		}
 
 		return ret;
-	},
+	}
 	render() {
 		return (
 			<nav className={this.props.className}>
@@ -25,4 +35,6 @@ window.Menu = React.createClass({
 			</nav>
 		);
     }
-});
+}
+
+export default Menu
