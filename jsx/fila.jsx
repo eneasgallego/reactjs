@@ -75,7 +75,9 @@ class Fila extends React.Component {
 		return ret;
 	}
 	orden(campo) {
-		return (this.props.orden.campo == campo);
+		//return (this.props.orden.campo == campo);
+
+		return this.props.orden.indice('campo', campo) + 1;
 	}
 	renderCeldas()  {
 		let celdas = [];
@@ -135,7 +137,7 @@ Fila.defaultProps = {
 	combos_dataset: {},
 	header: false,
 	anchos: [],
-	orden: {},
+	orden: [],
 	cols: [],
 	claseFila(){},
 	onResize(){},

@@ -13,7 +13,7 @@ class Tabla extends React.Component {
 			cargando: false,
 			filas: [],
 			combos_dataset: {},
-			orden: props.orden,
+			orden: this.props.orden instanceof Array ? this.props.orden : [this.props.orden],
 			velo: false,
 			anchos: [],
 			cols: parseCols(props.cols),
@@ -220,13 +220,23 @@ class Tabla extends React.Component {
 	}
 	ordenar(orden, celda, fila) {
 
-		this.setState({
-			orden: {
+		var state = this.state.orden;
+
+		var elOrden = state.buscar('campo', celda.props.campo);
+		if (elOrden) {
+			state = state.slice(elOrden);
+			elOrden.desc = !elOrden.desc;
+		} else {
+			elOrden = {
 				campo: celda.props.campo,
 				desc: orden < 0
-			}
-		});
-	}
+			};
+		}
+
+		state.splice(0, 0, elOrden);
+
+		this.setState(state);
+	},
 	refrescar() {
 		this.state.filas_cargadas = false;
 		this.cargarFilas(this.forceUpdate);
@@ -267,17 +277,30 @@ class Tabla extends React.Component {
 				anchos={this.state.anchos}
 			/>
 
-			let campo = this.state.orden.campo;
-			if (campo) {
-				let desc = this.state.orden.desc;
-				let index = filas.indice((v, k) => {
-					let valor1 = parseFloat(v.props.datos[campo]);
-					valor1 = isNaN(valor1) ? v.props.datos[campo] : valor1;
+			if (this.state.orden.length) {
+				let ordenar = (datos, prof) => {
+					let orden = this.state.orden[prof];
+					let ret = false;
 
-					let valor2 = parseFloat(fila[campo]);
-					valor2 = isNaN(valor2) ? fila[campo] : valor2;
-					return ((desc && valor1 < valor2) ||
-					((!desc) && valor1 > valor2));
+					if (orden) {
+						let campo = orden.campo;
+						let desc = orden.desc;
+
+						let valor1 = parseFloat(datos[campo]);
+						valor1 = isNaN(valor1) ? datos[campo] : valor1;
+
+						let valor2 = parseFloat(fila[campo]);
+						valor2 = isNaN(valor2) ? fila[campo] : valor2;
+
+						ret = (((valor1 == valor2) && ordenar(datos, prof+1)) ||
+						(desc && valor1 < valor2) ||
+						((!desc) && valor1 > valor2));
+					}
+
+					return ret;
+				};
+				let index = filas.indice((v, k) => {
+					return ordenar(v.props.datos, 0);
 				});
 				if (!~index) {
 					filas.push(objFila);
@@ -373,6 +396,7 @@ Tabla.defaultProps = {
 	params: {},
 	style: {},
 	cols: [],
+	orden: [],
 	acciones: [],
 	claseFila(){},
 	parseData(){},

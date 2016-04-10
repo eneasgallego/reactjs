@@ -182,12 +182,12 @@ class Celda extends React.Component {
 				ret = 'icon icon-triangle icon-inv';
 			}
 		}
- 
+
 		return ret;
 	}
 	renderCeldaHeader(){
-		return <th style={this.renderStyle()} onClick={this.accionCelda} ><div className="tabla-celda-div"><i className={this.renderIconoOrden()}></i>{this.props.datos}</div></th>
-	}
+		return <th style={this.renderStyle()} onClick={this.accionCelda} ><div className="tabla-celda-div"><i className={this.renderIconoOrden()}>{this.props.orden}</i>{this.props.datos}</div></th>
+	},
 	render(){
 		return (
 			this.props.header ? this.renderCeldaHeader() : this.renderCelda()
@@ -200,7 +200,8 @@ Celda.defaultProps = {
 	tipo: 'string',
 	header: false,
 	combos_dataset: {},
-	orden: false,
+	orden: 0,
+	orden_desc: false,
 	onClick(){},
 	onResize(){},
 	onChangeDesc(){}

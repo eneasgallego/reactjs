@@ -85,7 +85,7 @@ PanelTabla.defaultProps = {
 	url: '',
 	id_campo: '',
 	params: {},
-	orden: {},
+	orden: [],
 	cols: [],
 	acciones: [],
 	claseFila(){},
