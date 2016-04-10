@@ -1,19 +1,22 @@
-window.Tabla = React.createClass({
-	getInitialState() {
-		return {
+import React from 'react'
+
+class Tabla extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
 			filas_cargadas: false,
 			cargando: false,
 			filas: [],
-			cols: parseCols(this.props.cols),
+			cols: parseCols(props.cols),
 			combos_dataset: {},
-			orden: this.props.orden,
+			orden: props.orden,
 			velo: false,
 			anchos: [],
 			alto_tabla: undefined,
 			alto_body: undefined
 		};
-	},
-	getDefaultProps() {
+	}
+/*	getDefaultProps() {
 
 		return {
 			id_campo: '',
@@ -34,12 +37,12 @@ window.Tabla = React.createClass({
 			onChangeValor(){},
 			onClickAcciones(){}
 		};
-	},
+	},*/
 	componentWillUpdate() {
 		if (this.isCombosCompletos()) {
 			this.cargarFilas();
 		}
-	},
+	}
 	componentDidMount() {
 		if (this.isCombosCompletos()) {
 			this.cargarFilas();
@@ -56,16 +59,16 @@ window.Tabla = React.createClass({
 			left: dom.offsetLeft,
 			index: dom.cellIndex
 		});
-	},
+	}
 	parseData(data) {
 		let ret = this.props.parseData(data, this);
 
 		return ret ? ret : data;
-	},
+	}
 	triggerResize(offset) {
 		this.calcAltoTabla();
 		this.props.onResize(offset, this);
-	},
+	}
 	onResize(e) {
 		this.triggerResize({
 			width: e.currentTarget.offsetWidth,
@@ -74,7 +77,7 @@ window.Tabla = React.createClass({
 			left: e.currentTarget.offsetLeft,
 			index: e.currentTarget.cellIndex
 		});
-	},
+	}
 	onResizeCelda(offset, celda, fila) {
 		let anchos = this.state.anchos;
 		let ancho = anchos[offset.index];
@@ -83,13 +86,13 @@ window.Tabla = React.createClass({
 			this.setState({anchos: anchos});
 		}
 		this.props.onResizeCelda(offset, celda, fila, this);
-	},
+	}
 	onResizeFila(offset, fila) {
 		this.props.onResizeFila(offset, fila, this);
-	},
+	}
 	dimensionar() {
 		this.calcAltoTabla();
-	},
+	}
 	calcAltoTabla() {
 		let dom = ReactDOM.findDOMNode(this);
 		let alto_tabla = dom.offsetHeight;
@@ -100,7 +103,7 @@ window.Tabla = React.createClass({
 		this.setState({alto_tabla: alto_tabla}, () => {
 			this.calcAltoBody();
 		});
-	},
+	}
 	calcAltoBody() {
 		let dom = ReactDOM.findDOMNode(this);
 		let domDiv = dom.querySelector('.tabla-div');
@@ -109,20 +112,20 @@ window.Tabla = React.createClass({
 		alto_body -= domHead.offsetHeight;
 
 		this.setState({alto_body: alto_body});
-	},
+	}
 	onChangeValor(valor, celda, fila) {
 		this.props.onChangeValor(valor, celda, fila, this);
-	},
+	}
 	guardar(valor, field, celda, fila) {
 		if (typeof(this.props.guardar) === 'function') {
 			this.props.guardar(valor, field, celda, fila, this);
 		}
-	},
+	}
 	accionMenu(tag) {
 		if (tag == 'nuevo') {
 			this.nuevaFila();
 		}
-	},
+	}
 	getValorDefecto(tipo) {
 		let ret;
 
@@ -135,7 +138,7 @@ window.Tabla = React.createClass({
 		}
 
 		return ret;
-	},
+	}
 	nuevaFila() {
 		let filas = this.state.filas.slice();
 		let obj = {};
@@ -148,7 +151,7 @@ window.Tabla = React.createClass({
 		this.setState({
 			filas: filas
 		});
-	},
+	}
 	cargarFilas(fn) {
 		if (!this.state.filas_cargadas && !this.state.cargando) {
 			this.setState({cargando: true}, () => {
@@ -172,7 +175,7 @@ window.Tabla = React.createClass({
 				}, this);
 			});
 		}
-	},
+	}
 	isCombosCompletos() {
 		let ret = true;
 		for (let i = 0 ; i < this.state.cols.length ; i++) {
@@ -187,7 +190,7 @@ window.Tabla = React.createClass({
 		}
 
 		return ret;
-	},
+	}
 	cargarCombos() {
 		let cargarCombo = col => {
 
@@ -218,20 +221,20 @@ window.Tabla = React.createClass({
 			}
 		}
 
-	},
+	}
 	onClickCelda(e, celda) {
 		e.preventDefault();
 		if (!celda.props.header && this.props.guardar) {
 			celda.setState({editar:true});
 		}
-	},
+	}
 	onClickAcciones(tag, fila) {
 		this.props.onClickAcciones(tag, fila, this);
-	},
+	}
 	onClickCeldaHeader(e, celda) {
 		e.preventDefault();
 		celda.changeOrden();
-	},
+	}
 	ordenar(orden, celda, fila) {
 
 		this.setState({
@@ -240,11 +243,11 @@ window.Tabla = React.createClass({
 				desc: orden < 0
 			}
 		});
-	},
+	}
 	refrescar() {
 		this.state.filas_cargadas = false;
 		this.cargarFilas(this.forceUpdate);
-	},
+	}
 	renderMenu() {
 		let ret;
 
@@ -257,7 +260,7 @@ window.Tabla = React.createClass({
 		}
 
 		return ret;
-	},
+	}
 	renderFilas() {
 		let filas = [];
 
@@ -304,7 +307,7 @@ window.Tabla = React.createClass({
 		}
 
 		return filas;
-	},
+	}
 	renderVelo() {
 		let ret;
 
@@ -316,7 +319,7 @@ window.Tabla = React.createClass({
 		}
 
 		return ret;
-	},
+	}
 	renderStyleBody() {
 		let ret = {};
 
@@ -325,7 +328,7 @@ window.Tabla = React.createClass({
 		}
 
 		return ret;
-	},
+	}
 	renderStyleTabla() {
 		let ret = {};
 
@@ -334,7 +337,7 @@ window.Tabla = React.createClass({
 		}
 
 		return ret;
-	},
+	}
 	renderTabla() {
 		let ret;
 
@@ -370,7 +373,7 @@ window.Tabla = React.createClass({
 				</table>
 			</div>
 		);
-	},
+	}
 	render() {
 		return (
 			<div className="tabla-cont" style={this.props.style}>
@@ -380,4 +383,7 @@ window.Tabla = React.createClass({
 			</div>
 		);
 	}
-});
+}
+
+export default Tabla
+

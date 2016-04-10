@@ -1,11 +1,14 @@
-window.Dialogo = React.createClass({
-	getInitialState() {
-    	return {
-    		top: undefined,
-    		left: undefined
-    	};
-  	},
-	getDefaultProps() {
+import React from 'react'
+
+class Dialogo extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			top: undefined,
+			left: undefined
+		};
+	}
+/*	getDefaultProps() {
 		return {
 			titulo: 'Dialogo',
 			puedeCerrar: true,
@@ -14,14 +17,14 @@ window.Dialogo = React.createClass({
 			accionMenu(){},
 			cerrarDialogo(){}
 		};
-	},
+	},*/
 	componentDidMount() {
 		let dom = ReactDOM.findDOMNode(this);
 		dom.addEventListener('resize', () => {
 			this.dimensionar();
 		});
 		this.dimensionar();
-	},
+	}
 	dimensionar() {
 		let dom = ReactDOM.findDOMNode(this);
 		let contenedor = ReactDOM.findDOMNode(this.refs.contenedor);
@@ -32,13 +35,13 @@ window.Dialogo = React.createClass({
 			left: ancho,
 			top: alto
 		});
-	},
+	}
 	accionMenu(tag) {
 		this.props.accionMenu(tag, this);
-	},
+	}
 	cerrarDialogo() {
 		this.props.cerrarDialogo();
-	},
+	}
 	renderMenu() {
 		let ret = undefined;
 
@@ -47,7 +50,7 @@ window.Dialogo = React.createClass({
 		}
 
 		return ret;
-	},
+	}
 	renderStyleContenedor() {
 		let ret = {};
 
@@ -59,7 +62,7 @@ window.Dialogo = React.createClass({
 		}
 
 		return ret;
-	},
+	}
 	renderCerrar() {
 		let ret;
 
@@ -68,7 +71,7 @@ window.Dialogo = React.createClass({
 		}
 
 		return ret;
-	},
+	}
 	render() {
 		return (
 			<div className="dialogo">
@@ -91,4 +94,7 @@ window.Dialogo = React.createClass({
 			</div>
 		);
     }
-});
+}
+
+export default Dialogo
+

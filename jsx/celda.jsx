@@ -1,12 +1,15 @@
-window.Celda = React.createClass({
-	getInitialState() {
-    	return {
-    		orden: this.props.orden ? this.props.orden_desc ? -1 : 1 : 0,
-    		editar: false,
-    		tipo: parseTipo(this.props.tipo)
-    	};
-  	},
-	getDefaultProps() {
+import React from 'react'
+
+class Celda extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			orden: props.orden ? props.orden_desc ? -1 : 1 : 0,
+			editar: false,
+			tipo: parseTipo(props.tipo)
+		};
+	}
+/*	getDefaultProps() {
 		return {
 			datos: '',
 			campo: '',
@@ -23,7 +26,7 @@ window.Celda = React.createClass({
 			onChangeValor(){},
 			onChangeDesc(){}
 		};
-	},
+	},*/
 	componentDidMount(){
 		let dom = ReactDOM.findDOMNode(this);
 		dom.addEventListener('resize', this.onResize);
@@ -34,10 +37,10 @@ window.Celda = React.createClass({
 			left: dom.offsetLeft,
 			index: dom.cellIndex
 		});
-	},
+	}
 	triggerResize(offset) {
 		this.props.onResize(offset, this);
-	},
+	}
 	onResize(e) {
 		this.triggerResize({
 			width: e.currentTarget.offsetWidth,
@@ -46,7 +49,7 @@ window.Celda = React.createClass({
 			left: e.currentTarget.offsetLeft,
 			index: e.currentTarget.cellIndex
 		});
-	},
+	}
 	guardar(e, field) {
 		let valor;
 		if (this.state.tipo.tipo == 'bool') {
@@ -68,42 +71,42 @@ window.Celda = React.createClass({
 				this.props.guardar(valor, field, this);
 			}
 		});
-	},
+	}
 	accionCelda(e) {
 		this.props.onClick(e, this);
-	},
+	}
 	onClickField(e) {
 		e.stopPropagation();
-	},
+	}
 	onBlurTextField(e, textfield) {
 		return this.guardar(e, textfield);
-	},
+	}
 	onBlurField(e, field) {
 		this.setState({editar: false});
-	},
+	}
 	onKeyPressText(e, textfield) {
 		if (e.keyCode == 27 || e.charCode == 27) {
 			this.setState({editar: false});
 		} else if (e.keyCode == 13 || e.charCode == 13) {
 			return this.guardar(e, textfield);
 		}
-	},
+	}
 	onChangeCombo(e, combo) {
 		return this.guardar(e, combo);
-	},
+	}
 	onClickCheck(e, check) {
 		return this.guardar(e, check);
-	},
+	}
 	onLoadField(field) {
 		field.focus();
-	},
+	}
 	changeOrden(){
 		this.setState({
 			orden: this.state.orden > 0 ? -1 : 1
 		}, () => {
 			this.props.onChangeDesc(this.state.orden, this);
 		});
-	},
+	}
 	renderEditar(){
 		let ret = '';
 
@@ -138,7 +141,7 @@ window.Celda = React.createClass({
 		}
 
 		return ret;
-	},
+	}
 	renderValor(){
 		let ret = this.props.datos;
 
@@ -156,7 +159,7 @@ window.Celda = React.createClass({
 		}
 
 		return ret;
-	},
+	}
 	renderStyle(){
 		let ret = {};
 
@@ -171,7 +174,7 @@ window.Celda = React.createClass({
 		}
 
 		return ret;
-	},
+	}
 	renderCelda(){
 		return <td 	style={this.renderStyle()}
 					onClick={this.accionCelda}
@@ -181,7 +184,7 @@ window.Celda = React.createClass({
 						{this.renderEditar()}
 					</div>
 				</td>
-	},
+	}
 	renderIconoOrden(){
 		let ret = '';
 
@@ -194,13 +197,16 @@ window.Celda = React.createClass({
 		}
  
 		return ret;
-	},
+	}
 	renderCeldaHeader(){
 		return <th style={this.renderStyle()} onClick={this.accionCelda} ><div className="tabla-celda-div"><i className={this.renderIconoOrden()}></i>{this.props.datos}</div></th>
-	},
+	}
 	render(){
 		return (
 			this.props.header ? this.renderCeldaHeader() : this.renderCelda()
 		);
     }
-});
+}
+
+export default Celda
+

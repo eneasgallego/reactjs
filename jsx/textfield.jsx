@@ -1,10 +1,13 @@
-window.TextField = React.createClass({
-	getInitialState() {
-    	return {
-			valor: this.props.valor,
-    	};
-  	},
-	getDefaultProps() {
+import React from 'react'
+
+class TextField extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			valor: props.valor
+		};
+	}
+/*	getDefaultProps() {
 		return {
 			valor: '',
 			onClick(){},
@@ -12,22 +15,22 @@ window.TextField = React.createClass({
 			onKeyPress(){},
 			onLoad(){}
 		};
-	},
+	},*/
 	componentDidMount() {
 		this.props.onLoad(this);
-	},
+	}
 	focus() {
 		ReactDOM.findDOMNode(this).focus();
-	},
+	}
 	onFocus() {
 		ReactDOM.findDOMNode(this).select();
-	},
+	}
 	onBlur(e) {
 		return this.props.onBlur(e, this);
-	},
+	}
 	onKeyPress(e) {
 		return this.props.onKeyPress(e, this);
-	},
+	}
 	render() {
 		return (
 			<input 
@@ -39,4 +42,7 @@ window.TextField = React.createClass({
 			/>
 		);
     }
-});
+}
+
+export default TextField
+

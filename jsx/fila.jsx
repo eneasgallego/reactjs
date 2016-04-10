@@ -1,10 +1,13 @@
-window.Fila = React.createClass({
-	getInitialState() {
-    	return {
-    		cols: parseCols(this.props.cols)
-    	};
-  	},
-	getDefaultProps() {
+import React from 'react'
+
+class Fila extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			cols: parseCols(props.cols)
+		};
+	}
+/*	getDefaultProps() {
 		return {
 			id_campo: '',
 			datos: {},
@@ -23,7 +26,7 @@ window.Fila = React.createClass({
 			onChangeValor(){},
 			onChangeDesc(){}
 		};
-	},
+	},*/
 	componentDidMount() {
 		let dom = ReactDOM.findDOMNode(this);
 		dom.addEventListener('resize', this.onResize);
@@ -34,10 +37,10 @@ window.Fila = React.createClass({
 			left: dom.offsetLeft,
 			index: dom.cellIndex
 		});
-	},
+	}
 	triggerResize(offset) {
 		this.props.onResize(offset, this);
-	},
+	}
 	onResize(e) {
 		this.triggerResize({
 			width: e.currentTarget.offsetWidth,
@@ -46,30 +49,30 @@ window.Fila = React.createClass({
 			left: e.currentTarget.offsetLeft,
 			index: e.currentTarget.cellIndex
 		});
-	},
+	}
 	onResizeCelda(offset, celda) {
 		this.props.onResizeCelda(offset, celda, this);
-	},
+	}
 	onChangeValor(valor, celda) {
 		this.props.onChangeValor(valor, celda, this);
-	},
+	}
 	onChangeDesc(desc, celda) {
 		this.props.onChangeDesc(desc, celda, this);
-	},
+	}
 	getIdFila()  {
 		return this.props.datos[this.props.id_campo];
-	},
+	}
 	setIdFila(id) {
 		this.props.datos[this.props.id_campo] = id;
-	},
+	}
 	guardar(valor, field, celda) {
 		if (typeof(this.props.guardar) === 'function') {
 			this.props.guardar(valor, field, celda, this);
 		}
-	},
+	}
 	accionMenu(tag) {
 		this.props.onClickAcciones(tag, this);
-	},
+	}
 	renderAcciones()  {
 		let ret;
 
@@ -86,10 +89,10 @@ window.Fila = React.createClass({
 		}
 
 		return ret;
-	},
+	}
 	orden(campo) {
 		return (this.props.orden.campo == campo);
-	},
+	}
 	renderCeldas()  {
 		let celdas = [];
 		for (let i = 0 ; i < this.state.cols.length ; i++) {
@@ -122,7 +125,7 @@ window.Fila = React.createClass({
 		}
 
 		return celdas;
-	},
+	}
 	claseFila()  {
 		let ret = this.props.header ? 'header' : '';
 
@@ -132,7 +135,7 @@ window.Fila = React.createClass({
 		}
 
 		return ret;
-	},
+	}
 	render() {
 		return (
 			<tr className={this.claseFila()} >
@@ -140,4 +143,7 @@ window.Fila = React.createClass({
 			</tr>
 		);
     }
-});
+}
+
+export default Fila
+

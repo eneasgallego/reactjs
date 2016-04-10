@@ -1,10 +1,13 @@
-window.Combo = React.createClass({
-	getInitialState() {
-    	return {
-			valor: this.props.valor
-    	};
-  	},
-	getDefaultProps() {
+import React from 'react'
+
+class Combo extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			valor: props.valor
+		};
+	}
+/*	getDefaultProps() {
 		return {
 			valor: '',
 			combo: {},
@@ -14,19 +17,19 @@ window.Combo = React.createClass({
 			onChange(){},
 			onLoad(){}
 		};
-	},
+	},*/
 	componentDidMount() {
 		this.props.onLoad(this);
-	},
+	}
 	focus() {
 		ReactDOM.findDOMNode(this).focus();
-	},
+	}
 	onBlur(e) {
 		return this.props.onBlur(e, this);
-	},
+	}
 	onChange(e) {
 		return this.props.onChange(e, this);
-	},
+	}
 	renderOptions() {
 		let ret = [];
 
@@ -42,7 +45,7 @@ window.Combo = React.createClass({
 		}
 
 		return ret;
-	},
+	}
 	render() {
 		return (
 			<select 
@@ -55,4 +58,7 @@ window.Combo = React.createClass({
 			</select>
 		);
     }
-});
+}
+
+export default Combo
+

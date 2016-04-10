@@ -1,10 +1,13 @@
-window.ListaTabla = React.createClass({
-	getInitialState() {
-    	return {
-    		cols: parseCols(this.props.cols)
-    	};
-  	},
-	getDefaultProps() {
+import React from 'react'
+
+class ListaTabla extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			cols: parseCols(props.cols)
+		};
+	}
+/*	getDefaultProps() {
 		return {
 			id_campo: '',
 			url: '',
@@ -12,7 +15,7 @@ window.ListaTabla = React.createClass({
 			eliminar: false,
 			setDialogo(){}
 		};
-	},
+	},*/
 	acciones() {
 		if (this.props.eliminar) {
 			return [{
@@ -21,14 +24,14 @@ window.ListaTabla = React.createClass({
 			}];
 		}
 		return [];
-	},
+	}
 	onClickAcciones(tag) {
 		let fn = this[tag];
 
 		if (typeof(fn) === 'function') {
 			fn.apply(this, arguments);
 		}
-	},
+	}
 	eliminar(tag, fila, tabla) {
 
 		let id = fila.getIdFila();
@@ -67,7 +70,7 @@ window.ListaTabla = React.createClass({
 				}
 			});
 		}
-	},
+	}
 	guardar(valor, field, celda, fila, tabla) {
 		let id = fila.getIdFila();
 		let campo = celda.props.campo;
@@ -110,7 +113,7 @@ window.ListaTabla = React.createClass({
 			params: params,
 			success: fn
 		}, tabla);
-	},
+	}
 	render() {
 		return (
 			<Tabla
@@ -123,4 +126,7 @@ window.ListaTabla = React.createClass({
 			/>
 		);
     }
-});
+}
+
+export default ListaTabla
+
