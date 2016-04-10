@@ -168,7 +168,7 @@ window.Tabla = React.createClass({
 								fn.call(this);
 							}
 						});
-					}
+					}.bind(this)
 				}, this);
 			});
 		}
