@@ -49,7 +49,7 @@ window.ListaTabla = React.createClass({
 						ajax({
 							metodo: 'delete',
 							url: this.props.url + '/' + id,
-							success(response) {
+							success: response => {
 								var filas = tabla.state.filas.slice();
 								var indice = filas.indice(item => {
 									return (item[this.props.id_campo] == id);

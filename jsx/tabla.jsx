@@ -200,7 +200,7 @@ window.Tabla = React.createClass({
 				metodo: 'get',
 				url: col.tipo.url,
 				params: params,
-				success(response) {
+				success: response => {
 					var combos_dataset = this.state.combos_dataset;
 					combos_dataset[col.campo] = response;
 					this.setState({combos_dataset: combos_dataset});
