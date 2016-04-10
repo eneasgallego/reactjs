@@ -195,17 +195,8 @@ window.Celda = React.createClass({
 
 		return ret;
 	},
-	renderStyleIconoOrden(){
-		let ret = {};
-
-		if (this.props.orden) {
-			ret.fontSize = (1.1 - (this.props.orden / 10)) + 'em';
-		}
-
-		return ret;
-	},
 	renderCeldaHeader(){
-		return <th style={this.renderStyle()} onClick={this.accionCelda} ><div className="tabla-celda-div"><i className={this.renderIconoOrden()} style={this.renderStyleIconoOrden()}></i>{this.props.datos}</div></th>
+		return <th style={this.renderStyle()} onClick={this.accionCelda} ><div className="tabla-celda-div"><i className={this.renderIconoOrden()}>{this.props.orden}</i>{this.props.datos}</div></th>
 	},
 	render(){
 		return (
