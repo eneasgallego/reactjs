@@ -9,13 +9,6 @@ class Tabla extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			id_campo: props.id_campo ? props.id_campo : '',
-			url: props.url ? props.url : '',
-			params: props.params ? props.params : {},
-			style: props.style ? props.style : {},
-			cols: parseCols(props.cols),
-			acciones: props.acciones ? props.acciones : [],
-
 			filas_cargadas: false,
 			cargando: false,
 			filas: [],
@@ -23,16 +16,9 @@ class Tabla extends React.Component {
 			orden: props.orden,
 			velo: false,
 			anchos: [],
+			cols: parseCols(props.cols),
 			alto_tabla: undefined,
-			alto_body: undefined,
-
-			claseFila: props.claseFila ? props.claseFila : ()=>{},
-			parseData: props.parseData ? props.parseData : ()=>{},
-			onResize: props.onResize ? props.onResize : ()=>{},
-			onResizeFila: props.onResizeFila ? props.onResizeFila : ()=>{},
-			onResizeCelda: props.onResizeCelda ? props.onResizeCelda : ()=>{},
-			onChangeValor: props.onChangeValor ? props.onChangeValor : ()=>{},
-			onClickAcciones: props.onClickAcciones ? props.onClickAcciones : ()=>{}
+			alto_body: undefined
 		};
 	}
 	componentWillUpdate() {
@@ -58,13 +44,13 @@ class Tabla extends React.Component {
 		});
 	}
 	parseData(data) {
-		let ret = this.state.parseData(data, this);
+		let ret = this.props.parseData(data, this);
 
 		return ret ? ret : data;
 	}
 	triggerResize(offset) {
 		this.calcAltoTabla();
-		this.state.onResize(offset, this);
+		this.props.onResize(offset, this);
 	}
 	onResize(e) {
 		this.triggerResize({
@@ -82,10 +68,10 @@ class Tabla extends React.Component {
 			anchos[offset.index] = offset.width;
 			this.setState({anchos: anchos});
 		}
-		this.state.onResizeCelda(offset, celda, fila, this);
+		this.props.onResizeCelda(offset, celda, fila, this);
 	}
 	onResizeFila(offset, fila) {
-		this.state.onResizeFila(offset, fila, this);
+		this.props.onResizeFila(offset, fila, this);
 	}
 	dimensionar() {
 		this.calcAltoTabla();
@@ -111,7 +97,7 @@ class Tabla extends React.Component {
 		this.setState({alto_body: alto_body});
 	}
 	onChangeValor(valor, celda, fila) {
-		this.state.onChangeValor(valor, celda, fila, this);
+		this.props.onChangeValor(valor, celda, fila, this);
 	}
 	guardar(valor, field, celda, fila) {
 		if (typeof(this.props.guardar) === 'function') {
@@ -154,8 +140,8 @@ class Tabla extends React.Component {
 			this.setState({cargando: true}, () => {
 				ajax({
 					metodo: 'get',
-					params: this.state.params,
-					url: this.state.url,
+					params: this.props.params,
+					url: this.props.url,
 					success: res => {
 						let data = this.parseData(res);
 
@@ -226,7 +212,7 @@ class Tabla extends React.Component {
 		}
 	}
 	onClickAcciones(tag, fila) {
-		this.state.onClickAcciones(tag, fila, this);
+		this.props.onClickAcciones(tag, fila, this);
 	}
 	onClickCeldaHeader(e, celda) {
 		e.preventDefault();
@@ -269,9 +255,9 @@ class Tabla extends React.Component {
 				cols={this.state.cols}
 				datos={fila}
 				guardar={this.guardar}
-				id_campo={this.state.id_campo}
-				acciones={this.state.acciones}
-				claseFila={this.state.claseFila}
+				id_campo={this.props.id_campo}
+				acciones={this.props.acciones}
+				claseFila={this.props.claseFila}
 				onResize={this.onResizeFila}
 				onResizeCelda={this.onResizeCelda}
 				onClickCelda={this.onClickCelda}
@@ -358,7 +344,7 @@ class Tabla extends React.Component {
 							onResizeCelda={this.onResizeCelda}
 							onClickCelda={this.onClickCeldaHeader}
 							onChangeDesc={this.ordenar}
-							acciones={this.state.acciones}
+							acciones={this.props.acciones}
 							combos_dataset={this.state.combos_dataset}
 							anchos={this.state.anchos}
 							orden={this.state.orden}
@@ -373,7 +359,7 @@ class Tabla extends React.Component {
 	}
 	render() {
 		return (
-			<div className="tabla-cont" style={this.state.style}>
+			<div className="tabla-cont" style={this.props.style}>
 				{this.renderMenu()} 
 				{this.renderTabla()} 
 				{this.renderVelo()}
@@ -381,6 +367,21 @@ class Tabla extends React.Component {
 		);
 	}
 }
+Tabla.defaultProps = {
+	id_campo: '',
+	url: '',
+	params: {},
+	style: {},
+	cols: [],
+	acciones: [],
+	claseFila(){},
+	parseData(){},
+	onResize(){},
+	onResizeFila(){},
+	onResizeCelda(){},
+	onChangeValor(){},
+	onClickAcciones(){}
+};
 
 export default Tabla
 

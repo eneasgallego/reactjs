@@ -9,16 +9,6 @@ class Celda extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			datos: props.datos ? props.datos : '',
-			campo: props.campo ? props.campo : '',
-			props_tipo: props.tipo ? props.tipo : 'string',
-			header: props.header ? props.header : false,
-			combos_dataset: props.combos_dataset ? props.combos_dataset : {},
-			props_orden: props.orden ? props.orden : false,
-			onClick: props.onClick ? props.onClick : ()=>{},
-			onResize: props.onResize ? props.onResize : ()=>{},
-			onChangeDesc: props.onChangeDesc ? props.onChangeDesc : ()=>{},
-
 			orden: props.orden ? props.orden_desc ? -1 : 1 : 0,
 			editar: false,
 			tipo: parseTipo(props.tipo)
@@ -36,7 +26,7 @@ class Celda extends React.Component {
 		});
 	}
 	triggerResize(offset) {
-		this.state.onResize(offset, this);
+		this.props.onResize.call(this, offset, this);
 	}
 	onResize(e) {
 		this.triggerResize({
@@ -70,7 +60,7 @@ class Celda extends React.Component {
 		});
 	}
 	accionCelda(e) {
-		this.state.onClick(e, this);
+		this.props.onClick.call(this, e, this);
 	}
 	onClickField(e) {
 		e.stopPropagation();
@@ -101,7 +91,7 @@ class Celda extends React.Component {
 		this.setState({
 			orden: this.state.orden > 0 ? -1 : 1
 		}, () => {
-			this.state.onChangeDesc(this.state.orden, this);
+			this.props.onChangeDesc.call(this, this.state.orden, this);
 		});
 	}
 	renderEditar(){
@@ -110,17 +100,17 @@ class Celda extends React.Component {
 		if (this.state.editar) {
 			if (this.state.tipo.tipo == 'object') {
 				ret = 	<Combo 
-							valor={this.state.datos}
-							combo={this.state.props_tipo}
+							valor={this.props.datos}
+							combo={this.props.tipo}
 							onClick={this.onClickField}
 							onBlur={this.onBlurField}
 							onChange={this.onChangeCombo}
 							onLoad={this.onLoadField}
-							dataset={this.state.combos_dataset[this.state.campo]}
+							dataset={this.props.combos_dataset[this.props.campo]}
 						/>
 			} else if (this.state.tipo.tipo == 'bool') {
 				ret = 	<CheckBox 
-							valor={this.state.datos}
+							valor={this.props.datos}
 							onClick={this.onClickCheck}
 							onBlur={this.onBlurField}
 							onChange={this.onChangeCombo}
@@ -128,7 +118,7 @@ class Celda extends React.Component {
 						/>
 			} else {
 				ret = 	<TextField 
-							valor={this.state.datos}
+							valor={this.props.datos}
 							onClick={this.onClickField}
 							onBlur={this.onBlurTextField}
 							onKeyPress={this.onKeyPressText}
@@ -140,10 +130,10 @@ class Celda extends React.Component {
 		return ret;
 	}
 	renderValor(){
-		let ret = this.state.datos;
+		let ret = this.props.datos;
 
 		if (this.state.tipo.tipo == 'object') {
-			let dataset = this.state.combos_dataset[this.state.campo];
+			let dataset = this.props.combos_dataset[this.props.campo];
 
 			if (dataset) {
 				let item = dataset.buscar(this.state.tipo.id, ret);
@@ -185,7 +175,7 @@ class Celda extends React.Component {
 	renderIconoOrden(){
 		let ret = '';
 
-		if (this.state.props_orden) {
+		if (this.props.orden) {
 			if (this.state.orden > 0) {
 				ret = 'icon icon-triangle';
 			} else if (this.state.orden < 0) {
@@ -196,14 +186,25 @@ class Celda extends React.Component {
 		return ret;
 	}
 	renderCeldaHeader(){
-		return <th style={this.renderStyle()} onClick={this.accionCelda} ><div className="tabla-celda-div"><i className={this.renderIconoOrden()}></i>{this.state.datos}</div></th>
+		return <th style={this.renderStyle()} onClick={this.accionCelda} ><div className="tabla-celda-div"><i className={this.renderIconoOrden()}></i>{this.props.datos}</div></th>
 	}
 	render(){
 		return (
-			this.state.header ? this.renderCeldaHeader() : this.renderCelda()
+			this.props.header ? this.renderCeldaHeader() : this.renderCelda()
 		);
     }
 }
+Celda.defaultProps = {
+	datos: '',
+	campo: '',
+	tipo: 'string',
+	header: false,
+	combos_dataset: {},
+	orden: false,
+	onClick(){},
+	onResize(){},
+	onChangeDesc(){}
+};
 
 export default Celda
 

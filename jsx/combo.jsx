@@ -5,26 +5,20 @@ class Combo extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			valor: props.valor,
-			combo: props.combo ? props.combo : {},
-			dataset: props.dataset ? props.dataset : [],
-			onClick: props.onClick ? props.onClick : ()=>{},
-			onBlur: props.onBlur ? props.onBlur : ()=>{},
-			onChange: props.onChange ? props.onChange : ()=>{},
-			onLoad: props.onLoad ? props.onLoad : ()=>{}
+			valor: props.valor
 		};
 	}
 	componentDidMount() {
-		this.state.onLoad(this);
+		this.props.onLoad(this);
 	}
 	focus() {
 		ReactDOM.findDOMNode(this).focus();
 	}
 	onBlur(e) {
-		return this.state.onBlur(e, this);
+		return this.props.onBlur(e, this);
 	}
 	onChange(e) {
-		return this.state.onChange(e, this);
+		return this.props.onChange(e, this);
 	}
 	renderOptions() {
 		let ret = [];
@@ -32,11 +26,11 @@ class Combo extends React.Component {
 		ret.push(
 			<option key={-1}></option>
 		);
-		for (let i = 0 ; i < this.state.dataset.length ; i++) {
-			let item = this.state.dataset[i];
+		for (let i = 0 ; i < this.props.dataset.length ; i++) {
+			let item = this.props.dataset[i];
 
 			ret.push(
-				<option key={i} value={item[this.state.combo.id]}>{item[this.state.combo.texto]}</option>
+				<option key={i} value={item[this.props.combo.id]}>{item[this.props.combo.texto]}</option>
 			);
 		}
 
@@ -46,7 +40,7 @@ class Combo extends React.Component {
 		return (
 			<select 
 				defaultValue={parseInt(this.state.valor)}
-				onClick={this.state.onClick}
+				onClick={this.props.onClick}
 				onBlur={this.onBlur}
 				onChange={this.onChange}
 			>
@@ -55,6 +49,15 @@ class Combo extends React.Component {
 		);
     }
 }
+Combo.defaultProps = {
+	valor: '',
+	combo: {},
+	dataset: [],
+	onClick(){},
+	onBlur(){},
+	onChange(){},
+	onLoad(){}
+};
 
 export default Combo
 

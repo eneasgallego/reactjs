@@ -7,12 +7,6 @@ class Dialogo extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			titulo: props.titulo ? props.titulo : 'Diálogo',
-			puedeCerrar: typeof(props.puedeCerrar) === 'boolean' ? props.puedeCerrar : true,
-			contenido: props.contenido ? props.contenido : 'Inserte el contenido',
-			menu: props.menu ? props.menu : [],
-			accionMenu: props.accionMenu ? props.accionMenu : ()=>{},
-			cerrarDialogo: props.cerrarDialogo ? props.cerrarDialogo : ()=>{},
 			top: undefined,
 			left: undefined
 		};
@@ -36,16 +30,16 @@ class Dialogo extends React.Component {
 		});
 	}
 	accionMenu(tag) {
-		this.state.accionMenu(tag, this);
+		this.props.accionMenu(tag, this);
 	}
 	cerrarDialogo() {
-		this.state.cerrarDialogo();
+		this.props.cerrarDialogo();
 	}
 	renderMenu() {
 		let ret = undefined;
 
-		if (this.state.menu.length) {
-			ret = <Menu ref="menu" children={this.state.menu} accion={this.accionMenu}/>
+		if (this.props.menu.length) {
+			ret = <Menu ref="menu" children={this.props.menu} accion={this.accionMenu}/>
 		}
 
 		return ret;
@@ -65,7 +59,7 @@ class Dialogo extends React.Component {
 	renderCerrar() {
 		let ret;
 
-		if (this.state.puedeCerrar) {
+		if (this.props.puedeCerrar) {
 			ret = <i className="icon icon-cancel" onClick={this.cerrarDialogo}></i>
 		}
 
@@ -79,13 +73,13 @@ class Dialogo extends React.Component {
 				<div ref="contenedor" className="dialogo-contenedor" style={this.renderStyleContenedor()}>
 					<header>
 						<h2>
-							{this.state.titulo}
+							{this.props.titulo}
 							{this.renderCerrar()}
 						</h2>
 					</header>
 
 					<main ref="contenido" className="dialogo-contenido">
-						{this.state.contenido}
+						{this.props.contenido}
 					</main>
 
 					{this.renderMenu()}
@@ -94,6 +88,14 @@ class Dialogo extends React.Component {
 		);
     }
 }
+Dialogo.defaultProps = {
+	titulo: 'Diálogo',
+	puedeCerrar: true,
+	contenido: 'Inserte el contenido',
+	menu: [],
+	accionMenu(){},
+	cerrarDialogo(){}
+};
 
 export default Dialogo
 

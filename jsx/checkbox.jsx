@@ -5,24 +5,21 @@ class CheckBox extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			valor: props.valor,
-			onClick: props.onClick ? props.onClick : ()=>{},
-			onBlur: props.onBlur ? props.onBlur : ()=>{},
-			onLoad: props.onLoad ? props.onLoad : ()=>{}
+			valor: props.valor
 		};
 	}
 	componentDidMount() {
-		this.state.onLoad(this);
+		this.props.onLoad(this);
 	}
 	focus() {
 		ReactDOM.findDOMNode(this).focus();
 	}
 	onBlur(e) {
-		return this.state.onBlur(e, this);
+		return this.props.onBlur(e, this);
 	}
 	onClick(e) {
 		e.stopPropagation();
-		return this.state.onClick(e, this);
+		return this.props.onClick(e, this);
 	}
 	render() {
 		return (
@@ -35,6 +32,12 @@ class CheckBox extends React.Component {
 		);
     }
 }
+CheckBox.defaultProps = {
+	valor: '',
+	onClick(){},
+	onBlur(){},
+	onLoad(){}
+};
 
 export default CheckBox
 

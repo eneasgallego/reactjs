@@ -5,15 +5,11 @@ class TextField extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			valor: props.valor,
-			onClick: props.onClick ? props.onClick : ()=>{},
-			onBlur: props.onBlur ? props.onBlur : ()=>{},
-			onKeyPress: props.onKeyPress ? props.onKeyPress : ()=>{},
-			onLoad: props.onLoad ? props.onLoad : ()=>{}
+			valor: props.valor
 		};
 	}
 	componentDidMount() {
-		this.state.onLoad(this);
+		this.props.onLoad(this);
 	}
 	focus() {
 		ReactDOM.findDOMNode(this).focus();
@@ -22,16 +18,16 @@ class TextField extends React.Component {
 		ReactDOM.findDOMNode(this).select();
 	}
 	onBlur(e) {
-		return this.state.onBlur(e, this);
+		return this.props.onBlur(e, this);
 	}
 	onKeyPress(e) {
-		return this.state.onKeyPress(e, this);
+		return this.props.onKeyPress(e, this);
 	}
 	render() {
 		return (
 			<input 
 				defaultValue={this.state.valor}
-				onClick={this.state.onClick}
+				onClick={this.props.onClick}
 				onBlur={this.onBlur}
 				onKeyDown={this.onKeyPress}
 				onFocus={this.onFocus}
@@ -39,6 +35,13 @@ class TextField extends React.Component {
 		);
     }
 }
+TextField.defaultProps = {
+	valor: '',
+	onClick(){},
+	onBlur(){},
+	onKeyPress(){},
+	onLoad(){}
+};
 
 export default TextField
 

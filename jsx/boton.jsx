@@ -3,20 +3,20 @@ import React from 'react'
 class Boton extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			texto: props.texto ? props.texto : '',
-			accion: props.accion ? props.accion : ()=>{}
-		};
 	}
 	render() {
 		return (
 			<a 	href="#!" 
-				onClick={this.state.accion}
+				onClick={this.props.accion}
 			>
-				{this.state.texto}
+				{this.props.texto}
 			</a> 
 		);
     }
 }
+Boton.defaultProps = {
+	texto: '',
+	accion(){}
+};
 
-export default Boton
+export default MenuItem
