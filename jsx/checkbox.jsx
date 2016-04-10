@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 
 class CheckBox extends React.Component {
 	constructor(props) {

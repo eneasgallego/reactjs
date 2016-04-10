@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 
 import Combo from './combo.jsx'
 import CheckBox from './checkbox.jsx'

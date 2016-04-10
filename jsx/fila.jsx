@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 
 import Celda from './celda.jsx'
 import Menu from './menu.jsx'
