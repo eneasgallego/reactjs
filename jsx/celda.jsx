@@ -16,7 +16,7 @@ window.Celda = React.createClass({
 			combos_dataset: {},
 			guardar: undefined,
     		ancho: undefined,
-			orden: false,
+			orden: 0,
 			orden_desc: false,
 			onClick(){},
 			onResize(){},
@@ -192,11 +192,20 @@ window.Celda = React.createClass({
 				ret = 'icon icon-triangle icon-inv';
 			}
 		}
- 
+
+		return ret;
+	},
+	renderStyleIconoOrden(){
+		let ret = '';
+
+		if (this.props.orden) {
+			ret.fontSize = (1.1 - (this.props.orden / 10)) + 'em';
+		}
+
 		return ret;
 	},
 	renderCeldaHeader(){
-		return <th style={this.renderStyle()} onClick={this.accionCelda} ><div className="tabla-celda-div"><i className={this.renderIconoOrden()}></i>{this.props.datos}</div></th>
+		return <th style={this.renderStyle()} onClick={this.accionCelda} ><div className="tabla-celda-div"><i className={this.renderIconoOrden()} style={this.renderStyleIconoOrden()}></i>{this.props.datos}</div></th>
 	},
 	render(){
 		return (

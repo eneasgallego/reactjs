@@ -14,7 +14,7 @@ window.Fila = React.createClass({
 			header: false,
 			guardar: undefined,
     		anchos: [],
-			orden: {},
+			orden: [],
 			claseFila(){},
 			onResize(){},
 			onResizeCelda(){},
@@ -88,13 +88,17 @@ window.Fila = React.createClass({
 		return ret;
 	},
 	orden(campo) {
-		return (this.props.orden.campo == campo);
+		//return (this.props.orden.campo == campo);
+
+		return this.props.orden.indice('campo', campo) + 1;
 	},
 	renderCeldas()  {
 		let celdas = [];
 		for (let i = 0 ; i < this.state.cols.length ; i++) {
 
 			let col = this.state.cols[i];
+
+			let orden = this.orden(col.campo);
 
 			celdas.push(
 				<Celda 
@@ -109,8 +113,8 @@ window.Fila = React.createClass({
 					tipo={col.tipo}
 					combos_dataset={this.props.combos_dataset}
 					ancho={this.props.anchos[i]}
-					orden={this.orden(col.campo)}
-					orden_desc={this.orden(col.campo) && this.props.orden.desc}
+					orden={orden}
+					orden_desc={orden && this.props.orden[orden].desc}
 					onResize={this.onResizeCelda}
 				/>
 			);

@@ -10,7 +10,7 @@ window.PanelTabla = React.createClass({
 			titulo: '',
 			url: '',
 			params: {},
-			orden: {},
+			orden: [],
 			id_campo: '',
 			cols: [],
 			acciones: [],
