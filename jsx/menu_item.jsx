@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Boton from './boton.jsx'
+import Menu from './menu.jsx'
 
 class MenuItem extends React.Component {
 	constructor(props) {
