@@ -1,12 +1,12 @@
 window.Menu = React.createClass({
-	getDefaultProps: () => {
+	getDefaultProps() {
 		return {
 			className: '',
 			children: [],
-			accion: () => {}
+			accion(){}
 		};
 	},
-	renderChildren: () => {
+	renderChildren() {
 		var ret = [];
 
 		for (var i = 0 ; i < this.props.children.length ; i++) {
@@ -16,7 +16,7 @@ window.Menu = React.createClass({
 
 		return ret;
 	},
-	render: () => {
+	render() {
 		return (
 			<nav className={this.props.className}>
 				<ul className="menu">
