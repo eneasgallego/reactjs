@@ -1,5 +1,5 @@
 (() => {
-	var promesas = (fn, success, error, ref) => {
+	var promesas = function(fn, success, error, ref) {
 		var array = this;
 		var crearPromesa = (item, index) => {
 			return new Promise(
@@ -29,14 +29,14 @@
 		}
 	};
 	Array.prototype.promesas = promesas;
-	var buscar = (...arg) => {
+	var buscar = function() {
 		var valor;
 		var campo;
-		if (arg.length == 1) {
-			valor = arg[0];
-		} else if (arg.length > 1) {
-			campo = arg[0];
-			valor = arg[1];
+		if (arguments.length == 1) {
+			valor = arguments[0];
+		} else if (arguments.length > 1) {
+			campo = arguments[0];
+			valor = arguments[1];
 		}
 
 		for (var i = 0 ; i < this.length ; i++) {
@@ -52,14 +52,14 @@
 		return undefined;
 	};
 	Array.prototype.buscar = buscar;
-	var indice = (...arg) => {
+	var indice = function() {
 		var valor, campo;
 
-		if (arg.length == 1) {
-			valor = arg[0];
-		} else if (arg.length > 1) {
-			campo = arg[0];
-			valor = arg[1];
+		if (arguments.length == 1) {
+			valor = arguments[0];
+		} else if (arguments.length > 1) {
+			campo = arguments[0];
+			valor = arguments[1];
 		}
 
 		for (var i = 0 ; i < this.length ; i++) {
@@ -75,7 +75,7 @@
 		return -1;
 	};
 	Array.prototype.indice = indice;
-	var crearMapa = id => {
+	var crearMapa = function(id) {
 		var ret = {};
 
 		for (var i = 0 ; i < this.length ; i++) {
@@ -87,7 +87,7 @@
 		return ret;
 	};
 	Array.prototype.crearMapa = crearMapa;
-	window.ajax = (par, tabla) => {
+	window.ajax = function(par, tabla) {
 
 		var params = '';
 		var arr = [];
