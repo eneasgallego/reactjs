@@ -12,6 +12,8 @@ class Celda extends React.Component {
 		this.accionCelda = this.accionCelda.bind(this);
 		this.onKeyPressText = this.onKeyPressText.bind(this);
 		this.onBlurTextField = this.onBlurTextField.bind(this);
+		this.onChangeCombo = this.onChangeCombo.bind(this);
+		this.onClickCheck = this.onClickCheck.bind(this);
 
 		this.state = {
 			orden: props.orden ? props.orden_desc ? -1 : 1 : 0,
@@ -104,31 +106,31 @@ class Celda extends React.Component {
 
 		if (this.state.editar) {
 			if (this.state.tipo.tipo == 'object') {
-				ret = 	<Combo 
-							valor={this.props.datos}
-							combo={this.props.tipo}
-							onClick={this.onClickField}
-							onBlur={this.onBlurField}
-							onChange={this.onChangeCombo}
-							onLoad={this.onLoadField}
-							dataset={this.props.combos_dataset[this.props.campo]}
-						/>
+				ret = 	<Combo
+					valor={this.props.datos}
+					combo={this.props.tipo}
+					onClick={this.onClickField}
+					onBlur={this.onBlurField}
+					onChange={this.onChangeCombo}
+					onLoad={this.onLoadField}
+					dataset={this.props.combos_dataset[this.props.campo]}
+				/>
 			} else if (this.state.tipo.tipo == 'bool') {
-				ret = 	<CheckBox 
-							valor={this.props.datos}
-							onClick={this.onClickCheck}
-							onBlur={this.onBlurField}
-							onChange={this.onChangeCombo}
-							onLoad={this.onLoadField}
-						/>
+				ret = 	<CheckBox
+					valor={this.props.datos}
+					onClick={this.onClickCheck}
+					onBlur={this.onBlurField}
+					onChange={this.onChangeCombo}
+					onLoad={this.onLoadField}
+				/>
 			} else {
-				ret = 	<TextField 
-							valor={this.props.datos}
-							onClick={this.onClickField}
-							onBlur={this.onBlurTextField}
-							onKeyPress={this.onKeyPressText}
-							onLoad={this.onLoadField}
-						/>
+				ret = 	<TextField
+					valor={this.props.datos}
+					onClick={this.onClickField}
+					onBlur={this.onBlurTextField}
+					onKeyPress={this.onKeyPressText}
+					onLoad={this.onLoadField}
+				/>
 			}
 		}
 
@@ -169,13 +171,13 @@ class Celda extends React.Component {
 	}
 	renderCelda(){
 		return <td 	style={this.renderStyle()}
-					onClick={this.accionCelda}
-				>
-					<div className="tabla-celda-div">
+			onClick={this.accionCelda}
+		>
+			<div className="tabla-celda-div">
 						{this.renderValor()}
 						{this.renderEditar()}
-					</div>
-				</td>
+			</div>
+		</td>
 	}
 	renderIconoOrden(){
 		let ret = '';
@@ -197,7 +199,7 @@ class Celda extends React.Component {
 		return (
 			this.props.header ? this.renderCeldaHeader() : this.renderCelda()
 		);
-    }
+	}
 }
 Celda.defaultProps = {
 	datos: '',

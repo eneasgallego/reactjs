@@ -4,6 +4,11 @@ import ReactDOM from 'react-dom'
 class Combo extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.onChange = this.onChange.bind(this);
+		this.focus = this.focus.bind(this);
+		this.onBlur = this.onBlur.bind(this);
+
 		this.state = {
 			valor: props.valor
 		};
@@ -38,7 +43,7 @@ class Combo extends React.Component {
 	}
 	render() {
 		return (
-			<select 
+			<select
 				defaultValue={parseInt(this.state.valor)}
 				onClick={this.props.onClick}
 				onBlur={this.onBlur}
@@ -47,7 +52,7 @@ class Combo extends React.Component {
 			{this.renderOptions()}
 			</select>
 		);
-    }
+	}
 }
 Combo.defaultProps = {
 	valor: '',

@@ -6,13 +6,13 @@ class Boton extends React.Component {
 	}
 	render() {
 		return (
-			<a 	href="#!" 
+			<a 	href="#!"
 				onClick={this.props.accion}
 			>
 				{this.props.texto}
-			</a> 
+			</a>
 		);
-    }
+	}
 }
 Boton.defaultProps = {
 	texto: '',

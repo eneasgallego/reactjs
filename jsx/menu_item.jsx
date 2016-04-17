@@ -55,7 +55,7 @@ class MenuItem extends React.Component {
 				{this.renderMenu()}
 			</li>
 		);
-    }
+	}
 }
 MenuItem.defaultProps = {
 	texto: '',

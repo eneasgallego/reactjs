@@ -7,6 +7,7 @@ class ListaTabla extends React.Component {
 		super(props);
 
 		this.guardar = this.guardar.bind(this);
+		this.onClickAcciones = this.onClickAcciones.bind(this);
 
 		this.state = {
 			cols: parseCols(props.cols)
@@ -121,7 +122,7 @@ class ListaTabla extends React.Component {
 				onClickAcciones={this.onClickAcciones}
 			/>
 		);
-    }
+	}
 }
 ListaTabla.defaultProps = {
 	cols: [],

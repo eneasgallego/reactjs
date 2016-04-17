@@ -6,6 +6,10 @@ import Menu from './menu.jsx'
 class Dialogo extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.cerrarDialogo = this.cerrarDialogo.bind(this);
+		this.accionMenu = this.accionMenu.bind(this);
+
 		this.state = {
 			top: undefined,
 			left: undefined
@@ -86,7 +90,7 @@ class Dialogo extends React.Component {
 				</div>
 			</div>
 		);
-    }
+	}
 }
 Dialogo.defaultProps = {
 	titulo: 'Diálogo',

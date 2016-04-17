@@ -4,6 +4,11 @@ import ReactDOM from 'react-dom'
 class CheckBox extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.focus = this.focus.bind(this);
+		this.onBlur = this.onBlur.bind(this);
+		this.onClick = this.onClick.bind(this);
+
 		this.state = {
 			valor: props.valor
 		};
@@ -23,14 +28,14 @@ class CheckBox extends React.Component {
 	}
 	render() {
 		return (
-			<input 
+			<input
 				type="checkbox"
 				defaultChecked={this.state.valor != '0'}
 				onClick={this.onClick}
 				onBlur={this.onBlur}
 			/>
 		);
-    }
+	}
 }
 CheckBox.defaultProps = {
 	valor: '',

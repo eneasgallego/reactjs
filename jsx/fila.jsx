@@ -10,6 +10,8 @@ class Fila extends React.Component {
 
 		this.onResizeCelda = this.onResizeCelda.bind(this);
 		this.guardar = this.guardar.bind(this);
+		this.accionMenu = this.accionMenu.bind(this);
+		this.onChangeDesc = this.onChangeDesc.bind(this);
 
 		this.state = {
 			cols: parseCols(props.cols)
@@ -66,13 +68,13 @@ class Fila extends React.Component {
 
 		if (this.props.acciones.length) {
 			if (this.props.header) {
-				ret = 
-				<th key={this.state.cols.length}></th>
+				ret =
+					<th key={this.state.cols.length}></th>
 			} else {
-				ret = 
-				<td key={this.state.cols.length}>
-					<Menu children={this.props.acciones} accion={this.accionMenu}/>
-				</td>
+				ret =
+					<td key={this.state.cols.length}>
+						<Menu children={this.props.acciones} accion={this.accionMenu}/>
+					</td>
 			}
 		}
 
@@ -90,7 +92,7 @@ class Fila extends React.Component {
 			let col = this.state.cols[i];
 
 			celdas.push(
-				<Celda 
+				<Celda
 					key={i}
 					datos={this.props.datos[col.campo]}
 					campo={col.campo}
@@ -132,7 +134,7 @@ class Fila extends React.Component {
 				{this.renderCeldas()}
 			</tr>
 		);
-    }
+	}
 }
 Fila.defaultProps = {
 	id_campo: '',
