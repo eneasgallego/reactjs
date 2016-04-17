@@ -10,6 +10,7 @@ class Tabla extends React.Component {
 		super(props);
 
 		this.onResizeCelda = this.onResizeCelda.bind(this);
+		this.onResizeFila = this.onResizeFila.bind(this);
 
 		this.state = {
 			filas_cargadas: false,
