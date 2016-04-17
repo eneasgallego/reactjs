@@ -187,7 +187,7 @@ class Celda extends React.Component {
 	}
 	renderCeldaHeader(){
 		return <th style={this.renderStyle()} onClick={this.accionCelda} ><div className="tabla-celda-div"><i className={this.renderIconoOrden()}>{this.props.orden}</i>{this.props.datos}</div></th>
-	},
+	}
 	render(){
 		return (
 			this.props.header ? this.renderCeldaHeader() : this.renderCelda()
