@@ -8,6 +8,9 @@ import TextField from './textfield.jsx'
 class Celda extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.accionCelda = this.accionCelda.bind(this);
+
 		this.state = {
 			orden: props.orden ? props.orden_desc ? -1 : 1 : 0,
 			editar: false,
