@@ -11,6 +11,7 @@ class Celda extends React.Component {
 
 		this.accionCelda = this.accionCelda.bind(this);
 		this.onKeyPressText = this.onKeyPressText.bind(this);
+		this.onBlurTextField = this.onBlurTextField.bind(this);
 
 		this.state = {
 			orden: props.orden ? props.orden_desc ? -1 : 1 : 0,
