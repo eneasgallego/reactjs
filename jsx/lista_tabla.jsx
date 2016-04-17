@@ -5,6 +5,9 @@ import Tabla from './tabla.jsx'
 class ListaTabla extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.guardar = this.guardar.bind(this);
+
 		this.state = {
 			cols: parseCols(props.cols)
 		};
