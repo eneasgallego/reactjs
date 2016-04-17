@@ -8,6 +8,8 @@ class PanelTabla extends React.Component {
 		super(props);
 
 		this.onResizeTabla = this.onResizeTabla.bind(this);
+		this.parseData = this.parseData.bind(this);
+
 
 		this.state = {
 			alto_tabla: undefined
