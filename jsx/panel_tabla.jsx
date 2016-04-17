@@ -9,7 +9,7 @@ class PanelTabla extends React.Component {
 
 		this.onResizeTabla = this.onResizeTabla.bind(this);
 		this.parseData = this.parseData.bind(this);
-
+		this.onClickAcciones = this.onClickAcciones.bind(this);
 
 		this.state = {
 			alto_tabla: undefined
