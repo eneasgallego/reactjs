@@ -6,6 +6,9 @@ import Tabla from './tabla.jsx'
 class PanelTabla extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.onResizeTabla = this.onResizeTabla.bind(this);
+
 		this.state = {
 			alto_tabla: undefined
 		};
