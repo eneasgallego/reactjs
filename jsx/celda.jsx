@@ -10,6 +10,7 @@ class Celda extends React.Component {
 		super(props);
 
 		this.accionCelda = this.accionCelda.bind(this);
+		this.onKeyPressText = this.onKeyPressText.bind(this);
 
 		this.state = {
 			orden: props.orden ? props.orden_desc ? -1 : 1 : 0,
