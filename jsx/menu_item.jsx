@@ -6,6 +6,9 @@ import Menu from './menu.jsx'
 class MenuItem extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.onMouseOver = this.onMouseOver.bind(this);
+
 		this.state = {
 			mostrar_children: false
 		};
