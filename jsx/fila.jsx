@@ -23,7 +23,7 @@ class Fila extends React.Component {
 		});
 	}
 	triggerResize(offset) {
-		this.props.onResize(offset, this);
+		this.props.onResize.call(this, offset, this);
 	}
 	onResize(e) {
 		this.triggerResize({
