@@ -8,7 +8,7 @@ class Fila extends React.Component {
 	constructor(props) {
 		super(props);
 
-		if (props.onResizeCelda) props.onResizeCelda = props.onResizeCelda.bind(this);
+		if (props.onResizeCelda) this.onResizeCelda = this.onResizeCelda.bind(this);
 
 		this.state = {
 			cols: parseCols(props.cols)
