@@ -71,7 +71,7 @@ class Tabla extends React.Component {
 		this.props.onResizeCelda(offset, celda, fila, this);
 	}
 	onResizeFila(offset, fila) {
-		this.props.onResizeFila(offset, fila, this);
+		this.props.onResizeFila.call(this, offset, fila, this);
 	}
 	dimensionar() {
 		this.calcAltoTabla();
