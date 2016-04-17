@@ -8,6 +8,7 @@ class MenuItem extends React.Component {
 		super(props);
 
 		this.onMouseOver = this.onMouseOver.bind(this);
+		this.onMouseOut = this.onMouseOut.bind(this);
 
 		this.state = {
 			mostrar_children: false
