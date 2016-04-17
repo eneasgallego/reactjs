@@ -236,7 +236,7 @@ class Tabla extends React.Component {
 		state.splice(0, 0, elOrden);
 
 		this.setState(state);
-	},
+	}
 	refrescar() {
 		this.state.filas_cargadas = false;
 		this.cargarFilas(this.forceUpdate);
