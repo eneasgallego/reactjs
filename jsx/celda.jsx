@@ -26,7 +26,7 @@ class Celda extends React.Component {
 		});
 	}
 	triggerResize(offset) {
-		this.props.onResize.call(this, offset, this);
+		this.props.onResize(offset, this);
 	}
 	onResize(e) {
 		this.triggerResize({
