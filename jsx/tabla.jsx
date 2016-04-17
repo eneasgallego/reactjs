@@ -8,6 +8,9 @@ import Base from './base.jsx'
 class Tabla extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.onResizeCelda = this.onResizeCelda.bind(this);
+
 		this.state = {
 			filas_cargadas: false,
 			cargando: false,
