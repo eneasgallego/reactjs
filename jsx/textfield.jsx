@@ -4,6 +4,12 @@ import ReactDOM from 'react-dom'
 class TextField extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.focus = this.focus.bind(this);
+		this.onFocus = this.onFocus.bind(this);
+		this.onBlur = this.onBlur.bind(this);
+		this.onKeyPress = this.onKeyPress.bind(this);
+
 		this.state = {
 			valor: props.valor
 		};
