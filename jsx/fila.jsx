@@ -6,7 +6,11 @@ import Menu from './menu.jsx'
 
 class Fila extends React.Component {
 	constructor(props) {
+
+		if (props.onResizeCelda) props.onResizeCelda = props.onResizeCelda.bind(this);
+
 		super(props);
+
 		this.state = {
 			cols: parseCols(props.cols)
 		};
@@ -35,7 +39,7 @@ class Fila extends React.Component {
 		});
 	}
 	onResizeCelda(offset, celda) {
-		this.props.onResizeCelda && this.props.onResizeCelda(offset, celda, this);
+		this.props.onResizeCelda(offset, celda, this);
 	}
 	onChangeValor(valor, celda) {
 		this.props.onChangeValor(valor, celda, this);
