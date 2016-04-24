@@ -86,6 +86,24 @@ let crearMapa = function(id) {
 	return ret;
 };
 Array.prototype.crearMapa = crearMapa;
+let calcular = function(fn, no_sumar) {
+	let ret = 0;
+
+	for (let i = 0 ; i < this.length ; i++) {
+		let item = this[i];
+
+		let val = fn.call(item, item, ret);
+
+		if (no_sumar) {
+			ret = val;
+		} else {
+			ret += val;
+		}
+	}
+
+	return ret;
+};
+Array.prototype.calcular = calcular;
 window.ajax = function(par, tabla) {
 
 	let params = '';
