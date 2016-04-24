@@ -86,15 +86,15 @@ let crearMapa = function(id) {
 	return ret;
 };
 Array.prototype.crearMapa = crearMapa;
-let calcular = function(fn, no_sumar) {
+let calcular = function(a, b) {
 	let ret = 0;
 
 	for (let i = 0 ; i < this.length ; i++) {
 		let item = this[i];
 
-		let val = fn.call(item, item, ret);
+		let val = typeof(a) === 'undefined' ? item : typeof(a) === 'function' ? fn.call(item, item, ret) : item[a];
 
-		if (no_sumar) {
+		if (b) {
 			ret = val;
 		} else {
 			ret += val;
