@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import PanelFlotante from './panelflotante.jsx'
+import TextField from './textfield.jsx'
 
 class FiltroTabla extends React.Component {
     constructor(props) {
@@ -11,13 +12,17 @@ class FiltroTabla extends React.Component {
         this.onMouseOut = this.onMouseOut.bind(this);
         this.onMouseOver = this.onMouseOver.bind(this);
         this.onClosePanel = this.onClosePanel.bind(this);
+        this.onBlurTextField = this.onBlurTextField.bind(this);
+        this.onKeyPressText = this.onKeyPressText.bind(this);
+        this.onClickField = this.onClickField.bind(this);
 
         this.state = {
             tipo: parseTipo(props.tipo),
             onClick: props.onClick,
             onMouseOver: props.onMouseOver,
             onMouseOut: props.onMouseOut,
-            onClosePanel: props.onClosePanel
+            onClosePanel: props.onClosePanel,
+            valor: props.valor
         };
     }
     onClick(e, panel, panelflotante){
@@ -40,37 +45,81 @@ class FiltroTabla extends React.Component {
             this.state.onMouseOver.call(this, e, panel, panelflotante, this);
         }
     }
+    onClickField(e) {
+        e.stopPropagation();
+        this.onClick.apply(this, arguments);
+    }
+    onBlurTextField(e, textfield) {
+        return this.filtrar(e, textfield);
+    }
+    onKeyPressText(e, textfield) {
+        if (e.keyCode == 27 || e.charCode == 27) {
+            this.cerrar();
+        } else if (e.keyCode == 13 || e.charCode == 13) {
+            return this.filtrar(e, textfield);
+        }
+    }
+    onLoadField(field) {
+        field.focus();
+    }
+    cerrar(){
+        if (this.state.onClosePanel) {
+            this.state.onClosePanel.call(this, this);
+        }
+    }
+    filtrar(e, field) {
+        let valor;
+        if (0 && this.state.tipo.tipo == 'bool') {
+            valor = e.currentTarget.checked;
+        } else if (0 && this.state.tipo.tipo == 'float' || this.state.tipo.tipo == 'int') {
+            valor = 0;
+            if (!isNaN(e.currentTarget.value)) {
+                valor = parseFloat(e.currentTarget.value);
+                if (this.state.tipo.tipo == 'int') {
+                    valor = ~~valor;
+                }
+            }
+        } else {
+            valor = e.currentTarget.value;
+        }
+
+        this.setState({valor: valor}, () => {
+            if (typeof(this.props.onFiltrado) === 'function') {
+                this.props.onFiltrado(valor, field, this);
+            }
+        });
+    }
     renderContenido(){
         var ret;
-        /*
-         if (this.state.tipo.tipo == 'object') {
-         ret = 	<Combo
-         valor={this.props.datos}
-         combo={this.props.tipo}
-         onClick={this.onClickField}
-         onBlur={this.onBlurField}
-         onChange={this.onChangeCombo}
-         onLoad={this.onLoadField}
-         dataset={this.props.combos_dataset[this.props.campo]}
-         />
-         } else if (this.state.tipo.tipo == 'bool') {
-         ret = 	<CheckBox
-         valor={this.props.datos}
-         onClick={this.onClickCheck}
-         onBlur={this.onBlurField}
-         onChange={this.onChangeCombo}
-         onLoad={this.onLoadField}
-         />
-         } else {
-         ret = 	<TextField
-         valor={this.props.datos}
-         onClick={this.onClickField}
-         onBlur={this.onBlurTextField}
-         onKeyPress={this.onKeyPressText}
-         onLoad={this.onLoadField}
-         />
-         }
-         */
+
+        if (0 && this.state.tipo.tipo == 'object') {
+            ret = 	<Combo
+                valor={this.props.datos}
+                combo={this.props.tipo}
+                onClick={this.onClickField}
+                onBlur={this.onBlurField}
+                onChange={this.onChangeCombo}
+                onLoad={this.onLoadField}
+                dataset={this.props.combos_dataset[this.props.campo]}
+            />
+        } else if (0 && this.state.tipo.tipo == 'bool') {
+            ret = 	<CheckBox
+                valor={this.props.datos}
+                onClick={this.onClickCheck}
+                onBlur={this.onBlurField}
+                onChange={this.onChangeCombo}
+                onLoad={this.onLoadField}
+            />
+        } else {
+            ret = 	<TextField
+                valor={this.state.valor}
+                onClick={this.onClickField}
+                onBlur={this.onBlurTextField}
+                onKeyPress={this.onKeyPressText}
+                onLoad={this.onLoadField}
+            />
+        }
+
         return ret;
     }
     render(){
@@ -86,10 +135,12 @@ class FiltroTabla extends React.Component {
 }
 FiltroTabla.defaultProps = {
     tipo: 'string',
+    valor: undefined,
     onClick(){},
     onClosePanel(){},
     onMouseOver(){},
-    onMouseOut(){}
+    onMouseOut(){},
+    onFiltrado(){}
 };
 
 export default FiltroTabla

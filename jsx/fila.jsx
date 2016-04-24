@@ -13,6 +13,7 @@ class Fila extends React.Component {
 		this.accionMenu = this.accionMenu.bind(this);
 		this.onChangeDesc = this.onChangeDesc.bind(this);
 		this.onFiltroFijado = this.onFiltroFijado.bind(this);
+		this.onFiltrado = this.onFiltrado.bind(this);
 		this.mostrarFiltro = this.mostrarFiltro.bind(this);
 
 		this.state = {
@@ -54,6 +55,9 @@ class Fila extends React.Component {
 	}
 	onFiltroFijado(campo, celda){
 		this.setState({filtro_fijado: campo});
+	}
+	onFiltrado(valor, field, filtrotabla, celda){
+		this.props.onFiltrado.call(this, valor, field, filtrotabla, celda, this);
 	}
 	getIdFila()  {
 		return this.props.datos[this.props.id_campo];
@@ -118,7 +122,9 @@ class Fila extends React.Component {
 					filtro={this.props.filtros ? col.filtro : false}
 					mostrarFiltro={this.mostrarFiltro}
 					onFiltroFijado={this.onFiltroFijado}
+					onFiltrado={this.onFiltrado}
 					onResize={this.onResizeCelda}
+
 				/>
 			);
 		}
@@ -164,7 +170,8 @@ Fila.defaultProps = {
 	onClickCelda(){},
 	onClickAcciones(){},
 	onChangeValor(){},
-	onChangeDesc(){}
+	onChangeDesc(){},
+	onFiltrado(){}
 };
 
 export default Fila

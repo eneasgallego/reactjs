@@ -167,10 +167,26 @@ window.parseTipo = tipo => {
 
 	return tipo;
 };
+window.parseFiltro = (filtro, tipo) => {
+	var ret = typeof(filtro) === 'undefined' ? true : filtro;
+
+	if (ret) {
+		if (ret === true) {
+			ret = tipo;
+		}
+		else if (typeof(ret) === 'string') {
+			let tipo_filtro = ret;
+			ret = tipo;
+			ret.tipo = tipo_filtro;
+		}
+	}
+
+	return ret;
+};
 window.parseCols = cols => {
 	for (let i = 0 ; i < cols.length ; i++) {
 		cols[i].tipo = parseTipo(cols[i].tipo ? cols[i].tipo : 'string');
-		cols[i].filtro = typeof(cols[i].filtro) === 'undefined' ? true : cols[i].filtro;
+		cols[i].filtro = parseTipo(cols[i].filtro, cols[i].tipo);
 	}
 
 	return cols;

@@ -16,6 +16,8 @@ class Tabla extends React.Component {
 		this.ordenar = this.ordenar.bind(this);
 		this.accionMenu = this.accionMenu.bind(this);
 		this.onClickCelda = this.onClickCelda.bind(this);
+		this.onFiltrado = this.onFiltrado.bind(this);
+		this.filtrar = this.filtrar.bind(this);
 
 		this.state = {
 			filas_cargadas: false,
@@ -23,6 +25,7 @@ class Tabla extends React.Component {
 			filas: [],
 			combos_dataset: {},
 			orden: this.props.orden instanceof Array ? this.props.orden : [this.props.orden],
+			filtros: {},
 			velo: false,
 			anchos: [],
 			cols: parseCols(props.cols),
@@ -228,6 +231,34 @@ class Tabla extends React.Component {
 		e.preventDefault();
 		celda.changeOrden();
 	}
+	onFiltrado(valor, field, filtrotabla, celda, fila){
+		let filtros = this.state.filtros;
+		if (!filtros) {
+			filtros = {};
+		}
+		let filtro = filtros[celda.props.campo];
+		if (!filtro) {
+			filtro = {
+				campo: celda.props.campo
+			};
+		}
+		filtro.valor = valor;
+		filtros[celda.props.campo] = filtro;
+		this.setState({filtros: filtros});
+	}
+	filtrar(fila){
+		for (let key in this.state.filtros) {
+			let filtro = this.state.filtros[key];
+
+			if (filtro.valor) {
+				if (fila[key] != filtro.valor) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
 	ordenar(orden, celda, fila) {
 
 		var state = this.state.orden;
@@ -270,63 +301,66 @@ class Tabla extends React.Component {
 		for (let i = 0 ; i < this.state.filas.length ; i++) {
 
 			let fila = this.state.filas[i];
-			let objFila = <Fila
-				key={i}
-				cols={this.state.cols}
-				datos={fila}
-				guardar={this.guardar}
-				id_campo={this.props.id_campo}
-				acciones={this.props.acciones}
-				claseFila={this.props.claseFila}
-				onResize={this.onResizeFila}
-				onResizeCelda={this.onResizeCelda}
-				onClickCelda={this.onClickCelda}
-				onClickAcciones={this.onClickAcciones}
-				onChangeValor={this.onChangeValor}
-				combos_dataset={this.state.combos_dataset}
-				anchos={this.state.anchos}
-				filtros={false}
-			/>
 
-			if (this.state.orden.length) {
-				let ordenar = (datos, prof) => {
-					let orden = this.state.orden[prof];
-					let ret = false;
+			if (this.filtrar(fila)) {
+				let objFila = <Fila
+					key={i}
+					cols={this.state.cols}
+					datos={fila}
+					guardar={this.guardar}
+					id_campo={this.props.id_campo}
+					acciones={this.props.acciones}
+					claseFila={this.props.claseFila}
+					onResize={this.onResizeFila}
+					onResizeCelda={this.onResizeCelda}
+					onClickCelda={this.onClickCelda}
+					onClickAcciones={this.onClickAcciones}
+					onChangeValor={this.onChangeValor}
+					combos_dataset={this.state.combos_dataset}
+					anchos={this.state.anchos}
+					filtros={false}
+				/>
 
-					if (orden) {
-						let campo = orden.campo;
-						let desc = orden.desc;
+				if (this.state.orden.length) {
+					let ordenar = (datos, prof) => {
+						let orden = this.state.orden[prof];
+						let ret = false;
 
-						let valor1;
-						let valor2;
-						if (typeof(campo) === 'function') {
-							valor1 = campo(datos);
-							valor2 = campo(fila);
-						} else {
-							valor1 = parseFloat(datos[campo]);
-							valor2 = parseFloat(fila[campo]);
+						if (orden) {
+							let campo = orden.campo;
+							let desc = orden.desc;
+
+							let valor1;
+							let valor2;
+							if (typeof(campo) === 'function') {
+								valor1 = campo(datos);
+								valor2 = campo(fila);
+							} else {
+								valor1 = parseFloat(datos[campo]);
+								valor2 = parseFloat(fila[campo]);
+							}
+
+							valor1 = isNaN(valor1) ? datos[campo] : valor1;
+							valor2 = isNaN(valor2) ? fila[campo] : valor2;
+
+							ret = (((valor1 == valor2) && ordenar(datos, prof+1)) ||
+							(desc && valor1 < valor2) ||
+							((!desc) && valor1 > valor2));
 						}
 
-						valor1 = isNaN(valor1) ? datos[campo] : valor1;
-						valor2 = isNaN(valor2) ? fila[campo] : valor2;
-
-						ret = (((valor1 == valor2) && ordenar(datos, prof+1)) ||
-						(desc && valor1 < valor2) ||
-						((!desc) && valor1 > valor2));
+						return ret;
+					};
+					let index = filas.indice((v, k) => {
+						return ordenar(v.props.datos, 0);
+					});
+					if (!~index) {
+						filas.push(objFila);
+					} else {
+						filas.splice(index, 0, objFila);
 					}
-
-					return ret;
-				};
-				let index = filas.indice((v, k) => {
-					return ordenar(v.props.datos, 0);
-				});
-				if (!~index) {
-					filas.push(objFila);
 				} else {
-					filas.splice(index, 0, objFila);
+					filas.push(objFila);
 				}
-			} else {
-				filas.push(objFila);
 			}
 		}
 
@@ -390,6 +424,7 @@ class Tabla extends React.Component {
 							anchos={this.state.anchos}
 							orden={this.state.orden}
 							filtros={this.props.filtros}
+							onFiltrado={this.onFiltrado}
 						/>
 					</thead>
 					<tbody style={this.renderStyleBody()}>
@@ -424,7 +459,8 @@ Tabla.defaultProps = {
 	onResizeFila(){},
 	onResizeCelda(){},
 	onChangeValor(){},
-	onClickAcciones(){}
+	onClickAcciones(){},
+	onFiltrado(){}
 };
 
 export default Tabla

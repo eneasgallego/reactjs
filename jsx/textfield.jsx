@@ -31,7 +31,7 @@ class TextField extends React.Component {
 	}
 	render() {
 		return (
-			<input 
+			<input
 				defaultValue={this.state.valor}
 				onClick={this.props.onClick}
 				onBlur={this.onBlur}
@@ -39,7 +39,7 @@ class TextField extends React.Component {
 				onFocus={this.onFocus}
 			/>
 		);
-    }
+	}
 }
 TextField.defaultProps = {
 	valor: '',
