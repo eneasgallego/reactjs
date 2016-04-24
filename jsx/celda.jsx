@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import Combo from './combo.jsx'
 import CheckBox from './checkbox.jsx'
 import TextField from './textfield.jsx'
+import FiltroTabla from './filtrotabla.jsx'
 
 class Celda extends React.Component {
 	constructor(props) {
@@ -14,11 +15,14 @@ class Celda extends React.Component {
 		this.onBlurTextField = this.onBlurTextField.bind(this);
 		this.onChangeCombo = this.onChangeCombo.bind(this);
 		this.onClickCheck = this.onClickCheck.bind(this);
+		this.onMouseOut = this.onMouseOut.bind(this);
+		this.onMouseOver = this.onMouseOver.bind(this);
 
 		this.state = {
 			orden: props.orden ? props.orden_desc ? -1 : 1 : 0,
 			editar: false,
-			tipo: parseTipo(props.tipo)
+			tipo: parseTipo(props.tipo),
+			mostrar_filtros: false
 		};
 	}
 	componentDidMount(){
@@ -68,6 +72,12 @@ class Celda extends React.Component {
 	}
 	accionCelda(e) {
 		this.props.onClick.call(this, e, this);
+	}
+	onMouseOver(e) {
+		this.setState({mostrar_filtros: true})
+	}
+	onMouseOut(e) {
+		this.setState({mostrar_filtros: false})
 	}
 	onClickField(e) {
 		e.stopPropagation();
@@ -192,8 +202,29 @@ class Celda extends React.Component {
 
 		return ret;
 	}
+	renderFiltros(){
+		var ret;
+
+		if (1 || this.state.mostrar_filtros) {
+			ret = <FiltroTabla></FiltroTabla>
+		}
+
+		return ret;
+	}
 	renderCeldaHeader(){
-		return <th style={this.renderStyle()} onClick={this.accionCelda} ><div className="tabla-celda-div"><i className={this.renderIconoOrden()}>{this.props.orden}</i>{this.props.datos}</div></th>
+		return <th 	style={this.renderStyle()}
+			onMouseOver={this.onMouseOver}
+			onMouseOut={this.onMouseOut}
+			onClick={this.accionCelda} >
+
+			<div 	className="tabla-celda-div">
+				<i 	className={this.renderIconoOrden()}>
+							{this.props.orden}
+				</i>
+						{this.props.datos}
+			</div>
+					{this.renderFiltros()}
+		</th>
 	}
 	render(){
 		return (

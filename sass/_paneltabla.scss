@@ -1,0 +1,46 @@
+
+.panel {
+  border-radius: 10px;
+  margin: 1%;
+  min-width: 32%;
+  min-height: 35%;
+  display: inline-block;
+  overflow: hidden;
+
+  .tabla-cont {
+    overflow: auto;
+    border-radius: 10px;
+
+    .tabla-div {
+      position: absolute;
+
+      .tabla {
+        border-width: 0;
+        margin: 0;
+
+        tbody tr:last-child {
+          border-radius: 0 0 10px 10px;
+        }
+
+        .menu {
+          display: flex;
+
+          .menu-item {
+            //position: absolute;
+          }
+        }
+      }
+    }
+  }
+  h2 {
+    border-radius: 10px;
+    font-family: Verdana;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    height: 32px;
+//    background-color: #686767;
+    @include color-cabecera();
+//    color: #c3c3c3;
+  }
+}
