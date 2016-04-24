@@ -13,10 +13,10 @@ let promesas = function(fn, success, error, ref) {
 				}, reject);
 			})
 			.then(
-			index => {
+				index => {
 				crearPromesa(array[index], index);
 			},
-			err => {
+				err => {
 				error.call(ref,err);
 			});
 	};
@@ -43,7 +43,7 @@ let buscar = function() {
 
 		if 	((campo && item[campo] == valor) ||
 			(!campo && ((typeof(valor) === 'function' && valor(item, i)) ||
-						(typeof(valor) !== 'function' && valor == item)))) {
+			(typeof(valor) !== 'function' && valor == item)))) {
 			return item;
 		}
 	}
@@ -66,7 +66,7 @@ let indice = function() {
 
 		if 	((campo && item[campo] == valor) ||
 			(!campo && ((typeof(valor) === 'function' && valor(item, i)) ||
-						(typeof(valor) !== 'function' && valor == item)))) {
+			(typeof(valor) !== 'function' && valor == item)))) {
 			return i;
 		}
 	}
@@ -170,6 +170,7 @@ window.parseTipo = tipo => {
 window.parseCols = cols => {
 	for (let i = 0 ; i < cols.length ; i++) {
 		cols[i].tipo = parseTipo(cols[i].tipo ? cols[i].tipo : 'string');
+		cols[i].filtro = typeof(cols[i].filtro) === 'undefined' ? true : cols[i].filtro;
 	}
 
 	return cols;

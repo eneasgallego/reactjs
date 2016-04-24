@@ -12,9 +12,12 @@ class Fila extends React.Component {
 		this.guardar = this.guardar.bind(this);
 		this.accionMenu = this.accionMenu.bind(this);
 		this.onChangeDesc = this.onChangeDesc.bind(this);
+		this.onFiltroFijado = this.onFiltroFijado.bind(this);
+		this.mostrarFiltro = this.mostrarFiltro.bind(this);
 
 		this.state = {
-			cols: parseCols(props.cols)
+			cols: parseCols(props.cols),
+			filtro_fijado: false
 		};
 	}
 	componentDidMount() {
@@ -48,6 +51,9 @@ class Fila extends React.Component {
 	}
 	onChangeDesc(desc, celda) {
 		this.props.onChangeDesc(desc, celda, this);
+	}
+	onFiltroFijado(campo, celda){
+		this.setState({filtro_fijado: campo});
 	}
 	getIdFila()  {
 		return this.props.datos[this.props.id_campo];
@@ -85,6 +91,9 @@ class Fila extends React.Component {
 
 		return this.props.orden.indice('campo', campo) + 1;
 	}
+	mostrarFiltro(celda){
+		return this.props.header && ((!this.state.filtro_fijado) || celda.props.campo == this.state.filtro_fijado);
+	}
 	renderCeldas()  {
 		let celdas = [];
 		for (let i = 0 ; i < this.state.cols.length ; i++) {
@@ -106,6 +115,9 @@ class Fila extends React.Component {
 					ancho={this.props.anchos[i]}
 					orden={this.orden(col.campo)}
 					orden_desc={this.orden(col.campo) && this.props.orden.desc}
+					filtro={this.props.filtros ? col.filtro : false}
+					mostrarFiltro={this.mostrarFiltro}
+					onFiltroFijado={this.onFiltroFijado}
 					onResize={this.onResizeCelda}
 				/>
 			);
@@ -142,6 +154,7 @@ Fila.defaultProps = {
 	acciones: [],
 	combos_dataset: {},
 	header: false,
+	filtros: true,
 	anchos: [],
 	orden: [],
 	cols: [],

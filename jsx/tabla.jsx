@@ -285,6 +285,7 @@ class Tabla extends React.Component {
 				onChangeValor={this.onChangeValor}
 				combos_dataset={this.state.combos_dataset}
 				anchos={this.state.anchos}
+				filtros={false}
 			/>
 
 			if (this.state.orden.length) {
@@ -388,6 +389,7 @@ class Tabla extends React.Component {
 							combos_dataset={this.state.combos_dataset}
 							anchos={this.state.anchos}
 							orden={this.state.orden}
+							filtros={this.props.filtros}
 						/>
 					</thead>
 					<tbody style={this.renderStyleBody()}>
@@ -415,6 +417,7 @@ Tabla.defaultProps = {
 	cols: [],
 	orden: [],
 	acciones: [],
+	filtros: true,
 	claseFila(){},
 	parseData(){},
 	onResize(){},

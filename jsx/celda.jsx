@@ -17,12 +17,22 @@ class Celda extends React.Component {
 		this.onClickCheck = this.onClickCheck.bind(this);
 		this.onMouseOut = this.onMouseOut.bind(this);
 		this.onMouseOver = this.onMouseOver.bind(this);
+		this.onMouseOutPanel = this.onMouseOutPanel.bind(this);
+		this.onMouseOverPanel = this.onMouseOverPanel.bind(this);
+		this.onClickPanel = this.onClickPanel.bind(this);
+		this.onClosePanel = this.onClosePanel.bind(this);
+		this.onFiltroFijado = this.onFiltroFijado.bind(this);
+		this.setStateDelay = this.setStateDelay.bind(this);
 
 		this.state = {
 			orden: props.orden ? props.orden_desc ? -1 : 1 : 0,
 			editar: false,
 			tipo: parseTipo(props.tipo),
-			mostrar_filtros: false
+			filtro: props.filtro,
+			mostrar_filtros_over: false,
+			mostrar_filtros_over_panel: false,
+			mostrar_filtros_click: false,
+			onFiltroFijado: props.onFiltroFijado
 		};
 	}
 	componentDidMount(){
@@ -74,10 +84,28 @@ class Celda extends React.Component {
 		this.props.onClick.call(this, e, this);
 	}
 	onMouseOver(e) {
-		this.setState({mostrar_filtros: true})
+		this.setStateDelay({mostrar_filtros_over: true}, 100);
 	}
 	onMouseOut(e) {
-		this.setState({mostrar_filtros: false})
+		this.setStateDelay({mostrar_filtros_over: false}, 100);
+	}
+	onMouseOverPanel(e, panel, panelflotante, filtrotabla) {
+		this.setStateDelay({mostrar_filtros_over_panel: true}, 100);
+	}
+	onMouseOutPanel(e, panel, panelflotante, filtrotabla) {
+		this.setStateDelay({mostrar_filtros_over_panel: false}, 100);
+	}
+	onFiltroFijado() {
+		if (this.state.onFiltroFijado) {
+			this.state.onFiltroFijado.call(this, this.state.mostrar_filtros_click ? this.props.campo : false, this);
+		}
+	}
+	onClickPanel(e, panel, panelflotante, filtrotabla) {
+		e.stopPropagation();
+		this.setState({mostrar_filtros_click: !this.state.mostrar_filtros_click}, this.onFiltroFijado);
+	}
+	onClosePanel(e) {
+		this.setState({mostrar_filtros_click: false});
 	}
 	onClickField(e) {
 		e.stopPropagation();
@@ -104,12 +132,20 @@ class Celda extends React.Component {
 	onLoadField(field) {
 		field.focus();
 	}
+	setStateDelay(state, delay, callback){
+		setTimeout(() => {
+			this.setState(state, callback);
+		}, delay);
+	}
 	changeOrden(){
 		this.setState({
 			orden: this.state.orden > 0 ? -1 : 1
 		}, () => {
 			this.props.onChangeDesc.call(this, this.state.orden, this);
 		});
+	}
+	mostrarFiltros(){
+		return this.state.mostrar_filtros_over || this.state.mostrar_filtros_over_panel || this.state.mostrar_filtros_click;
 	}
 	renderEditar(){
 		let ret = '';
@@ -205,8 +241,14 @@ class Celda extends React.Component {
 	renderFiltros(){
 		var ret;
 
-		if (1 || this.state.mostrar_filtros) {
-			ret = <FiltroTabla></FiltroTabla>
+		if (this.state.filtro && this.props.mostrarFiltro(this) && this.mostrarFiltros()) {
+			ret = 	<FiltroTabla 	tipo={this.state.tipo}
+				onClick={this.onClickPanel}
+				onClosePanel={this.onClosePanel}
+				onMouseOver={this.onMouseOverPanel}
+				onMouseOut={this.onMouseOutPanel}
+			>
+			</FiltroTabla>
 		}
 
 		return ret;
@@ -240,9 +282,12 @@ Celda.defaultProps = {
 	combos_dataset: {},
 	orden: 0,
 	orden_desc: false,
+	filtro: false,
 	onClick(){},
 	onResize(){},
-	onChangeDesc(){}
+	onChangeDesc(){},
+	onFiltroFijado(){},
+	mostrarFiltro(){}
 };
 
 export default Celda

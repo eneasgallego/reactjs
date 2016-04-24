@@ -66,6 +66,7 @@ class PanelTabla extends React.Component {
 			parseData={this.parseData}
 			params={this.props.params}
 			orden={this.props.orden}
+			filtros={this.props.filtros}
 			claseFila={this.props.claseFila}
 			cols={this.props.cols}
 			acciones={this.props.acciones}
@@ -91,6 +92,7 @@ PanelTabla.defaultProps = {
 	id_campo: '',
 	params: {},
 	orden: [],
+	filtros: true,
 	cols: [],
 	acciones: [],
 	claseFila(){},
