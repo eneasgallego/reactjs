@@ -15,6 +15,7 @@ class Tabla extends React.Component {
 		this.onClickAcciones = this.onClickAcciones.bind(this);
 		this.ordenar = this.ordenar.bind(this);
 		this.accionMenu = this.accionMenu.bind(this);
+		this.onClickCelda = this.onClickCelda.bind(this);
 
 		this.state = {
 			filas_cargadas: false,
@@ -26,7 +27,8 @@ class Tabla extends React.Component {
 			anchos: [],
 			cols: parseCols(props.cols),
 			alto_tabla: undefined,
-			alto_body: undefined
+			alto_body: undefined,
+			guardar: props.guardar ? props.guardar : undefined
 		};
 	}
 	componentWillUpdate() {
@@ -108,8 +110,8 @@ class Tabla extends React.Component {
 		this.props.onChangeValor(valor, celda, fila, this);
 	}
 	guardar(valor, field, celda, fila) {
-		if (typeof(this.props.guardar) === 'function') {
-			this.props.guardar(valor, field, celda, fila, this);
+		if (typeof(this.state.guardar) === 'function') {
+			this.state.guardar(valor, field, celda, fila, this);
 		}
 	}
 	accionMenu(tag) {
@@ -215,7 +217,7 @@ class Tabla extends React.Component {
 	}
 	onClickCelda(e, celda) {
 		e.preventDefault();
-		if (!celda.props.header && this.props.guardar) {
+		if (!celda.props.header && this.state.guardar) {
 			celda.setState({editar:true});
 		}
 	}
@@ -252,7 +254,7 @@ class Tabla extends React.Component {
 	renderMenu() {
 		let ret;
 
-		if (this.props.guardar) {
+		if (this.state.guardar) {
 			let menu = [{
 				texto: 'NUEVO',
 				tag: 'nuevo'
