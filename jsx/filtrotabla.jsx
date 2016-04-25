@@ -85,6 +85,7 @@ class FiltroTabla extends React.Component {
 
         this.setState({valor: valor}, () => {
             if (typeof(this.props.onFiltrado) === 'function') {
+                this.cerrar();
                 this.props.onFiltrado(valor, field, this);
             }
         });

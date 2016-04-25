@@ -251,7 +251,7 @@ class Celda extends React.Component {
 		return ret;
 	}
 	renderFiltros(){
-		var ret;
+		let ret;
 
 		if (this.state.filtro && this.props.mostrarFiltro(this) && this.mostrarFiltros()) {
 			ret = 	<FiltroTabla
@@ -268,10 +268,19 @@ class Celda extends React.Component {
 		return ret;
 	}
 	renderTitle(){
-		var ret = '';
+		let ret = '';
 
 		if (this.state.filtro && this.state.filtro.valor) {
 			ret = this.state.filtro.valor;
+		}
+
+		return ret;
+	}
+	renderClassHeader(){
+		let ret = '';
+
+		if (this.state.filtro && this.state.filtro.valor) {
+			ret = 'filtrado';
 		}
 
 		return ret;
@@ -282,6 +291,7 @@ class Celda extends React.Component {
 			onMouseOut={this.onMouseOut}
 			onClick={this.accionCelda}
 			title={this.renderTitle()}
+			className={this.renderClassHeader()}
 		>
 
 			<div 	className="tabla-celda-div">
