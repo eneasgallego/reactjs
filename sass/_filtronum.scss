@@ -6,12 +6,18 @@
 
     li {
       input{
+        max-width: 64px;
       }
 
       div {
         display: inline-block;
         height: 100%;
         width: 95%;
+        font-weight: normal;
+
+        span {
+          padding: 0 4px;
+        }
 
         &:first-child {
           width: 5%;

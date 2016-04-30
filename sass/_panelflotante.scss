@@ -1,7 +1,16 @@
+$color1: #d0d0d0;
+$color2: #ffffff;
+$color3: #a0a0a0;
+$color-texto:black;
+
 .flotante {
   position: absolute;
   min-width: 100px;
-  background-color: grey;
+  @include color-degradado2($color1,$color2,$color3,$color-texto);
   z-index: 1;
   padding: 4px;
+
+  &:hover {
+    @include color-degradado2($color1,$color2,$color3,$color-texto);
+  }
 }
