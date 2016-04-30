@@ -29,10 +29,12 @@ class ListaItemField extends React.Component {
     render(){
         return (
             <li>
-                <CheckBox
-                    valor={this.state.seleccionado}
-                    onClick={this.onClickCheck}
-                />
+                <div>
+                    <CheckBox
+                        valor={this.state.seleccionado}
+                        onClick={this.onClickCheck}
+                    />
+                </div>
                 {this.renderContenido()}
             </li>
         );

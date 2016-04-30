@@ -85,6 +85,7 @@ class ListaFieldInt extends React.Component {
             <ListaField
                 valor={this.state.valor}
                 lista={this.renderLista()}
+                className="filtronumerico"
                 onChange={this.onChange}
             />
         );

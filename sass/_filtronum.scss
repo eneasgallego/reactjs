@@ -1,0 +1,22 @@
+.filtronumerico {
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      input{
+      }
+
+      div {
+        display: inline-block;
+        height: 100%;
+        width: 95%;
+
+        &:first-child {
+          width: 5%;
+        }
+      }
+    }
+  }
+}
