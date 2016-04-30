@@ -178,7 +178,6 @@ class Celda extends React.Component {
 					valor={this.props.datos}
 					onClick={this.onClickCheck}
 					onBlur={this.onBlurField}
-					onChange={this.onChangeCombo}
 					onLoad={this.onLoadField}
 				/>
 			} else {

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 
 import PanelFlotante from './panelflotante.jsx'
 import TextField from './textfield.jsx'
+import ListaFieldInt from './listafieldint.jsx'
 
 class FiltroTabla extends React.Component {
     constructor(props) {
@@ -104,13 +105,17 @@ class FiltroTabla extends React.Component {
                 dataset={this.props.combos_dataset[this.props.campo]}
             />
         } else if (0 && this.state.tipo.tipo == 'bool') {
-            ret = 	<CheckBox
+            ret = 	<ListaField
                 valor={this.props.datos}
                 onClick={this.onClickCheck}
                 onBlur={this.onBlurField}
                 onChange={this.onChangeCombo}
                 onLoad={this.onLoadField}
             />
+        } else if (this.state.tipo.tipo == 'int') {
+            ret = 	<ListaFieldInt
+                        onChange={this.onChangeListaInt}
+                    />
         } else {
             ret = 	<TextField
                 valor={this.state.valor}

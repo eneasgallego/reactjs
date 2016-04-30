@@ -9,13 +9,14 @@ class TextField extends React.Component {
 		this.onFocus = this.onFocus.bind(this);
 		this.onBlur = this.onBlur.bind(this);
 		this.onKeyPress = this.onKeyPress.bind(this);
+		this.onClick = this.onClick.bind(this);
 
 		this.state = {
 			valor: props.valor
 		};
 	}
 	componentDidMount() {
-		this.props.onLoad(this);
+		this.props.onLoad.call(this, this);
 	}
 	focus() {
 		ReactDOM.findDOMNode(this).focus();
@@ -23,17 +24,20 @@ class TextField extends React.Component {
 	onFocus() {
 		ReactDOM.findDOMNode(this).select();
 	}
+	onClick(e) {
+		return this.props.onClick.call(this, e, this);
+	}
 	onBlur(e) {
-		return this.props.onBlur(e, this);
+		return this.props.onBlur.call(this, e, this);
 	}
 	onKeyPress(e) {
-		return this.props.onKeyPress(e, this);
+		return this.props.onKeyPress.call(this, e, this);
 	}
 	render() {
 		return (
 			<input
 				defaultValue={this.state.valor}
-				onClick={this.props.onClick}
+				onClick={this.onClick}
 				onBlur={this.onBlur}
 				onKeyDown={this.onKeyPress}
 				onFocus={this.onFocus}
