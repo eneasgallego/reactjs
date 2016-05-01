@@ -18,7 +18,7 @@ class ListaField extends React.Component {
         };
     }
     onChange(seleccionado, check, lista_item){
-       this.props.onChange.call(this, this.state.valor, this);
+        this.props.onChange.call(this, seleccionado, check, lista_item, this);
     }
     getSeleccionado(index) {
         return this.listaitemfield[index].getSeleccionado();

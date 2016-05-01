@@ -3,24 +3,35 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    display: table;
 
     li {
-      input{
-        max-width: 64px;
+      display: table-row;
+
+      input[type="checkbox"]{
+        display: table-cell;
+        vertical-align: middle;
       }
 
-      div {
-        display: inline-block;
-        height: 100%;
-        width: 95%;
+      .contenido {
+        display: table-cell;
         font-weight: normal;
+        vertical-align: middle;
 
-        span {
-          padding: 0 4px;
-        }
+        .contenido-numerico {
+          display: table;
+          font-weight: normal;
+          width: 100%;
 
-        &:first-child {
-          width: 5%;
+          .texto {
+            display: table-cell;
+            padding: 0 4px;
+          }
+
+          input {
+            display: table-cell;
+            max-width: 64px;
+          }
         }
       }
     }

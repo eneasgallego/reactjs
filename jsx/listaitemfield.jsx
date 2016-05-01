@@ -32,14 +32,15 @@ class ListaItemField extends React.Component {
     render(){
         return (
             <li>
-                <div>
-                    <CheckBox
-                        ref="checkbox"
-                        valor={this.props.seleccionado}
-                        onChange={this.onChange}
-                    />
+                <CheckBox
+                    ref="checkbox"
+                    valor={this.props.seleccionado}
+                    onChange={this.onChange}
+                    onClick={this.onChange}
+                />
+                <div className="contenido">
+                    {this.renderContenido()}
                 </div>
-                {this.renderContenido()}
             </li>
         );
     }

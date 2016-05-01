@@ -31,8 +31,8 @@ class ListaItemFieldInt extends React.Component {
     }
     render() {
         return (
-            <div>
-                <span>{this.props.texto}</span>
+            <div className="contenido-numerico">
+                <span className="texto">{this.props.texto}</span>
                 <TextField
                     valor={this.props.valor.valor}
                     onClick={this.onClick}

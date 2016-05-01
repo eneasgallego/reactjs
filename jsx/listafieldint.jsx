@@ -24,6 +24,8 @@ class ListaFieldInt extends React.Component {
 
         this.state.valor.getTitulo = this.getTitulo;
         this.state.valor.filtrar = this.filtrar;
+        this.state.valor.quitarValor = this.quitarValor;
+        this.state.valor.insertarValor = this.insertarValor;
     }
     componentDidMount(){
         this.setState({
@@ -31,6 +33,7 @@ class ListaFieldInt extends React.Component {
                 texto: 'mayor que',
                 tag: 'mayor',
                 titulo: '>',
+                compatible: ['menor'],
                 filtrar(a, b) {
                     return a > b;
                 }
@@ -38,6 +41,7 @@ class ListaFieldInt extends React.Component {
                 texto: 'menor que',
                 tag: 'menor',
                 titulo: '<',
+                compatible: ['mayor'],
                 filtrar(a, b) {
                     return a < b;
                 }
@@ -58,8 +62,45 @@ class ListaFieldInt extends React.Component {
             }]
         });
     }
-    onChange(valor, listafield){
-        this.props.onChange.call(this, valor, this);
+    insertarValor(tag, valor_actual, valor){
+        if (!valor_actual) {
+            valor_actual = {
+                tag: tag
+            }
+            this.push(valor_actual);
+        }
+        valor_actual.valor = valor;
+    }
+    quitarValor(valor){
+        if (typeof(valor) === 'string') {
+            valor = this.buscar('tag', valor);
+        }
+
+        if (valor) {
+            this.splice(this.indexOf(valor), 1);
+        }
+    }
+    onChange(seleccionado, check, lista_item, lista){
+        let tag = lista_item.props.tag;
+        let valor = this.state.valor;
+        let valor_actual = valor.buscar('tag', tag);
+
+        if (seleccionado) {
+            let item_lista = this.state.lista.buscar('tag', tag);
+            for (let i = 0; i < valor.length; i++) {
+                if (valor[i].tag != tag && (!item_lista.compatible || (item_lista.compatible && !~item_lista.compatible.indexOf(valor[i].tag)))) {
+                    valor.quitarValor(valor[i].tag);
+                    i--;
+                }
+            }
+            if (!valor_actual) {
+                valor.insertarValor(tag, valor_actual, 0);
+            }
+        } else {
+            valor.quitarValor(valor_actual);
+        }
+
+        this.props.onChange.call(this, this.state.valor, this);
     }
     onChangeInt(valor, indice, textfield, listaitemfieldint) {
         let tag = listaitemfieldint.props.tag;
@@ -68,17 +109,9 @@ class ListaFieldInt extends React.Component {
 
         let seleccionado = false;
         if (isNaN(valor)) {
-            if (valor_actual) {
-                valor_estado.splice(valor_estado.indexOf(valor_actual), 1);
-            }
+            valor_estado.quitarValor(valor_actual);
         } else {
-            if (!valor_actual) {
-                valor_actual = {
-                    tag: tag
-                }
-                valor_estado.push(valor_actual);
-            }
-            valor_actual.valor = valor;
+            valor_estado.insertarValor(tag, valor_actual, valor);
             seleccionado = true;
         }
 
@@ -147,8 +180,6 @@ class ListaFieldInt extends React.Component {
         return ret;
     }
     render() {
-        console.log('4 - listafieldint.render: ');
-        console.log(this.state.valor);
         return (
             <ListaField
                 ref="listafield"

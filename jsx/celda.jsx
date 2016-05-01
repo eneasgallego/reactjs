@@ -59,20 +59,14 @@ class Celda extends React.Component {
 			index: e.currentTarget.cellIndex
 		});
 	}
-	guardar(e, field) {
-		let valor;
-		if (this.state.tipo.tipo == 'bool') {
-			valor = e.currentTarget.checked;
-		} else if (this.state.tipo.tipo == 'float' || this.state.tipo.tipo == 'int') {
-			valor = 0;
-			if (!isNaN(e.currentTarget.value)) {
-				valor = parseFloat(e.currentTarget.value);
+	guardar(valor, field) {
+		if (typeof(valor) === 'string' && (this.state.tipo.tipo == 'float' || this.state.tipo.tipo == 'int')) {
+			if (!isNaN(valor)) {
+				valor = parseFloat(valor);
 				if (this.state.tipo.tipo == 'int') {
 					valor = ~~valor;
 				}
 			}
-		} else {
-			valor = e.currentTarget.value;
 		}
 
 		this.setState({editar: false}, () => {

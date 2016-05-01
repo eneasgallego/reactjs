@@ -13,6 +13,7 @@ class CheckBox extends React.Component {
 		this.setSeleccionado = this.setSeleccionado.bind(this);
 
 		this.state = {
+			valor: props.valor
 		};
 	}
 	componentDidMount() {
@@ -45,7 +46,7 @@ class CheckBox extends React.Component {
 			<input
 				ref="checkbox"
 				type="checkbox"
-				defaultChecked={this.props.valor}
+				defaultChecked={this.state.valor}
 				onClick={this.onClick}
 				onBlur={this.onBlur}
 				onChange={this.onChange}
