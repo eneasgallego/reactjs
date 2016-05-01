@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 import TextField from './textfield.jsx'
 
-class ListaItemFieldInt extends React.Component {
+class ListaItemFieldNum extends React.Component {
     constructor(props) {
         super(props);
 
@@ -43,7 +43,7 @@ class ListaItemFieldInt extends React.Component {
         );
     }
 }
-ListaItemFieldInt.defaultProps = {
+ListaItemFieldNum.defaultProps = {
     indice: undefined,
     tag: "",
     texto: "",
@@ -54,4 +54,4 @@ ListaItemFieldInt.defaultProps = {
     onChange(){}
 };
 
-export default ListaItemFieldInt
+export default ListaItemFieldNum

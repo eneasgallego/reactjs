@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import ListaField from './listafield.jsx'
-import ListaItemFieldInt from './listaitemfieldint.jsx'
+import ListaItemFieldNum from './listaitemfieldnum.jsx'
 
-class ListaFieldInt extends React.Component {
+class ListaFieldNum extends React.Component {
     constructor(props) {
         super(props);
 
@@ -102,8 +102,8 @@ class ListaFieldInt extends React.Component {
 
         this.props.onChange.call(this, this.state.valor, this);
     }
-    onChangeInt(valor, indice, textfield, listaitemfieldint) {
-        let tag = listaitemfieldint.props.tag;
+    onChangeInt(valor, indice, textfield, listaitemfieldnum) {
+        let tag = listaitemfieldnum.props.tag;
         let valor_estado = this.state.valor;
         let valor_actual = valor_estado.buscar('tag', tag);
 
@@ -117,14 +117,14 @@ class ListaFieldInt extends React.Component {
 
         this.refs.listafield.setSeleccionado(indice, seleccionado);
     }
-    onClick(e, textfield, listaitemfieldint) {
-        return this.props.onClick.call(this, e, textfield, listaitemfieldint, this);
+    onClick(e, textfield, listaitemfieldnum) {
+        return this.props.onClick.call(this, e, textfield, listaitemfieldnum, this);
     }
-    onBlur(e, textfield, listaitemfieldint) {
-        return this.props.onBlur.call(this, e, textfield, listaitemfieldint, this);
+    onBlur(e, textfield, listaitemfieldnum) {
+        return this.props.onBlur.call(this, e, textfield, listaitemfieldnum, this);
     }
-    onKeyPress(e, textfield, listaitemfieldint) {
-        return this.props.onKeyPress.call(this, e, textfield, listaitemfieldint, this);
+    onKeyPress(e, textfield, listaitemfieldnum) {
+        return this.props.onKeyPress.call(this, e, textfield, listaitemfieldnum, this);
     }
     getValor(tag) {
         return this.state.valor.buscar('tag', tag);
@@ -161,7 +161,7 @@ class ListaFieldInt extends React.Component {
 
             ret.push({
                 tag: item.tag,
-                contenido: <ListaItemFieldInt
+                contenido: <ListaItemFieldNum
                     texto={item.texto}
                     key={item.tag}
                     tag={item.tag}
@@ -191,7 +191,7 @@ class ListaFieldInt extends React.Component {
         );
     }
 }
-ListaFieldInt.defaultProps = {
+ListaFieldNum.defaultProps = {
     valor: [],
     onClick(){},
     onBlur(){},
@@ -199,5 +199,5 @@ ListaFieldInt.defaultProps = {
     onChange(){}
 };
 
-export default ListaFieldInt
+export default ListaFieldNum
 

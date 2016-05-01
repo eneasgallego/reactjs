@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 import PanelFlotante from './panelflotante.jsx'
 import TextField from './textfield.jsx'
-import ListaFieldInt from './listafieldint.jsx'
+import ListaFieldNum from './listafieldint.jsx'
 
 class FiltroTabla extends React.Component {
     constructor(props) {
@@ -64,8 +64,8 @@ class FiltroTabla extends React.Component {
     onLoadField(field) {
         field.focus();
     }
-    onChangeListaInt(valor, listafieldint) {
-        this.filtrar(valor, listafieldint);
+    onChangeListaInt(valor, listafieldnum) {
+        this.filtrar(valor, listafieldnum);
     }
     cerrar(){
         if (this.state.onClosePanel) {
@@ -100,7 +100,7 @@ class FiltroTabla extends React.Component {
                 onLoad={this.onLoadField}
             />
         } else if (this.state.tipo.tipo == 'int') {
-            ret = 	<ListaFieldInt
+            ret = 	<ListaFieldNum
                         valor={this.state.valor ? this.state.valor : []}
                         onChange={this.onChangeListaInt}
                     />
