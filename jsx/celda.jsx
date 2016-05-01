@@ -278,7 +278,7 @@ class Celda extends React.Component {
 	renderClassHeader(){
 		let ret = '';
 
-		if (this.state.filtro && this.state.filtro.valor) {
+		if (this.state.filtro && this.state.filtro.valor && ((this.state.filtro.valor instanceof Array && this.state.filtro.valor.length) || !(this.state.filtro.valor instanceof Array))) {
 			ret = 'filtrado';
 		}
 
