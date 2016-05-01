@@ -36,7 +36,6 @@ class ListaItemField extends React.Component {
                     ref="checkbox"
                     valor={this.props.seleccionado}
                     onChange={this.onChange}
-                    onClick={this.onChange}
                 />
                 <div className="contenido">
                     {this.renderContenido()}

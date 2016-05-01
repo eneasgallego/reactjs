@@ -255,8 +255,8 @@ class Tabla extends React.Component {
 					if (!~(fila[key] + '').toUpperCase().indexOf((filtro.valor + '').toUpperCase())) {
 						return false;
 					}
-				} else if (typeof(filtro.valor) === 'object') {
-					return filtro.valor.filtrar(fila[key]);
+				} else if (typeof(filtro.valor) === 'object' && !filtro.valor.filtrar(fila[key])) {
+					return false;
 				}
 			}
 		}

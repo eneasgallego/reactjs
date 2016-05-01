@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import PanelFlotante from './panelflotante.jsx'
 import TextField from './textfield.jsx'
 import ListaFieldNum from './listafieldnum.jsx'
+import ListaFieldBool from './listafieldbool.jsx'
 
 class FiltroTabla extends React.Component {
     constructor(props) {
@@ -16,7 +17,7 @@ class FiltroTabla extends React.Component {
         this.onBlurTextField = this.onBlurTextField.bind(this);
         this.onKeyPressText = this.onKeyPressText.bind(this);
         this.onClickField = this.onClickField.bind(this);
-        this.onChangeListaInt = this.onChangeListaInt.bind(this);
+        this.onChangeLista = this.onChangeLista.bind(this);
 
         this.state = {
             tipo: parseTipo(props.tipo),
@@ -64,7 +65,7 @@ class FiltroTabla extends React.Component {
     onLoadField(field) {
         field.focus();
     }
-    onChangeListaInt(valor, listafieldnum) {
+    onChangeLista(valor, listafieldnum) {
         this.filtrar(valor, listafieldnum);
     }
     cerrar(){
@@ -91,18 +92,15 @@ class FiltroTabla extends React.Component {
                 onLoad={this.onLoadField}
                 dataset={this.props.combos_dataset[this.props.campo]}
             />
-        } else if (0 && this.state.tipo.tipo == 'bool') {
-            ret = 	<ListaField
-                valor={this.props.datos}
-                onClick={this.onClickCheck}
-                onBlur={this.onBlurField}
-                onChange={this.onChangeCombo}
-                onLoad={this.onLoadField}
+        } else if (this.state.tipo.tipo == 'bool') {
+            ret = 	<ListaFieldBool
+                valor={this.state.valor ? this.state.valor : []}
+                onChange={this.onChangeLista}
             />
         } else if (this.state.tipo.tipo == 'int') {
             ret = 	<ListaFieldNum
                         valor={this.state.valor ? this.state.valor : []}
-                        onChange={this.onChangeListaInt}
+                        onChange={this.onChangeLista}
                     />
         } else {
             ret = 	<TextField

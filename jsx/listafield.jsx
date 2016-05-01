@@ -8,6 +8,7 @@ class ListaField extends React.Component {
         super(props);
 
         this.onChange = this.onChange.bind(this);
+        this.onClick = this.onClick.bind(this);
         this.getSeleccionado = this.getSeleccionado.bind(this);
         this.setSeleccionado = this.setSeleccionado.bind(this);
         this.estaSeleccionado = this.estaSeleccionado.bind(this);
@@ -19,6 +20,9 @@ class ListaField extends React.Component {
     }
     onChange(seleccionado, check, lista_item){
         this.props.onChange.call(this, seleccionado, check, lista_item, this);
+    }
+    onClick(e) {
+        return this.props.onClick.call(this, e, this);
     }
     getSeleccionado(index) {
         return this.listaitemfield[index].getSeleccionado();
@@ -62,17 +66,18 @@ class ListaField extends React.Component {
     }
     render() {
         return (
-            <div className={this.props.className}>
+            <div className="filtro"
+                    onClick={this.onClick}>
                 {this.renderLista()}
             </div>
         );
     }
 }
 ListaField.defaultProps = {
-    className: '',
     valor: [],
     lista: [],
-    onChange(){}
+    onChange(){},
+    onClick(){}
 };
 
 export default ListaField

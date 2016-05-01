@@ -9,7 +9,7 @@ class ListaFieldNum extends React.Component {
         super(props);
 
         this.onChange = this.onChange.bind(this);
-        this.onChangeInt = this.onChangeInt.bind(this);
+        this.onChangeNum = this.onChangeNum.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onBlur = this.onBlur.bind(this);
         this.onKeyPress = this.onKeyPress.bind(this);
@@ -102,7 +102,7 @@ class ListaFieldNum extends React.Component {
 
         this.props.onChange.call(this, this.state.valor, this);
     }
-    onChangeInt(valor, indice, textfield, listaitemfieldnum) {
+    onChangeNum(valor, indice, textfield, listaitemfieldnum) {
         let tag = listaitemfieldnum.props.tag;
         let valor_estado = this.state.valor;
         let valor_actual = valor_estado.buscar('tag', tag);
@@ -170,7 +170,7 @@ class ListaFieldNum extends React.Component {
                     onClick={this.onClick}
                     onBlur={this.onBlur}
                     onKeyPress={this.onKeyPress}
-                    onChange={this.onChangeInt}
+                    onChange={this.onChangeNum}
                 />
             }
 
@@ -185,7 +185,6 @@ class ListaFieldNum extends React.Component {
                 ref="listafield"
                 valor={this.state.valor}
                 lista={this.renderLista()}
-                className="filtronumerico"
                 onChange={this.onChange}
             />
         );

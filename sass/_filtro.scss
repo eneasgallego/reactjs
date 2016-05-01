@@ -1,4 +1,5 @@
-.filtronumerico {
+.filtro {
+  font-style: normal;
   ul {
     list-style: none;
     padding: 0;
@@ -26,7 +27,6 @@
           .texto {
             display: table-cell;
             padding: 0 4px;
-            font-style: normal;
           }
 
           input {
