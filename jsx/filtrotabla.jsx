@@ -5,6 +5,7 @@ import PanelFlotante from './panelflotante.jsx'
 import TextField from './textfield.jsx'
 import ListaFieldNum from './listafieldnum.jsx'
 import ListaFieldBool from './listafieldbool.jsx'
+import ListaFieldObj from './listafieldobj.jsx'
 
 class FiltroTabla extends React.Component {
     constructor(props) {
@@ -82,15 +83,13 @@ class FiltroTabla extends React.Component {
     renderContenido(){
         var ret;
 
-        if (0 && this.state.tipo.tipo == 'object') {
-            ret = 	<Combo
-                valor={this.props.datos}
-                combo={this.props.tipo}
-                onClick={this.onClickField}
-                onBlur={this.onBlurField}
-                onChange={this.onChangeCombo}
-                onLoad={this.onLoadField}
-                dataset={this.props.combos_dataset[this.props.campo]}
+        if (this.state.tipo.tipo == 'object') {
+            ret = <ListaFieldObj
+                valor={this.state.valor ? this.state.valor : []}
+                campo_texto={this.props.campo_texto}
+                campo_valor={this.props.campo_valor}
+                dataset={this.props.dataset}
+                onChange={this.onChangeLista}
             />
         } else if (this.state.tipo.tipo == 'bool') {
             ret = 	<ListaFieldBool
@@ -128,6 +127,7 @@ class FiltroTabla extends React.Component {
 FiltroTabla.defaultProps = {
     tipo: 'string',
     valor: undefined,
+    filtro: {},
     onClick(){},
     onClosePanel(){},
     onMouseOver(){},

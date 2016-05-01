@@ -117,7 +117,7 @@ class Celda extends React.Component {
 		e.stopPropagation();
 	}
 	onBlurTextField(e, textfield) {
-		return this.guardar(e, textfield);
+		return this.guardar(e.currentTarget.value, textfield);
 	}
 	onBlurField(e, field) {
 		this.setState({editar: false});
@@ -248,8 +248,9 @@ class Celda extends React.Component {
 
 		if (this.state.filtro && this.props.mostrarFiltro(this) && this.mostrarFiltros()) {
 			ret = 	<FiltroTabla
-				tipo={this.state.tipo}
+				tipo={this.state.filtro.tipo}
 				valor={this.state.filtro.valor}
+				filtro={this.state.filtro}
 				onClick={this.onClickPanel}
 				onClosePanel={this.onClosePanel}
 				onMouseOver={this.onMouseOverPanel}
