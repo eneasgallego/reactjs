@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 import PanelFlotante from './panelflotante.jsx'
 import TextField from './textfield.jsx'
-import ListaFieldNum from './listafieldint.jsx'
+import ListaFieldNum from './listafieldnum.jsx'
 
 class FiltroTabla extends React.Component {
     constructor(props) {
