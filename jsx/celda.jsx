@@ -126,14 +126,14 @@ class Celda extends React.Component {
 		if (e.keyCode == 27 || e.charCode == 27) {
 			this.setState({editar: false});
 		} else if (e.keyCode == 13 || e.charCode == 13) {
-			return this.guardar(e, textfield);
+			return this.guardar(e.currentTarget.value, textfield);
 		}
 	}
 	onChangeCombo(e, combo) {
-		return this.guardar(e, combo);
+		return this.guardar(e.currentTarget.value, combo);
 	}
-	onClickCheck(e, check) {
-		return this.guardar(e, check);
+	onClickCheck(valor, check) {
+		return this.guardar(valor, check);
 	}
 	onLoadField(field) {
 		field.focus();
