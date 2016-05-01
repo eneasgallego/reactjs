@@ -7,41 +7,58 @@ class CheckBox extends React.Component {
 
 		this.focus = this.focus.bind(this);
 		this.onBlur = this.onBlur.bind(this);
+		this.onChange = this.onChange.bind(this);
 		this.onClick = this.onClick.bind(this);
+		this.getSeleccionado = this.getSeleccionado.bind(this);
+		this.setSeleccionado = this.setSeleccionado.bind(this);
 
 		this.state = {
-			valor: props.valor
 		};
 	}
 	componentDidMount() {
-		this.props.onLoad(this);
+		this.props.onLoad.call(this, this);
 	}
 	focus() {
 		ReactDOM.findDOMNode(this).focus();
 	}
 	onBlur(e) {
-		return this.props.onBlur(e, this);
+		this.props.onBlur.call(this, this.getSeleccionado(), this);
+	}
+	onChange(e) {
+		this.props.onChange.call(this, this.getSeleccionado(), this);
 	}
 	onClick(e) {
 		e.stopPropagation();
-		return this.props.onClick(e, this);
+		this.props.onClick.call(this, this.getSeleccionado(), this);
+	}
+	getSeleccionado() {
+		return this.refs.checkbox.checked;
+	}
+	setSeleccionado(seleccionado) {
+		if (this.refs.checkbox.checked != seleccionado) {
+			this.refs.checkbox.checked = seleccionado;
+			this.props.onChange.call(this, seleccionado, this);
+		}
 	}
 	render() {
 		return (
 			<input
+				ref="checkbox"
 				type="checkbox"
-				defaultChecked={this.state.valor != '0'}
+				defaultChecked={this.props.valor}
 				onClick={this.onClick}
 				onBlur={this.onBlur}
+				onChange={this.onChange}
 			/>
 		);
 	}
 }
 CheckBox.defaultProps = {
-	valor: '',
+	valor: false,
 	onClick(){},
 	onBlur(){},
-	onLoad(){}
+	onLoad(){},
+	onChange(){}
 };
 
 export default CheckBox

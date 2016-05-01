@@ -251,8 +251,12 @@ class Tabla extends React.Component {
 			let filtro = this.state.filtros[key];
 
 			if (filtro.valor) {
-				if (!~(fila[key] + '').toUpperCase().indexOf((filtro.valor + '').toUpperCase())) {
-					return false;
+				if (typeof(filtro.valor) === 'string') {
+					if (!~(fila[key] + '').toUpperCase().indexOf((filtro.valor + '').toUpperCase())) {
+						return false;
+					}
+				} else if (typeof(filtro.valor) === 'object') {
+					return filtro.valor.filtrar(fila[key]);
 				}
 			}
 		}

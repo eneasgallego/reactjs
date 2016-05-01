@@ -186,7 +186,7 @@ window.parseFiltro = (filtro, tipo) => {
 window.parseCols = cols => {
 	for (let i = 0 ; i < cols.length ; i++) {
 		cols[i].tipo = parseTipo(cols[i].tipo ? cols[i].tipo : 'string');
-		cols[i].filtro = parseTipo(cols[i].filtro, cols[i].tipo);
+		cols[i].filtro = parseFiltro(cols[i].filtro, cols[i].tipo);
 	}
 
 	return cols;

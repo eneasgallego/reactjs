@@ -7,32 +7,36 @@ class ListaItemField extends React.Component {
     constructor(props) {
         super(props);
 
-        this.onClickCheck = this.onClickCheck.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.getSeleccionado = this.getSeleccionado.bind(this);
+        this.setSeleccionado = this.setSeleccionado.bind(this);
 
         this.state = {
-            contenido: props.contenido,
-            seleccionado: props.seleccionado
         };
     }
     componentDidMount() {
-        this.props.onLoad(this);
+        this.props.onLoad.call(this, this);
     }
-    onClickCheck(e, check) {
-        let seleccionado = e.currentTarget.checked;
-        this.setState({seleccionado: seleccionado},()=>{
-            this.props.onSelected.call(this, this);
-        });
+    onChange(seleccionado, check) {
+        this.props.onChange.call(this, seleccionado, check, this);
+    }
+    getSeleccionado() {
+        return this.refs.checkbox.getSeleccionado();
+    }
+    setSeleccionado(seleccionado) {
+        this.refs.checkbox.setSeleccionado(seleccionado);
     }
     renderContenido(){
-        return (typeof(this.state.contenido) === 'function') ? this.state.contenido.call(this, this) : this.state.contenido;
+        return (typeof(this.props.contenido) === 'function') ? this.props.contenido.call(this, this) : this.props.contenido;
     }
     render(){
         return (
             <li>
                 <div>
                     <CheckBox
-                        valor={this.state.seleccionado}
-                        onClick={this.onClickCheck}
+                        ref="checkbox"
+                        valor={this.props.seleccionado}
+                        onChange={this.onChange}
                     />
                 </div>
                 {this.renderContenido()}
@@ -41,10 +45,12 @@ class ListaItemField extends React.Component {
     }
 }
 ListaItemField.defaultProps = {
+    indice: undefined,
+    tag: '',
     contenido: undefined,
     seleccionado: false,
     onLoad(){},
-    onSelected(){}
+    onChange(){}
 };
 
 export default ListaItemField

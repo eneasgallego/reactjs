@@ -7,31 +7,24 @@ class ListaField extends React.Component {
     constructor(props) {
         super(props);
 
+        this.onChange = this.onChange.bind(this);
+        this.getSeleccionado = this.getSeleccionado.bind(this);
+        this.setSeleccionado = this.setSeleccionado.bind(this);
         this.estaSeleccionado = this.estaSeleccionado.bind(this);
-        this.onSelectedItem = this.onSelectedItem.bind(this);
+        this.listaitemfield = [];
 
         this.state = {
             valor: props.valor
         };
     }
-    onSelectedItem(lista_item){
-        let valor = this.state.valor;
-        let index = valor.indexOf(lista_item.state.contenido);
-
-        if (lista_item.state.valor && !!~index) {
-            valor.push(lista_item.state.contenido);
-        } else if (!lista_item.state.valor && !~index) {
-            valor.splice(index, 1);
-        }
-
-        let arr = [];
-        for (let i = 0 ; i < valor.length ; i++) {
-            arr.push(valor[i]);
-        }
-
-        this.setState({valor: arr}, ()=>{
-           this.props.onChange.call(this, this);
-        });
+    onChange(seleccionado, check, lista_item){
+       this.props.onChange.call(this, this.state.valor, this);
+    }
+    getSeleccionado(index) {
+        return this.listaitemfield[index].getSeleccionado();
+    }
+    setSeleccionado(index, seleccionado) {
+        this.listaitemfield[index].setSeleccionado(seleccionado);
     }
     estaSeleccionado(item){
         return !!~this.state.valor.indice('tag', item.tag);
@@ -43,10 +36,13 @@ class ListaField extends React.Component {
             let item = this.props.lista[i];
             ret.push(
                 <ListaItemField
+                    indice={i}
                     key={item.tag}
+                    tag={item.tag}
+                    ref={ref => this.listaitemfield.push(ref)}
                     seleccionado={this.estaSeleccionado(item)}
                     contenido={item.contenido}
-                    onSelected={this.onSelectedItem}
+                    onChange={this.onChange}
                 />
             );
         }

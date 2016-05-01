@@ -10,6 +10,7 @@ class TextField extends React.Component {
 		this.onBlur = this.onBlur.bind(this);
 		this.onKeyPress = this.onKeyPress.bind(this);
 		this.onClick = this.onClick.bind(this);
+		this.onChange = this.onChange.bind(this);
 
 		this.state = {
 			valor: props.valor
@@ -33,6 +34,10 @@ class TextField extends React.Component {
 	onKeyPress(e) {
 		return this.props.onKeyPress.call(this, e, this);
 	}
+	onChange(e) {
+		console.log('1 - textfield.onChange: ' + e.currentTarget.value);
+		return this.props.onChange.call(this, e.currentTarget.value, this);
+	}
 	render() {
 		return (
 			<input
@@ -41,6 +46,7 @@ class TextField extends React.Component {
 				onBlur={this.onBlur}
 				onKeyDown={this.onKeyPress}
 				onFocus={this.onFocus}
+				onChange={this.onChange}
 			/>
 		);
 	}
@@ -50,7 +56,8 @@ TextField.defaultProps = {
 	onClick(){},
 	onBlur(){},
 	onKeyPress(){},
-	onLoad(){}
+	onLoad(){},
+	onChange(){}
 };
 
 export default TextField

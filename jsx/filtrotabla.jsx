@@ -16,6 +16,7 @@ class FiltroTabla extends React.Component {
         this.onBlurTextField = this.onBlurTextField.bind(this);
         this.onKeyPressText = this.onKeyPressText.bind(this);
         this.onClickField = this.onClickField.bind(this);
+        this.onChangeListaInt = this.onChangeListaInt.bind(this);
 
         this.state = {
             tipo: parseTipo(props.tipo),
@@ -51,44 +52,30 @@ class FiltroTabla extends React.Component {
         this.onClick.apply(this, arguments);
     }
     onBlurTextField(e, textfield) {
-        return this.filtrar(e, textfield);
+        return this.filtrar(e.currentTarget.value, textfield);
     }
     onKeyPressText(e, textfield) {
         if (e.keyCode == 27 || e.charCode == 27) {
             this.cerrar();
         } else if (e.keyCode == 13 || e.charCode == 13) {
-            return this.filtrar(e, textfield);
+            return this.filtrar(e.currentTarget.value, textfield);
         }
     }
     onLoadField(field) {
         field.focus();
+    }
+    onChangeListaInt(valor, listafieldint) {
+        this.filtrar(valor, listafieldint);
     }
     cerrar(){
         if (this.state.onClosePanel) {
             this.state.onClosePanel.call(this, this);
         }
     }
-    filtrar(e, field) {
-        let valor;
-        if (0 && this.state.tipo.tipo == 'bool') {
-            valor = e.currentTarget.checked;
-        } else if (0 && this.state.tipo.tipo == 'float' || this.state.tipo.tipo == 'int') {
-            valor = 0;
-            if (!isNaN(e.currentTarget.value)) {
-                valor = parseFloat(e.currentTarget.value);
-                if (this.state.tipo.tipo == 'int') {
-                    valor = ~~valor;
-                }
-            }
-        } else {
-            valor = e.currentTarget.value;
-        }
-
+    filtrar(valor, field) {
         this.setState({valor: valor}, () => {
-            if (typeof(this.props.onFiltrado) === 'function') {
-                this.cerrar();
-                this.props.onFiltrado(valor, field, this);
-            }
+            this.cerrar();
+            this.props.onFiltrado.call(this, valor, field, this);
         });
     }
     renderContenido(){
@@ -114,6 +101,7 @@ class FiltroTabla extends React.Component {
             />
         } else if (this.state.tipo.tipo == 'int') {
             ret = 	<ListaFieldInt
+                        valor={this.state.valor ? this.state.valor : []}
                         onChange={this.onChangeListaInt}
                     />
         } else {

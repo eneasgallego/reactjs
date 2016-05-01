@@ -270,7 +270,13 @@ class Celda extends React.Component {
 		let ret = '';
 
 		if (this.state.filtro && this.state.filtro.valor) {
-			ret = this.state.filtro.valor;
+			if (typeof(this.state.filtro.valor) === 'string') {
+				ret = this.state.filtro.valor;
+			} else if (typeof(this.state.filtro.valor) === 'object') {
+				if (this.state.filtro.tipo == 'int') {
+					ret = this.state.filtro.valor.getTitulo();
+				}
+			}
 		}
 
 		return ret;
