@@ -71,7 +71,7 @@ class ListaFieldObj extends React.Component {
     }
     onChange(seleccionado, field, lista_item, lista){
         let tag = lista_item.props.tag;
-        let valor = this.state.valor;
+        let valor = this.getValorLimpio(clonar.call(this.state.valor));
 
         let modificarValor = (item_lista, item_valor, insertar) =>{
             if (insertar) {
@@ -101,9 +101,9 @@ class ListaFieldObj extends React.Component {
             modificarValor(this.state.lista.buscar('tag', tag), valor.buscar('tag', tag), seleccionado);
         }
 
-        this.setState({valor: valor},()=>{
+/*        this.setState({valor: valor},()=>{*/
             this.props.onChange.call(this, valor, this);
-        });
+/*        });*/
     }
     onMouseOver(e, listafield) {
         e.persist();

@@ -11,6 +11,7 @@ class CheckBox extends React.Component {
 		this.onClick = this.onClick.bind(this);
 		this.getSeleccionado = this.getSeleccionado.bind(this);
 		this.setSeleccionado = this.setSeleccionado.bind(this);
+		this.toggleSeleccionado = this.toggleSeleccionado.bind(this);
 
 		this.state = {
 			valor: props.valor
@@ -40,6 +41,9 @@ class CheckBox extends React.Component {
 			this.refs.checkbox.checked = seleccionado;
 			this.props.onChange.call(this, seleccionado, this);
 		}
+	}
+	toggleSeleccionado() {
+		this.setSeleccionado(!this.getSeleccionado());
 	}
 	render() {
 		return (
