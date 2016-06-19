@@ -15,7 +15,7 @@ class ListaFieldObj extends React.Component {
         this.cargarLista = this.cargarLista.bind(this);
 
         this.state = {
-            valor: props.valor,
+            valor: this.getValorLimpio(props.valor),
             lista: this.props.lista ? this.cargarLista(this.props.lista) : this.getValorLimpio(),
             cargado: !!this.props.lista
         };
@@ -54,8 +54,8 @@ class ListaFieldObj extends React.Component {
 
         return ret;
     }
-    getValorLimpio(){
-        let ret = [];
+    getValorLimpio(array){
+        let ret = array instanceof Array ? array : [];
 
         ret.getTitulo = this.getTitulo;
         ret.filtrar = this.filtrar;
@@ -69,17 +69,36 @@ class ListaFieldObj extends React.Component {
             valor: valor
         };
     }
-    onChange(seleccionado, combo, lista_item, lista){
+    onChange(seleccionado, field, lista_item, lista){
         let tag = lista_item.props.tag;
-        let valor = this.getValorLimpio();
+        let valor = this.state.valor;
 
-        if (seleccionado) {
-            let item_lista = this.state.lista.buscar('tag', tag);
-            valor.push({
-                titulo: item_lista.texto,
-                tag: tag,
-                valor: item_lista.valor
-            });
+        let modificarValor = (item_lista, item_valor, insertar) =>{
+            if (insertar) {
+                if (!item_valor) {
+                    item_valor = {};
+                    valor.push(item_valor);
+                }
+                item_valor.titulo = item_lista.texto;
+                item_valor.tag = item_lista.tag;
+                item_valor.valor = item_lista.valor;
+            } else if (item_valor) {
+                valor.splice(valor.indexOf(item_valor), 1);
+            }
+        };
+
+        if (seleccionado && (tag == 'todos' || tag == 'ninguno')) {
+            if (tag == 'todos') {
+                for (let i = 0; i < this.state.lista.length; i++) {
+                    modificarValor(this.state.lista[i], valor.buscar('tag', this.state.lista[i].tag), true);
+                }
+            } else {
+                valor = this.getValorLimpio();
+            }
+        } else {
+            modificarValor(this.state.lista[0], valor.buscar('tag', 'todos'), false);
+            modificarValor(this.state.lista[1], valor.buscar('tag', 'ninguno'), false);
+            modificarValor(this.state.lista.buscar('tag', tag), valor.buscar('tag', tag), seleccionado);
         }
 
         this.setState({valor: valor},()=>{
@@ -111,15 +130,21 @@ class ListaFieldObj extends React.Component {
             let item = this.state.valor[i];
             let item_lista = this.state.lista.buscar('tag', item.tag);
 
-            if (valor !== item.valor) {
-                return false;
+            if (valor === item.valor) {
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
     renderLista(){
-        let ret = [];
+        let ret = [{
+            tag: 'todos',
+            contenido: 'TODOS'
+        },{
+            tag: 'ninguno',
+            contenido: 'NINGUNO'
+        }];
 
         for (let i = 0 ; i < this.state.lista.length ; i++) {
             let item = this.state.lista[i];
