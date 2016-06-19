@@ -1,5 +1,8 @@
 .filtro {
   font-style: normal;
+  max-height: 200px;
+  overflow: auto;
+
   ul {
     list-style: none;
     padding: 0;
