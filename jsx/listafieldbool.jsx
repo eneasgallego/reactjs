@@ -13,13 +13,8 @@ class ListaFieldBool extends React.Component {
         this.filtrar = this.filtrar.bind(this);
 
         this.state = {
-            valor: props.valor,
-            lista: this.getValorLimpio()
-        };
-    }
-    componentDidMount(){
-        this.setState({
-            lista: [{
+            valor: this.getValorLimpio(props.valor),
+            lista: this.getValorLimpio([{
                 texto: 'Sí',
                 tag: 'si',
                 valor: true
@@ -27,11 +22,11 @@ class ListaFieldBool extends React.Component {
                 texto: 'No',
                 tag: 'no',
                 valor: false
-            }]
-        });
+            }])
+        };
     }
-    getValorLimpio(){
-        let ret = [];
+    getValorLimpio(array){
+        let ret = array instanceof Array ? array : [];
 
         ret.getTitulo = this.getTitulo;
         ret.filtrar = this.filtrar;
