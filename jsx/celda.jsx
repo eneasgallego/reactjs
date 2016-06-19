@@ -247,10 +247,12 @@ class Celda extends React.Component {
 		let ret;
 
 		if (this.state.filtro && this.props.mostrarFiltro(this) && this.mostrarFiltros()) {
+			let filtro = clonar.call(this.state.filtro);
+			filtro.lista = this.props.combos_dataset[this.props.campo];
 			ret = 	<FiltroTabla
 				tipo={this.state.filtro.tipo}
 				valor={this.state.filtro.valor}
-				filtro={this.state.filtro}
+				filtro={filtro}
 				onClick={this.onClickPanel}
 				onClosePanel={this.onClosePanel}
 				onMouseOver={this.onMouseOverPanel}

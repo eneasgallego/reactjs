@@ -104,6 +104,11 @@ let calcular = function(a, b) {
 	return ret;
 };
 Array.prototype.calcular = calcular;
+
+window.clonar = function() {
+	return JSON.parse(JSON.stringify(this));
+};
+
 window.ajax = function(par, tabla) {
 
 	let params = '';

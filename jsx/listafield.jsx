@@ -15,8 +15,16 @@ class ListaField extends React.Component {
         this.listaitemfield = [];
 
         this.state = {
-            valor: props.valor
+            valor: props.valor,
+            lista: props.lista
         };
+    }
+    componentDidMount(){
+        if (!this.state.lista.length) {
+            if (this.props.dataset) {
+
+            }
+        }
     }
     onChange(seleccionado, check, lista_item){
         this.props.onChange.call(this, seleccionado, check, lista_item, this);
@@ -36,8 +44,8 @@ class ListaField extends React.Component {
     renderListaItems(){
         let ret = [];
 
-        for (let i = 0 ; i < this.props.lista.length ; i++) {
-            let item = this.props.lista[i];
+        for (let i = 0 ; i < this.state.lista.length ; i++) {
+            let item = this.state.lista[i];
             ret.push(
                 <ListaItemField
                     indice={i}
@@ -56,7 +64,7 @@ class ListaField extends React.Component {
     renderLista(){
         let ret;
 
-        if (this.props.lista.length) {
+        if (this.state.lista.length) {
             ret =   <ul>
                         {this.renderListaItems()}
                     </ul>

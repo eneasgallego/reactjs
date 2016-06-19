@@ -11,18 +11,21 @@ class ListaFieldObj extends React.Component {
         this.onClick = this.onClick.bind(this);
         this.getTitulo = this.getTitulo.bind(this);
         this.filtrar = this.filtrar.bind(this);
+        this.cargarLista = this.cargarLista.bind(this);
 
         this.state = {
             valor: props.valor,
-            lista: this.getValorLimpio(),
-            cargado: false
+            lista: this.props.lista ? this.cargarLista(this.props.lista) : this.getValorLimpio(),
+            cargado: !!this.props.lista
         };
     }
     componentDidMount(){
-        if (this.props.dataset) {
-            this.cargarDataset(this.props.dataset);
-        } else {
-            this.setState({cargado: true});
+        if (!this.state.cargado) {
+            if (this.props.dataset) {
+                this.cargarDataset(this.props.dataset);
+            } else {
+                this.setState({cargado: true});
+            }
         }
     }
     cargarDataset(dataset, params, callback){
@@ -32,10 +35,7 @@ class ListaFieldObj extends React.Component {
                 params: params,
                 url: dataset,
                 success: res => {
-                    let lista = this.getValorLimpio();
-                    for (let i = 0 ; i < res.length ; i++) {
-                        lista.push(this.crearItemLista(res[i][this.props.campo_texto], res[i][this.props.campo_valor]));
-                    }
+                    let lista = this.cargarLista(res);
 
                     this.setState({
                         lista: lista,
@@ -44,6 +44,14 @@ class ListaFieldObj extends React.Component {
                 }
             }, this);
         }
+    }
+    cargarLista(lista){
+        let ret = this.getValorLimpio();
+        for (let i = 0 ; i < lista.length ; i++) {
+            ret.push(this.crearItemLista(lista[i][this.props.campo_texto], lista[i][this.props.campo_valor]));
+        }
+
+        return ret;
     }
     getValorLimpio(){
         let ret = [];

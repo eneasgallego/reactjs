@@ -86,9 +86,9 @@ class FiltroTabla extends React.Component {
         if (this.state.tipo.tipo == 'object') {
             ret = <ListaFieldObj
                 valor={this.state.valor ? this.state.valor : []}
-                campo_texto={this.props.campo_texto}
-                campo_valor={this.props.campo_valor}
-                dataset={this.props.dataset}
+                campo_texto={this.props.filtro.texto}
+                campo_valor={this.props.filtro.id}
+                lista={this.props.filtro.lista}
                 onChange={this.onChangeLista}
             />
         } else if (this.state.tipo.tipo == 'bool') {

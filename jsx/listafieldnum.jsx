@@ -19,16 +19,6 @@ class ListaFieldNum extends React.Component {
 
         this.state = {
             valor: props.valor,
-            lista: []
-        };
-
-        this.state.valor.getTitulo = this.getTitulo;
-        this.state.valor.filtrar = this.filtrar;
-        this.state.valor.quitarValor = this.quitarValor;
-        this.state.valor.insertarValor = this.insertarValor;
-    }
-    componentDidMount(){
-        this.setState({
             lista: [{
                 texto: 'mayor que',
                 tag: 'mayor',
@@ -60,7 +50,12 @@ class ListaFieldNum extends React.Component {
                     return a != b;
                 }
             }]
-        });
+        };
+
+        this.state.valor.getTitulo = this.getTitulo;
+        this.state.valor.filtrar = this.filtrar;
+        this.state.valor.quitarValor = this.quitarValor;
+        this.state.valor.insertarValor = this.insertarValor;
     }
     insertarValor(tag, valor_actual, valor){
         if (!valor_actual) {
