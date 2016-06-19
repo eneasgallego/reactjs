@@ -102,9 +102,14 @@ class Celda extends React.Component {
 			this.state.onFiltroFijado.call(this, this.state.mostrar_filtros_click ? this.props.campo : false, this);
 		}
 	}
-	onClickPanel(e, panel, panelflotante, filtrotabla) {
+	onClickPanel(e) {
 		e.stopPropagation();
-		this.setState({mostrar_filtros_click: !this.state.mostrar_filtros_click}, this.onFiltroFijado);
+		if (!e.solo_mostrar || !this.state.mostrar_filtros_click) {
+			this.setState({mostrar_filtros_click: !this.state.mostrar_filtros_click}, this.onFiltroFijado);
+		}
+		if (e.solo_mostrar) {
+			delete e.solo_mostrar;
+		}
 	}
 	onClosePanel(e) {
 		this.setState({

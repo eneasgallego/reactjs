@@ -8,6 +8,7 @@ class ListaFieldObj extends React.Component {
         super(props);
 
         this.onChange = this.onChange.bind(this);
+        this.onMouseOver = this.onMouseOver.bind(this);
         this.onClick = this.onClick.bind(this);
         this.getTitulo = this.getTitulo.bind(this);
         this.filtrar = this.filtrar.bind(this);
@@ -85,6 +86,11 @@ class ListaFieldObj extends React.Component {
             this.props.onChange.call(this, valor, this);
         });
     }
+    onMouseOver(e, listafield) {
+        e.persist();
+        e.solo_mostrar = true;
+        return this.props.onMouseOver.call(this, e, listafield, this);
+    }
     onClick(e, listafield) {
         return this.props.onClick.call(this, e, listafield, this);
     }
@@ -134,6 +140,7 @@ class ListaFieldObj extends React.Component {
                 lista={this.renderLista()}
                 onChange={this.onChange}
                 onClick={this.onClick}
+                onMouseOver={this.onMouseOver}
             />
         );
     }
@@ -146,7 +153,8 @@ ListaFieldObj.defaultProps = {
     onClick(){},
     onBlur(){},
     onKeyPress(){},
-    onChange(){}
+    onChange(){},
+    onMouseOver(){}
 };
 
 export default ListaFieldObj

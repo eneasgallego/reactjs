@@ -12,6 +12,12 @@
     li {
       display: table-row;
 
+      &:not(:first-child){
+        border-top-style: solid;
+        border-top-width: 1px;
+        border-top-color: #a0a0a0;
+      }
+
       input[type="checkbox"]{
         display: table-cell;
         vertical-align: middle;
@@ -21,6 +27,7 @@
         display: table-cell;
         font-weight: normal;
         vertical-align: middle;
+        text-align: left;
 
         .contenido-numerico {
           display: table;

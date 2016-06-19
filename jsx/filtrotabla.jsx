@@ -90,6 +90,7 @@ class FiltroTabla extends React.Component {
                 campo_valor={this.props.filtro.id}
                 lista={this.props.filtro.lista}
                 onChange={this.onChangeLista}
+                onMouseOver={this.onClick}
             />
         } else if (this.state.tipo.tipo == 'bool') {
             ret = 	<ListaFieldBool
