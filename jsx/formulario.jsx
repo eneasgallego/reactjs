@@ -16,14 +16,18 @@ class Formulario extends React.Component {
 			velo: false
 		};
 	}
-	componentDidMount() {
-		this.setState({velo:true},()=>{
-			if (this.isCombosCompletos()) {
+	componentDidUpdate() {
+		if (this.isCombosCompletos()) {
+			if (this.state.velo) {
 				this.setState({velo:false});
-			} else {
-				this.cargarCombos();
 			}
-		});
+		} else {
+			if (this.state.velo) {
+				this.cargarCombos();
+			} else {
+				this.setState({velo:true});
+			}
+		}
 	}
 	onSubmit(e) {
 		this.props.onSubmit(e, this);
@@ -56,11 +60,11 @@ class Formulario extends React.Component {
 				url: campo.tipo.url,
 				params: params,
 				success: response => {
-					let combos_dataset = this.state.combos_dataset;
+					let combos_dataset = clonar.call(this.state.combos_dataset);
 					combos_dataset[campo.campo] = response;
 					this.setState({combos_dataset: combos_dataset});
 				}
-			}, this);
+			});
 		};
 
 		for (let i = 0 ; i < this.state.campos.length ; i++) {
@@ -77,7 +81,7 @@ class Formulario extends React.Component {
 	renderCampo(campo) {
 		let ret;
 
-		if (campo.tipo == 'object') {
+		if (campo.tipo.tipo == 'object') {
 			ret = 	<Combo
 				combo={campo.tipo}
 				dataset={this.state.combos_dataset[campo.campo]}
@@ -126,10 +130,10 @@ class Formulario extends React.Component {
 		);
 	}
 }
-Tabla.defaultProps = {
+Formulario.defaultProps = {
 	campos: [],
 	onSubmit(){}
 };
 
-export default Tabla
+export default Formulario
 

@@ -209,9 +209,11 @@ window.parseCampo = (campo) => {
 	return ret;
 };
 window.parseCampos = campos => {
+	let ret = [];
+
 	for (let i = 0 ; i < campos.length ; i++) {
-		campos[i].tipo = parseCampo(campos[i]);
+		ret.push(parseCampo(campos[i]));
 	}
 
-	return cols;
+	return ret;
 };
