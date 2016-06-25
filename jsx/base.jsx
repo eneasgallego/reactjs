@@ -196,3 +196,22 @@ window.parseCols = cols => {
 
 	return cols;
 };
+window.parseCampo = (campo) => {
+	var ret = {};
+
+	if (typeof(campo) === 'string') {
+		ret.campo = campo;
+	} else {
+		ret = clonar.call(campo);
+	}
+	ret.tipo = parseTipo(ret.tipo ? ret.tipo : 'string');
+
+	return ret;
+};
+window.parseCampos = campos => {
+	for (let i = 0 ; i < campos.length ; i++) {
+		campos[i].tipo = parseCampo(campos[i]);
+	}
+
+	return cols;
+};
