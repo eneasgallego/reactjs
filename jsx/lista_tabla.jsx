@@ -15,6 +15,9 @@ class ListaTabla extends React.Component {
 			cols: parseCols(props.cols)
 		};
 	}
+	componentDidMount() {
+		this.props.onLoad(this);
+	}
 	dimensionar(alto) {
 		this.refs.tabla.dimensionar(alto);
 	}
@@ -140,6 +143,7 @@ ListaTabla.defaultProps = {
 	url: '',
 	eliminar: false,
 	onResizeFila(){},
+	onLoad(){},
 	setDialogo(){}
 };
 

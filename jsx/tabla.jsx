@@ -97,7 +97,7 @@ class Tabla extends React.Component {
 		if (domMenu) {
 			alto_tabla -= domMenu.offsetHeight;
 		}
-		this.setState({alto_tabla: alto_tabla}, this.calcAltoBody());
+		this.setState({alto_tabla: alto_tabla}, this.calcAltoBody);
 	}
 	calcAltoBody() {
 		let dom = ReactDOM.findDOMNode(this);
