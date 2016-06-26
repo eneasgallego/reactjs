@@ -43,8 +43,6 @@ $profundidad: 1;
 		padding: 2px 8px;
 		margin: 2px;
 		cursor: pointer;
-		//@include borde();
-		//@include color-fondo();
 
 		&:hover {
 			@include color-cabecera-hover();

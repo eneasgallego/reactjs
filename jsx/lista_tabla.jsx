@@ -40,6 +40,9 @@ class ListaTabla extends React.Component {
 			fn.apply(this, arguments);
 		}
 	}
+	getValor(){
+		return this.refs.tabla.getValor();
+	}
 	eliminar(tag, fila, tabla) {
 		let id = fila.getIdFila();
 		if (id) {

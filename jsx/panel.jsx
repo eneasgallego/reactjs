@@ -41,7 +41,8 @@ class Panel extends React.Component {
         return typeof(this.state.contenido) === 'function' ? this.state.contenido.call(this, this) : this.state.contenido;
     }
     render(){
-        return  <div    className={this.state.className}
+        return  <div
+            className={this.state.className}
             onClick={this.onClick}
             onMouseOver={this.onMouseOver}
             onMouseOut={this.onMouseOut}

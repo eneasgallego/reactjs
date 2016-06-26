@@ -87,6 +87,9 @@ class Tabla extends React.Component {
 	onResizeFila(offset, fila) {
 		this.props.onResizeFila(offset, fila, this);
 	}
+	getValor(){
+		return this.state.filas;
+	}
 	dimensionar(alto) {
 		this.setState({alto:alto}, this.calcAltoTabla);
 	}

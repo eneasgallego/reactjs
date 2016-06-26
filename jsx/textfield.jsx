@@ -35,8 +35,11 @@ class TextField extends React.Component {
 		return this.props.onKeyPress.call(this, e, this);
 	}
 	onChange(e) {
-		console.log('1 - textfield.onChange: ' + e.currentTarget.value);
+		this.state.valor = e.currentTarget.value;
 		return this.props.onChange.call(this, e.currentTarget.value, this);
+	}
+	getValor(){
+		return this.state.valor;
 	}
 	render() {
 		return (

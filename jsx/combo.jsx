@@ -23,7 +23,11 @@ class Combo extends React.Component {
 		return this.props.onBlur(e, this);
 	}
 	onChange(e) {
+		this.state.valor = e.currentTarget.value;
 		return this.props.onChange(e, this);
+	}
+	getValor(){
+		return this.state.valor;
 	}
 	renderOptions() {
 		let ret = [];
@@ -44,6 +48,7 @@ class Combo extends React.Component {
 	render() {
 		return (
 			<select
+				ref="combo"
 				defaultValue={parseInt(this.state.valor)}
 				onClick={this.props.onClick}
 				onBlur={this.onBlur}
