@@ -41,7 +41,6 @@ class ListaTabla extends React.Component {
 		}
 	}
 	eliminar(tag, fila, tabla) {
-
 		let id = fila.getIdFila();
 		if (id) {
 			this.props.setDialogo({
@@ -51,27 +50,33 @@ class ListaTabla extends React.Component {
 				menu: [{
 					texto: 'Aceptar',
 					tag: 'aceptar'
-				},{
+				}, {
 					texto: 'Cancelar',
 					tag: 'cancelar'
 				}],
 				accionMenu: tag => {
 					if (tag == 'aceptar') {
-						ajax({
-							metodo: 'delete',
-							url: this.props.url + '/' + id,
-							success: response => {
-								let filas = tabla.state.filas.slice();
-								let indice = filas.indice(item => {
-									return (item[this.props.id_campo] == id);
-								});
-								if (!!~indice) {
-									filas.splice(indice, 1);
-									tabla.setState({filas: filas});
-								}
-								this.props.setDialogo();
+						let eliminar = ()=>{
+							let filas = tabla.state.filas.slice();
+							let indice = filas.indice(item => {
+								return (item[this.props.id_campo] == id);
+							});
+							if (!!~indice) {
+								filas.splice(indice, 1);
+								tabla.setState({filas: filas});
 							}
-						}, tabla);
+							this.props.setDialogo();
+						};
+
+						if (this.props.persistir) {
+							ajax({
+								metodo: 'delete',
+								url: this.props.url + '/' + id,
+								success: eliminar
+							}, tabla);
+						} else {
+							eliminar();
+						}
 					} else if (tag == 'cancelar') {
 						this.props.setDialogo();
 					}
@@ -80,47 +85,86 @@ class ListaTabla extends React.Component {
 		}
 	}
 	guardar(valor, field, celda, fila, tabla) {
-		let id = fila.getIdFila();
-		let campo = celda.props.campo;
-		let params = fila.props.datos;
-		params[campo] = valor;
-		let url = this.props.url;
-		let metodo = 'post';
+		if (this.props.persistir) {
+			let id = fila.getIdFila();
+			let campo = celda.props.campo;
+			let params = fila.props.datos;
+			params[campo] = valor;
+			let url = this.props.url;
+			let metodo = 'post';
 
-		let fn = response => {
+			let fn = response => {
+				let filas = tabla.state.filas.slice();
+				let indice = filas.indice(item => {
+					return (item[this.props.id_campo] == id);
+				});
+				if (!!~indice) {
+					let datos = filas[indice];
+					if (metodo == 'post') {
+						datos[this.props.id_campo] = response[this.props.id_campo];
+					};
+					datos[campo] = valor;
+					filas[indice] = datos;
+					tabla.setState({filas: filas});
+				}
+			};
+
+			if (id) {
+				for (let i = 0 ; i < this.state.cols.length ; i++) {
+					let col = this.state.cols[i];
+
+					if (col.campo && col.campo != campo) {
+						params[col.campo] = fila.props.datos[col.campo];
+					}
+				}
+				url += '/' + id;
+				metodo = 'put';
+			}
+
+			ajax({
+				metodo: metodo,
+				url: url,
+				params: params,
+				success: fn
+			}, tabla);
+		} else {
+			let id = fila.getIdFila();
+			let campo = celda.props.campo;
+			let params = fila.props.datos;
+			params[campo] = valor;
+			if (id) {
+				for (let i = 0 ; i < this.state.cols.length ; i++) {
+					let col = this.state.cols[i];
+
+					if (col.campo && col.campo != campo) {
+						params[col.campo] = fila.props.datos[col.campo];
+					}
+				}
+			}
+
 			let filas = tabla.state.filas.slice();
 			let indice = filas.indice(item => {
 				return (item[this.props.id_campo] == id);
 			});
 			if (!!~indice) {
 				let datos = filas[indice];
-				if (metodo == 'post') {
-					datos[this.props.id_campo] = response[this.props.id_campo];
+				if (!id) {
+					let generarId = ()=>{
+						let id = 1;
+
+						while(!!~filas.indice('id', id)) {
+							id++;
+						}
+
+						return id;
+					};
+					datos[this.props.id_campo] = generarId();
 				};
 				datos[campo] = valor;
 				filas[indice] = datos;
 				tabla.setState({filas: filas});
 			}
-		};
-
-		if (id) {
-			for (let i = 0 ; i < this.state.cols.length ; i++) {
-				let col = this.state.cols[i];
-
-				if (col.campo && col.campo != campo) {
-					params[col.campo] = fila.props.datos[col.campo];
-				}
-			}
-			url += '/' + id;
-			metodo = 'put';
 		}
-
-		ajax({
-			metodo: metodo,
-			url: url,
-			params: params,
-			success: fn
-		}, tabla);
 	}
 	render() {
 		return (
@@ -142,6 +186,7 @@ ListaTabla.defaultProps = {
 	id_campo: '',
 	url: '',
 	eliminar: false,
+	persistir: true,
 	onResizeFila(){},
 	onLoad(){},
 	setDialogo(){}
