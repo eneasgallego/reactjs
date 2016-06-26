@@ -29,6 +29,7 @@ class Tabla extends React.Component {
 			velo: false,
 			anchos: [],
 			cols: parseCols(props.cols),
+			alto: undefined,
 			alto_tabla: undefined,
 			alto_body: undefined,
 			guardar: props.guardar ? props.guardar : undefined
@@ -86,8 +87,8 @@ class Tabla extends React.Component {
 	onResizeFila(offset, fila) {
 		this.props.onResizeFila(offset, fila, this);
 	}
-	dimensionar() {
-		this.calcAltoTabla();
+	dimensionar(alto) {
+		this.setState({alto:alto}, this.calcAltoTabla);
 	}
 	calcAltoTabla() {
 		let dom = ReactDOM.findDOMNode(this);
@@ -96,9 +97,7 @@ class Tabla extends React.Component {
 		if (domMenu) {
 			alto_tabla -= domMenu.offsetHeight;
 		}
-		this.setState({alto_tabla: alto_tabla}, () => {
-			this.calcAltoBody();
-		});
+		this.setState({alto_tabla: alto_tabla}, this.calcAltoBody());
 	}
 	calcAltoBody() {
 		let dom = ReactDOM.findDOMNode(this);
@@ -149,27 +148,36 @@ class Tabla extends React.Component {
 		});
 	}
 	cargarFilas(fn) {
-		if (!this.state.filas_cargadas && !this.state.cargando) {
-			this.setState({cargando: true}, () => {
-				ajax({
-					metodo: 'get',
-					params: this.props.params,
-					url: this.props.url,
-					success: res => {
-						let data = this.parseData(res);
+		if (this.props.url) {
+			if (!this.state.filas_cargadas && !this.state.cargando) {
+				this.setState({cargando: true}, () => {
+					ajax({
+						metodo: 'get',
+						params: this.props.params,
+						url: this.props.url,
+						success: res => {
+							let data = this.parseData(res);
 
-						this.setState({
-							filas: data,
-							filas_cargadas: true,
-							cargando: false
-						}, () => {
-							if (typeof(fn) === 'function') {
-								fn.call(this);
-							}
-						});
-					}
-				}, this);
-			});
+							this.setState({
+								filas: data,
+								filas_cargadas: true,
+								cargando: false
+							}, () => {
+								if (typeof(fn) === 'function') {
+									fn.call(this);
+								}
+							});
+						}
+					}, this);
+				});
+			}
+		} else {
+			if (!this.state.filas_cargadas || this.state.cargando) {
+				this.setState({
+					filas_cargadas: true,
+					cargando: false
+				});
+			}
 		}
 	}
 	isCombosCompletos() {
@@ -438,9 +446,17 @@ class Tabla extends React.Component {
 			</div>
 		);
 	}
+	renderStyle() {
+		let style = clonar.call(this.props.style);
+		if (this.state.alto) {
+			style.height = this.state.alto + 'px';
+		}
+
+		return style;
+	}
 	render() {
 		return (
-			<div className="tabla-cont" style={this.props.style}>
+			<div className="tabla-cont" style={this.renderStyle()}>
 				{this.renderMenu()} 
 				{this.renderTabla()} 
 				{this.renderVelo()}

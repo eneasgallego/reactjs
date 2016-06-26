@@ -8,10 +8,15 @@ class ListaTabla extends React.Component {
 
 		this.guardar = this.guardar.bind(this);
 		this.onClickAcciones = this.onClickAcciones.bind(this);
+		this.onResizeFila = this.onResizeFila.bind(this);
+		this.dimensionar = this.dimensionar.bind(this);
 
 		this.state = {
 			cols: parseCols(props.cols)
 		};
+	}
+	dimensionar(alto) {
+		this.refs.tabla.dimensionar(alto);
 	}
 	acciones() {
 		if (this.props.eliminar) {
@@ -21,6 +26,9 @@ class ListaTabla extends React.Component {
 			}];
 		}
 		return [];
+	}
+	onResizeFila(offset, fila, tabla) {
+		this.props.onResizeFila(offset, fila, tabla, this);
 	}
 	onClickAcciones(tag) {
 		let fn = this[tag];
@@ -114,12 +122,14 @@ class ListaTabla extends React.Component {
 	render() {
 		return (
 			<Tabla
+				ref="tabla"
 				id_campo={this.props.id_campo}
 				guardar={this.guardar}
 				url={this.props.url}
 				cols={this.state.cols}
 				acciones={this.acciones()}
 				onClickAcciones={this.onClickAcciones}
+				onResizeFila={this.onResizeFila}
 			/>
 		);
 	}
@@ -129,6 +139,7 @@ ListaTabla.defaultProps = {
 	id_campo: '',
 	url: '',
 	eliminar: false,
+	onResizeFila(){},
 	setDialogo(){}
 };
 

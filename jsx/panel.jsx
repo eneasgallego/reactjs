@@ -17,6 +17,11 @@ class Panel extends React.Component {
             onMouseOut: props.onMouseOut
         };
     }
+    dimensionar(alto) {
+        if (typeof(this.props.dimensionar) === 'function') {
+            this.props.dimensionar(alto, this);
+        }
+    }
     onClick(e){
         if (this.state.onClick) {
             this.state.onClick.call(this, e, this);
