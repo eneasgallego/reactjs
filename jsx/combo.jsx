@@ -29,6 +29,9 @@ class Combo extends React.Component {
 	getValor(){
 		return this.state.valor;
 	}
+	getValorItem(){
+		return this.props.dataset.buscar(this.props.combo.id, this.getValor());
+	}
 	renderOptions() {
 		let ret = [];
 
