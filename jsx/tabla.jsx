@@ -22,7 +22,7 @@ class Tabla extends React.Component {
 		this.state = {
 			filas_cargadas: false,
 			cargando: false,
-			filas: this.props.datos,
+			filas: [],
 			combos_dataset: {},
 			orden: this.props.orden instanceof Array ? this.props.orden : [this.props.orden],
 			filtros: {},
@@ -35,17 +35,15 @@ class Tabla extends React.Component {
 			guardar: props.guardar ? props.guardar : undefined
 		};
 	}
-	componentWillUpdate() {
-		if (this.isCombosCompletos()) {
-			this.cargarFilas();
-		}
-	}
 	componentDidMount() {
-		if (this.isCombosCompletos()) {
-			this.cargarFilas();
-		} else {
-			this.cargarCombos();
-		}
+
+		this.setState({
+			combos_dataset: this.cargarCombos()
+		}, () => {
+			if (typeof(fn) === 'function') {
+				fn.call(this);
+			}
+		});
 
 		let dom = ReactDOM.findDOMNode(this);
 		dom.addEventListener('resize', this.onResize);
@@ -88,7 +86,7 @@ class Tabla extends React.Component {
 		this.props.onResizeFila(offset, fila, this);
 	}
 	getValor(){
-		return this.state.filas;
+		return this.props.filas;
 	}
 	dimensionar(alto) {
 		this.setState({alto:alto}, this.calcAltoTabla);
@@ -150,7 +148,8 @@ class Tabla extends React.Component {
 			filas: filas
 		});
 	}
-	cargarFilas(fn) {
+	cargar(fn) {
+		/*
 		if (this.props.url) {
 			if (!this.state.filas_cargadas && !this.state.cargando) {
 				this.setState({cargando: true}, () => {
@@ -171,48 +170,31 @@ class Tabla extends React.Component {
 			if (!this.state.filas_cargadas || this.state.cargando) {
 				this.setState({
 					filas_cargadas: true,
-					cargando: false
+					cargando: false,
+					filas: this.props.filas
 				});
 			}
 		}
-	}
-	isCombosCompletos() {
-		let ret = true;
-		for (let i = 0 ; i < this.state.cols.length ; i++) {
-			let col = this.state.cols[i];
-
-			if (col.tipo.tipo == 'object') {
-				if (this.state.combos_dataset && !this.state.combos_dataset[col.campo]) {
-					ret = false;
-					break;
-				}
-			}
-		}
-
-		return ret;
+		*/
 	}
 	cargarCombos() {
-		let cargarCombo = col => {
-			let params = {
-				_sort: col.tipo.texto,
-				_order: 'ASC'
-			};
-
-			let combos_dataset = this.state.combos_dataset;
-			combos_dataset[col.campo] = this.props.bd[col.tipo.dataset];
-			this.setState({combos_dataset: combos_dataset});
-		};
-
+		let combos_dataset = {};
 		for (let i = 0 ; i < this.state.cols.length ; i++) {
 			let col = this.state.cols[i];
 
 			if (col.tipo.tipo == 'object') {
 				if (!this.state.combos_dataset[col.campo]) {
-					cargarCombo(col);
+					let params = {
+						_sort: col.tipo.texto,
+						_order: 'ASC'
+					};
+
+					combos_dataset[col.campo] = this.props.bd[col.tipo.dataset];
 				}
 			}
 		}
 
+		return combos_dataset;
 	}
 	onClickCelda(e, celda) {
 		e.preventDefault();
@@ -279,7 +261,6 @@ class Tabla extends React.Component {
 		this.setState(state);
 	}
 	refrescar() {
-		this.state.filas_cargadas = false;
 		this.cargarFilas(this.forceUpdate);
 	}
 	renderMenu() {
@@ -298,9 +279,9 @@ class Tabla extends React.Component {
 	renderFilas() {
 		let filas = [];
 
-		for (let i = 0 ; i < this.state.filas.length ; i++) {
+		for (let i = 0 ; i < this.props.filas.length ; i++) {
 
-			let fila = this.state.filas[i];
+			let fila = this.props.filas[i];
 
 			if (this.filtrar(fila)) {
 				let objFila = <Fila
