@@ -22,7 +22,7 @@ class Tabla extends React.Component {
 		this.state = {
 			filas_cargadas: false,
 			cargando: false,
-			filas: [],
+			filas: this.props.datos,
 			combos_dataset: {},
 			orden: this.props.orden instanceof Array ? this.props.orden : [this.props.orden],
 			filtros: {},
@@ -154,24 +154,17 @@ class Tabla extends React.Component {
 		if (this.props.url) {
 			if (!this.state.filas_cargadas && !this.state.cargando) {
 				this.setState({cargando: true}, () => {
-					ajax({
-						metodo: 'get',
-						params: this.props.params,
-						url: this.props.url,
-						success: res => {
-							let data = this.parseData(res);
+					let data = this.props.filas;
 
-							this.setState({
-								filas: data,
-								filas_cargadas: true,
-								cargando: false
-							}, () => {
-								if (typeof(fn) === 'function') {
-									fn.call(this);
-								}
-							});
+					this.setState({
+						filas: data,
+						filas_cargadas: true,
+						cargando: false
+					}, () => {
+						if (typeof(fn) === 'function') {
+							fn.call(this);
 						}
-					}, this);
+					});
 				});
 			}
 		} else {
@@ -200,22 +193,14 @@ class Tabla extends React.Component {
 	}
 	cargarCombos() {
 		let cargarCombo = col => {
-
 			let params = {
 				_sort: col.tipo.texto,
 				_order: 'ASC'
 			};
 
-			ajax({
-				metodo: 'get',
-				url: col.tipo.url,
-				params: params,
-				success: response => {
-					let combos_dataset = this.state.combos_dataset;
-					combos_dataset[col.campo] = response;
-					this.setState({combos_dataset: combos_dataset});
-				}
-			}, this);
+			let combos_dataset = this.state.combos_dataset;
+			combos_dataset[col.campo] = this.props.bd[col.tipo.dataset];
+			this.setState({combos_dataset: combos_dataset});
 		};
 
 		for (let i = 0 ; i < this.state.cols.length ; i++) {
@@ -472,6 +457,8 @@ Tabla.defaultProps = {
 	url: '',
 	params: {},
 	style: {},
+	bd: {},
+	filas: [],
 	cols: [],
 	orden: [],
 	acciones: [],
