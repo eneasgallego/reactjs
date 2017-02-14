@@ -10,6 +10,7 @@ class ListaTabla extends React.Component {
 		this.onClickAcciones = this.onClickAcciones.bind(this);
 		this.onResizeFila = this.onResizeFila.bind(this);
 		this.dimensionar = this.dimensionar.bind(this);
+		this.onNuevaFila = this.onNuevaFila.bind(this);
 
 		this.state = {
 			cols: parseCols(props.cols)
@@ -32,6 +33,9 @@ class ListaTabla extends React.Component {
 	}
 	onResizeFila(offset, fila, tabla) {
 		this.props.onResizeFila(offset, fila, tabla, this);
+	}
+	onNuevaFila(obj) {
+		this.props.onNuevaFila(this.props.id, obj);
 	}
 	onClickAcciones(tag) {
 		let fn = this[tag];
@@ -88,6 +92,8 @@ class ListaTabla extends React.Component {
 		}
 	}
 	guardar(valor, field, celda, fila, tabla) {
+		this.props.onAccion('GUARDAR', this.props.id, fila.getIdFila(), celda.props.campo, valor, this.props.persistir)
+return;
 		if (this.props.persistir) {
 			let id = fila.getIdFila();
 			let campo = celda.props.campo;
@@ -180,6 +186,9 @@ class ListaTabla extends React.Component {
 				acciones={this.acciones()}
 				onClickAcciones={this.onClickAcciones}
 				onResizeFila={this.onResizeFila}
+				onNuevaFila={this.onNuevaFila}
+				bd={this.props.bd}
+				filas={this.props.filas}
 			/>
 		);
 	}
@@ -188,8 +197,12 @@ ListaTabla.defaultProps = {
 	cols: [],
 	id_campo: '',
 	url: '',
+	bd: {},
+	filas: [],
 	eliminar: false,
 	persistir: true,
+	onNuevaFila(){},
+	onAccion(){},
 	onResizeFila(){},
 	onLoad(){},
 	setDialogo(){}

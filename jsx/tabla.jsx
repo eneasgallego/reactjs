@@ -22,7 +22,7 @@ class Tabla extends React.Component {
 		this.state = {
 			filas_cargadas: false,
 			cargando: false,
-			filas: [],
+			filas: this.props.filas,
 			combos_dataset: {},
 			orden: this.props.orden instanceof Array ? this.props.orden : [this.props.orden],
 			filtros: {},
@@ -86,7 +86,7 @@ class Tabla extends React.Component {
 		this.props.onResizeFila(offset, fila, this);
 	}
 	getValor(){
-		return this.props.filas;
+		return this.state.filas;
 	}
 	dimensionar(alto) {
 		this.setState({alto:alto}, this.calcAltoTabla);
@@ -143,10 +143,11 @@ class Tabla extends React.Component {
 
 			obj[col.campo] = this.getValorDefecto(col.tipo.tipo);
 		}
-		filas.push(obj);
+		filas.unshift(obj);
 		this.setState({
 			filas: filas
-		});
+		})
+		this.props.onNuevaFila(obj);
 	}
 	cargar(fn) {
 		/*
@@ -279,9 +280,9 @@ class Tabla extends React.Component {
 	renderFilas() {
 		let filas = [];
 
-		for (let i = 0 ; i < this.props.filas.length ; i++) {
+		for (let i = 0 ; i < this.state.filas.length ; i++) {
 
-			let fila = this.props.filas[i];
+			let fila = this.state.filas[i];
 
 			if (this.filtrar(fila)) {
 				let objFila = <Fila
@@ -451,7 +452,8 @@ Tabla.defaultProps = {
 	onResizeCelda(){},
 	onChangeValor(){},
 	onClickAcciones(){},
-	onFiltrado(){}
+	onFiltrado(){},
+	onNuevaFila(){}
 };
 
 export default Tabla
