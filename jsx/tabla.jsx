@@ -55,6 +55,9 @@ class Tabla extends React.Component {
 			index: dom.cellIndex
 		});
 	}
+	componentWillReceiveProps(nextProps) {
+		this.setState({filas:nextProps.filas})
+	}
 	parseData(data) {
 		let ret = this.props.parseData(data, this);
 

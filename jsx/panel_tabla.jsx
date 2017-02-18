@@ -64,7 +64,7 @@ class PanelTabla extends React.Component {
 			id_campo={this.props.id_campo}
 			url={this.props.url}
 			bd={this.props.bd}
-			filas={this.props.filas}
+			filas={this.props.filas.slice()}
 			params={this.props.params}
 			orden={this.props.orden}
 			filtros={this.props.filtros}
