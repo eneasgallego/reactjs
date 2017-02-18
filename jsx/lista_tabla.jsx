@@ -63,30 +63,9 @@ class ListaTabla extends React.Component {
 				}],
 				accionMenu: tag => {
 					if (tag == 'aceptar') {
-						let eliminar = ()=>{
-							let filas = tabla.state.filas.slice();
-							let indice = filas.indice(item => {
-								return (item[this.props.id_campo] == id);
-							});
-							if (!!~indice) {
-								filas.splice(indice, 1);
-								tabla.setState({filas: filas});
-							}
-							this.props.setDialogo();
-						};
-
-						if (this.props.persistir) {
-							ajax({
-								metodo: 'delete',
-								url: this.props.url + '/' + id,
-								success: eliminar
-							}, tabla);
-						} else {
-							eliminar();
-						}
-					} else if (tag == 'cancelar') {
-						this.props.setDialogo();
+						this.props.onEliminar(this.props.id, id, this.props.persistir);
 					}
+					this.props.setDialogo();
 				}
 			});
 		}
@@ -202,6 +181,7 @@ ListaTabla.defaultProps = {
 	eliminar: false,
 	persistir: true,
 	onNuevaFila(){},
+	onEliminar(){},
 	onAccion(){},
 	onResizeFila(){},
 	onLoad(){},
